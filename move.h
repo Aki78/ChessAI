@@ -17,12 +17,10 @@ public:
 	// Create a constructor that initializes a move object
 	// from a given string, e.g., "e2e4" or "g8f6".
 	Move(const string& str){
+
 		setMove(str);
-    // e2e4
     		Move move(moveNums[0], moveNums[1], moveNums[2], moveNums[3]);
 		printMoves();
-
-
 		
 	}
 
@@ -39,8 +37,10 @@ private:
 	friend class Position;
 
 	int charToInt(char c) {
+
 		if (c >= 'a' && c <= 'h') {
 		return c - 'a';
+
 		} else {
 			return -1; // Returns -1 or any other sentinel value to indicate an invalid input.
 		}
