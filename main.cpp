@@ -1,5 +1,6 @@
 #include "position.h"
 #include "move.h"
+#include "chess.h"
 
 int main()
 {

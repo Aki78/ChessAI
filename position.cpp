@@ -5,7 +5,7 @@ void Position::clear()
 {
     for (int row = 0; row < 8; ++row)
         for (int column = 0; column < 8; ++column)
-            _board[row][column] = EMPTY;
+            _board[row][column] = NA;
 }
 
 
@@ -17,7 +17,7 @@ void Position::make_move(const Move& m)
     int piece = _board[m._start_row][m._start_column];
 
     // Clear the starting square.
-    _board[m._start_row][m._start_column] = EMPTY;
+    _board[m._start_row][m._start_column] = NA;
 
     // Place the original piece in the ending square.
     _board[m._end_row][m._end_column] = piece;
