@@ -20,7 +20,7 @@ public:
 		setMove(str);
     // e2e4
     		Move move(moveNums[0], moveNums[1], moveNums[2], moveNums[3]);
-
+		printMoves();
 
 
 		
@@ -48,7 +48,7 @@ private:
 
 	int numToInt(char c) {
 		if (c >= '0' && c <= '9') {
-			return c - '0'; // Subtract ASCII value of '0' to get the integer value
+			return c - '0' ; // Subtract ASCII value of '0' to get the integer value
 		} else {
 			return -1; // Returns -1 or any other sentinel value to indicate an invalid input.
 		}
@@ -60,11 +60,20 @@ private:
     		moveChars[2] = str[2];
     		moveChars[3] = str[3];
 
-    		moveNums[0] = charToInt(moveChars[0]);
-    		moveNums[1] = numToInt(moveChars[1]);
-    		moveNums[2] = charToInt(moveChars[2]);
-    		moveNums[3] = numToInt(moveChars[3]);
+    		moveNums[0] = 8 - numToInt(moveChars[1]);
+    		moveNums[1] = charToInt(moveChars[0]);
+    		moveNums[2] = 8 -  numToInt(moveChars[3]);
+    		moveNums[3] = charToInt(moveChars[2]);
 
+	}
+	void printMoves() {
+		for (char c : moveChars) {
+			cout << c << " " ;
+		}
+		cout << endl;
+		for (int i : moveNums) {
+			cout << i << " " ;
+		}
 	}
 };
 
