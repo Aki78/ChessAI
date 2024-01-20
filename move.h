@@ -17,13 +17,9 @@ public:
 	// Create a constructor that initializes a move object
 	// from a given string, e.g., "e2e4" or "g8f6".
 	Move(const string& str){
-		for (int i = 0; i < 4 && i < str.length(); ++i) {
-			chars.push_back(str[i]);
-		}
-
-
+		setMove(str);
     // e2e4
-    		Move move(charToInt(chars[0]), numToInt(chars[1]), charToInt(chars[2]), numToInt(chars[3]));
+    		Move move(moveNums[0], moveNums[1], moveNums[2], moveNums[3]);
 
 
 
@@ -37,7 +33,8 @@ private:
 
 	int _end_row; // ending row of the move
 	int _end_column; // ending column of the move
-	vector<char> chars; // for splitting the movement chars
+	vector<char> moveChars = {'\0','\0','\0','\0'}; // for splitting the movement chars
+	vector<char> moveNums = {0,0,0,0}; // for splitting the movement chars
 
 	friend class Position;
 
@@ -55,6 +52,19 @@ private:
 		} else {
 			return -1; // Returns -1 or any other sentinel value to indicate an invalid input.
 		}
+	}
+
+	void setMove(const string& str) {
+    		moveChars[0] = str[0];
+    		moveChars[1] = str[1];
+    		moveChars[2] = str[2];
+    		moveChars[3] = str[3];
+
+    		moveNums[0] = charToInt(moveChars[0]);
+    		moveNums[1] = numToInt(moveChars[1]);
+    		moveNums[2] = charToInt(moveChars[2]);
+    		moveNums[3] = numToInt(moveChars[3]);
+
 	}
 };
 
