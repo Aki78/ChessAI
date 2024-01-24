@@ -13,16 +13,12 @@ void Position::clear() {
 
 // Execute a move
 void Position::make_move(const Move& m) {
-	// Store the piece in the starting square.
-	int piece = _board[m._start_row][m._start_column];
+	
+	int piece = _board[m._start_row][m._start_column]; // Store the piece in the starting square.
 
-	// Clear the starting square.
-	_board[m._start_row][m._start_column] = NA;
+	_board[m._start_row][m._start_column] = NA; // Clear the starting square
+	_board[m._end_row][m._end_column] = piece; // Place the original piece in the destination square
 
-	// Place the original piece in the destination square.
-	_board[m._end_row][m._end_column] = piece;
-
-	// TODO
 	switch_turns();
 }
 
@@ -42,11 +38,8 @@ void Position::give_rook_raw_moves(int row, int column, int player, vector<Move>
 			moves.push_back(Move(row, column, current_row, current_column));
 			continue;
 		}
-
 		
 		if (piece_color(_board[current_row][current_column]) == player) break; // Encounter own piece?
-			
-
 		
 		moves.push_back(Move(row, column, current_row, current_column)); // Capture opponent's piece.
 		break;
@@ -58,11 +51,9 @@ void Position::print() const {
 	const string pieces[] =
 			{ "R", "N", "B", "Q", "K", "P", "r", "n", "b", "q", "k", "p", " " };
 
-	for (int row = 0; row < 8; ++row)
-	{
+	for (int row = 0; row < 8; ++row) {
 		string row_str;
-		for (int column = 0; column < 8; ++column)
-		{
+		for (int column = 0; column < 8; ++column) {
 			row_str += (" | " + pieces[_board[row][column]]);
 		}
 		cout << "     +---+---+---+---+---+---+---+---+\n";
