@@ -26,10 +26,10 @@ private:
 
 	friend class Position;
 
-	int charToInt(char c); 
-	int numToInt(char c); 
+	int char_to_int(char c); 
+	int num_to_int(char c); 
 
-	void setMove(const string& str); 
-	void printMoves(); 
+	void set_move(const string& str); 
+	void print_move(); 
 };
 

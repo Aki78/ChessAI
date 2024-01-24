@@ -34,5 +34,7 @@ private:
 	};
 
 	int _turn = WHITE;
+	void switch_turns();
+
 };
 

@@ -7,13 +7,13 @@ Move::Move(int start_row, int start_column, int end_row, int end_column) : _star
 
 Move::Move(const string& str){
 
-	setMove(str);
+	set_move(str);
     	Move move(moveNums[0], moveNums[1], moveNums[2], moveNums[3]);
-	printMoves();
+//	print_move();
 		
 }
 
-int Move::charToInt(char c) {
+int Move::char_to_int(char c) {
 
 	if (c >= 'a' && c <= 'h') {
 	return c - 'a';
@@ -23,7 +23,7 @@ int Move::charToInt(char c) {
 	}
 }
 
-int Move::numToInt(char c) {
+int Move::num_to_int(char c) {
 	if (c >= '0' && c <= '9') {
 		return c - '0' ; // Subtract ASCII value of '0' to get the integer value
 	} else {
@@ -31,26 +31,26 @@ int Move::numToInt(char c) {
 	}
 }
 
-void Move::setMove(const string& str) {
+void Move::set_move(const string& str) {
 	moveChars[0] = str[0];
    	moveChars[1] = str[1];
     	moveChars[2] = str[2];
     	moveChars[3] = str[3];
 
-    	moveNums[0] = 8 - numToInt(moveChars[1]);
-    	moveNums[1] = charToInt(moveChars[0]);
-    	moveNums[2] = 8 -  numToInt(moveChars[3]);
-    	moveNums[3] = charToInt(moveChars[2]);
+    	moveNums[0] = 8 - num_to_int(moveChars[1]);
+    	moveNums[1] = char_to_int(moveChars[0]);
+    	moveNums[2] = 8 -  num_to_int(moveChars[3]);
+    	moveNums[3] = char_to_int(moveChars[2]);
 
 }
 
-void Move::printMoves() {
-	for (char c : moveChars) {
-		cout << c << " " ;
-	}
-	cout << endl;
-	for (int i : moveNums) {
-		cout << i << " " ;
-	}
-}
+//void Move::print_move() {
+//	for (char c : moveChars) {
+//		cout << c << " " ;
+//	}
+//	cout << endl;
+//	for (int i : moveNums) {
+//		cout << i << " " ;
+//	}
+//}
 

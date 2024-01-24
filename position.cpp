@@ -70,10 +70,17 @@ void Position::print() const {
 		{
 			row_str += (" | " + pieces[_board[row][column]]);
 		}
-		cout << "	 +---+---+---+---+---+---+---+---+\n";
+		cout << "     +---+---+---+---+---+---+---+---+\n";
 		cout << to_string(8 - row) + "   " + row_str + " |\n";
 	}
-	cout << "	 +---+---+---+---+---+---+---+---+\n";
+	cout << "     +---+---+---+---+---+---+---+---+\n";
 	cout << "\n	   A   B   C   D   E   F   G   H\n";
+}
+
+void Position::switch_turns(){
+
+	if(_turn == WHITE) _turn = BLACK;
+	else _turn = WHITE;
+
 }
 
