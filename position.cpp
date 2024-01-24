@@ -23,7 +23,7 @@ void Position::make_move(const Move& m) {
 	_board[m._end_row][m._end_column] = piece;
 
 	// TODO
-	// change the turn
+	switch_turns();
 }
 
 // Generate rook's raw moves
@@ -31,34 +31,29 @@ void Position::give_rook_raw_moves(int row, int column, int player, vector<Move>
 	// Up
 	int current_row = row;
 	int current_column = column;
-	while (true)
-	{
+	while (true) {
 		current_row--;
 
-		// Off the board?
-		if (current_row < 0)
-			break;
+		
+		if (current_row < 0) break; // Off the board?
 
-		// Empty square?
-		if (_board[current_row][current_column] == NA)
-		{
+		
+		if (_board[current_row][current_column] == NA){ // Empty square?
 			moves.push_back(Move(row, column, current_row, current_column));
 			continue;
 		}
 
-		// Encounter own piece?
-		if (piece_color(_board[current_row][current_column]) == player)
-			break;
+		
+		if (piece_color(_board[current_row][current_column]) == player) break; // Encounter own piece?
+			
 
-		// Capture opponent's piece.
-		moves.push_back(Move(row, column, current_row, current_column));
+		
+		moves.push_back(Move(row, column, current_row, current_column)); // Capture opponent's piece.
 		break;
 	}
 
-	// ... presumably, there are more directions to check for the rook.
 }
 
-// Print the board
 void Position::print() const {
 	const string pieces[] =
 			{ "R", "N", "B", "Q", "K", "P", "r", "n", "b", "q", "k", "p", " " };
