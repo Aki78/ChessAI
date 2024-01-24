@@ -28,9 +28,9 @@ void Position::give_rook_raw_moves(int row, int column, int player, vector<Move>
 	int current_row = row;
 	int current_column = column;
 	while (true) {
+
 		current_row--;
 
-		
 		if (current_row < 0) break; // Off the board?
 
 		

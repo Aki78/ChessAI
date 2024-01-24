@@ -5,14 +5,9 @@
 class Position
 {
 public:
+	int temp_row;
+	int temp_column;
 
-	void clear();
-	void make_move(const Move& m);
-
-	// HOMEWORK
-	// Print the board as ASCII graphics.
-	void print() const;
-	void give_rook_raw_moves(int row, int column, int player, vector<Move>& moves) const;
 
 private:
 
