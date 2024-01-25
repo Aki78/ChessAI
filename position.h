@@ -2,11 +2,14 @@
 #include "chess.h"
 #include "move.h"
 
-class Position
-{
+class Position {
 public:
 	int temp_row;
 	int temp_column;
+	void clear();
+	void print() const;
+	void make_move(const Move& m);
+	void give_rook_raw_moves(int row, int column, int player, vector<Move>& moves) const;
 
 
 private:

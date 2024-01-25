@@ -1,7 +1,8 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include "position.h" // Assuming "asema" translates to "station"
+#include "position.h"
+#include "piece.h"
 using namespace std;
 
 // Clears the board
@@ -48,6 +49,7 @@ void Position::give_rook_raw_moves(int row, int column, int player, vector<Move>
 }
 
 void Position::print() const {
+	Piece a;
 	const string pieces[] =
 			{ "R", "N", "B", "Q", "K", "P", "r", "n", "b", "q", "k", "p", " " };
 
