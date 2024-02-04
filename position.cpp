@@ -23,6 +23,21 @@ void Position::make_move(const Move& m) {
 	switch_turns();
 }
 
+bool check_and_push_move(int row, int column, int player, vector<Move>& moves){
+
+
+	if (current_row < 0) return true; // Off the board?
+	if (_board[current_row][current_column] == NA){ // Empty square?
+		moves.push_back(Move(row, column, current_row, current_column));
+		return false;
+	}
+	if (piece_color(_board[current_row][current_column]) == player) return true; // Encounter own piece?
+	
+	moves.push_back(Move(row, column, current_row, current_column)); // Capture opponent's piece.
+	return true;
+
+}
+
 // Generate rook's raw moves
 void Position::give_rook_raw_moves(int row, int column, int player, vector<Move>& moves) const {
 	// Up
@@ -31,19 +46,8 @@ void Position::give_rook_raw_moves(int row, int column, int player, vector<Move>
 	while (true) {
 
 		current_row--;
-
-		if (current_row < 0) break; // Off the board?
-
-		
-		if (_board[current_row][current_column] == NA){ // Empty square?
-			moves.push_back(Move(row, column, current_row, current_column));
-			continue;
-		}
-		
-		if (piece_color(_board[current_row][current_column]) == player) break; // Encounter own piece?
-		
-		moves.push_back(Move(row, column, current_row, current_column)); // Capture opponent's piece.
-		break;
+		bool wanna_break = check_and_push_move(current_row, current_column, player, moves);
+		if (wanna_break) break;
 	}
 
 	current_row = row;
@@ -52,19 +56,9 @@ void Position::give_rook_raw_moves(int row, int column, int player, vector<Move>
 	while (true) {
 
 		current_row++;
+		bool wanna_break = check_and_push_move(current_row, current_column, player, moves);
+		if (wanna_break) break;
 
-		if (current_row < 0) break; // Off the board?
-
-		
-		if (_board[current_row][current_column] == NA){ // Empty square?
-			moves.push_back(Move(row, column, current_row, current_column));
-			continue;
-		}
-		
-		if (piece_color(_board[current_row][current_column]) == player) break; // Encounter own piece?
-		
-		moves.push_back(Move(row, column, current_row, current_column)); // Capture opponent's piece.
-		break;
 	}
 
 
@@ -73,19 +67,9 @@ void Position::give_rook_raw_moves(int row, int column, int player, vector<Move>
 	while (true) {
 
 		current_column--;
+		bool wanna_break = check_and_push_move(current_row, current_column, player, moves);
+		if (wanna_break) break;
 
-		if (current_row < 0) break; // Off the board?
-
-		
-		if (_board[current_row][current_column] == NA){ // Empty square?
-			moves.push_back(Move(row, column, current_row, current_column));
-			continue;
-		}
-		
-		if (piece_color(_board[current_row][current_column]) == player) break; // Encounter own piece?
-		
-		moves.push_back(Move(row, column, current_row, current_column)); // Capture opponent's piece.
-		break;
 	}
 
 	current_column = column;
@@ -93,19 +77,43 @@ void Position::give_rook_raw_moves(int row, int column, int player, vector<Move>
 	while (true) {
 
 		current_column++;
+		bool wanna_break = check_and_push_move(current_row, current_column, player, moves);
+		if (wanna_break) break;
 
-		if (current_row < 0) break; // Off the board?
+	}
 
-		
-		if (_board[current_row][current_column] == NA){ // Empty square?
-			moves.push_back(Move(row, column, current_row, current_column));
-			continue;
-		}
-		
-		if (piece_color(_board[current_row][current_column]) == player) break; // Encounter own piece?
-		
-		moves.push_back(Move(row, column, current_row, current_column)); // Capture opponent's piece.
-		break;
+}
+
+
+void Position::give_nite_raw_moves(int row, int column, int player, vector<Move>& moves) const {
+
+	int current_row = row;
+	int current_column = column;
+	vector<vector<int>> nite_moves = {{1,2},{1,-2},{2,1},{2,-1},{-1,2},{-1,-2},{-2,1},{-2,-1}};
+
+	for (auto move : nite_moves){
+		current_row += move[0] ;
+		current_column += move[1];
+		check_and_push_move(current_row, current_column, player, moves);
+		current_row = row;
+		current_column = column;
+	}
+}
+
+
+
+void Position::give_bish_raw_moves(int row, int column, int player, vector<Move>& moves) const {
+	int current_row = row;
+	int current_column = column;
+	vector<vector<int>> nite_moves = {{-4,-4},{-3,-3},{-2,-2},{-1,-1},{1,1},{2,2},{3,3},{4,4},
+					  {-4,4},{-3,3},{-2,2},{-1,1},{1,-1},{2,-2},{3,-3},{4,-4}}
+
+	for (auto move : nite_moves){
+		current_row += move[0] ;
+		current_column += move[1];
+		check_and_push_move(current_row, current_column, player, moves);
+		current_row = row;
+		current_column = column;
 	}
 
 }
