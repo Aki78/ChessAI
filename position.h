@@ -11,11 +11,11 @@ public:
 	void make_move(const Move& m);
 	void give_rook_raw_moves(int row, int column, int player, vector<Move>& moves);
 	void give_nite_or_king_raw_moves(char a, int row, int column, int player, vector<Move>& moves);
-	bool check_and_push_move(int row, int column, int player, vector<Move>& moves);
+	bool check_and_push_move(int row, int column, int row_current, int column_current, int player, vector<Move>& moves);
 	void give_bish_raw_moves(int row, int column, int player, vector<Move>& moves);
 	void give_queen_raw_moves(int row, int column, int player, vector<Move>& moves);
 
-	bool check_pawn_and_push_move(vector<int> move, int row, int column, int player, vector<Move>& moves);
+	bool check_pawn_and_push_move(vector<int> move, int row, int column, int row_current, int row_column, int player, vector<Move>& moves);
 
 
 private:

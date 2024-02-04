@@ -23,37 +23,37 @@ void Position::make_move(const Move& m) {
 	switch_turns();
 }
 
-bool Position::check_and_push_move(int row, int column, int player, vector<Move>& moves){ // woudl this logic really work?
+bool Position::check_and_push_move(int row, int column, int row_current, int column_current, int player, vector<Move>& moves){ // woudl this logic really work?
 
-	if (row < 0 || row > 7 || column < 0 || column > 7) return true; // Off the board?
-	if (_board[row][column] == NA){ // Empty square?
-		moves.push_back(Move(row, column, row, column));
+	if (row_current < 0 || row_current > 7 || column_current < 0 || column_current > 7) return true; // Off the board?
+	if (_board[row_current][column_current] == NA){ // Empty square?
+		moves.push_back(Move(row, column, row_current, column_current));
 		return false; // false in thise case meens success and continue
 	}
-	if (piece_color(_board[row][column]) == player) return true; // Encounter own piece?
+	if (piece_color(_board[row_current][column_current]) == player) return true; // Encounter own piece?
 	
-	moves.push_back(Move(row, column, row, column)); // Capture opponent's piece.
+	moves.push_back(Move(row, column, row_current, column_current)); // Capture opponent's piece.
 	return true;
 
 }
-bool Position::check_pawn_and_push_move(vector<int> move,int row, int column, int player, vector<Move>& moves){ // woudl this logic really work?
-// bool depricated, it used to be used for breaking while loops
 
-	if (row < 0 || row > 7 || column < 0 || column > 7) return true; // Off the board?
-	if (_board[row][column] == NA){ // Empty square?
-		moves.push_back(Move(row, column, row, column));
+bool Position::check_pawn_and_push_move(vector<int> move,int row, int column, int row_current, int column_current, int player, vector<Move>& moves){ // woudl this logic really work?
+// add promotion, en passande,  taking pieces
+	if (row_current < 0 || row_current > 7 || column_current < 0 || column_current > 7) return true; // Off the board?
+	if (_board[row_current][column_current] == NA){ // Empty square?
+		moves.push_back(Move(row, column, row_current, column_current));
 		return false; // false in thise case meens success and continue
 	}
-	if (piece_color(_board[row][column]) == player) return true; // Encounter own piece?
-	if (piece_color(_board[row][column]) != player and (move[0]==0 and (move[1]==1 || move[1] ==-1) )) return true; // Enemy piece infront?
+	if (piece_color(_board[row_current][column_current]) == player) return true; // Encounter own piece?
+	if (piece_color(_board[row_current][column_current]) != player and (move[0]==0 and (move[1]==1 || move[1] ==-1) )) return true; // Enemy piece infront?
 
 	if (_board[row][column] == NA){ // Empty square?
-		moves.push_back(Move(row, column, row, column));
+		moves.push_back(Move(row, column, row_current, column_current));
 		return false; // false in thise case meens success and continue
 	}
 	
-	if (piece_color(_board[row][column]) != player and (move[0]==1 || move[0]== -1) and (move[1]==1 || move[1] ==-1) )  
-		moves.push_back(Move(row, column, row, column)); // Capture opponent's piece.
+	if (piece_color(_board[row_current][column_current]) != player and (move[0]==1 || move[0]== -1) and (move[1]==1 || move[1] ==-1) )  
+		moves.push_back(Move(row, column, row_current, column_current)); // Capture opponent's piece.
 	return true;
 
 }
@@ -66,7 +66,7 @@ void Position::give_rook_raw_moves(int row, int column, int player, vector<Move>
 
 	while (true) {
 		current_row--;
-		bool wanna_break = check_and_push_move(current_row, current_column, player, moves);
+		bool wanna_break = check_and_push_move(row, column, current_row, current_column, player, moves);
 		if (wanna_break) break;
 	}
 
@@ -74,7 +74,7 @@ void Position::give_rook_raw_moves(int row, int column, int player, vector<Move>
 
 	while (true) {
 		current_row++;
-		bool wanna_break = check_and_push_move(current_row, current_column, player, moves);
+		bool wanna_break = check_and_push_move(row, column, current_row, current_column, player, moves);
 		if (wanna_break) break;
 	}
 
@@ -82,7 +82,7 @@ void Position::give_rook_raw_moves(int row, int column, int player, vector<Move>
 
 	while (true) {
 		current_column--;
-		bool wanna_break = check_and_push_move(current_row, current_column, player, moves);
+		bool wanna_break = check_and_push_move(row, column, current_row, current_column, player, moves);
 		if (wanna_break) break;
 	}
 
@@ -90,7 +90,7 @@ void Position::give_rook_raw_moves(int row, int column, int player, vector<Move>
 
 	while (true) {
 		current_column++;
-		bool wanna_break = check_and_push_move(current_row, current_column, player, moves);
+		bool wanna_break = check_and_push_move(row, column, current_row, current_column, player, moves);
 		if (wanna_break) break;
 	}
 
@@ -105,7 +105,7 @@ void Position::give_bish_raw_moves(int row, int column, int player, vector<Move>
 	while (true) {
 		current_row--;
 		current_column--;
-		bool wanna_break = check_and_push_move(current_row, current_column, player, moves);
+		bool wanna_break = check_and_push_move(row, column, current_row, current_column, player, moves);
 		if (wanna_break) break;
 	}
 
@@ -115,7 +115,7 @@ void Position::give_bish_raw_moves(int row, int column, int player, vector<Move>
 	while (true) {
 		current_row++;
 		current_column--;
-		bool wanna_break = check_and_push_move(current_row, current_column, player, moves);
+		bool wanna_break = check_and_push_move(row, column, current_row, current_column, player, moves);
 		if (wanna_break) break;
 	}
 
@@ -126,7 +126,7 @@ void Position::give_bish_raw_moves(int row, int column, int player, vector<Move>
 	while (true) {
 		current_row--;
 		current_column++;
-		bool wanna_break = check_and_push_move(current_row, current_column, player, moves);
+		bool wanna_break = check_and_push_move(row, column, current_row, current_column, player, moves);
 		if (wanna_break) break;
 	}
 
@@ -136,7 +136,7 @@ void Position::give_bish_raw_moves(int row, int column, int player, vector<Move>
 	while (true) {
 		current_row++;
 		current_column++;
-		bool wanna_break = check_and_push_move(current_row, current_column, player, moves);
+		bool wanna_break = check_and_push_move(row, column, current_row, current_column, player, moves);
 		if (wanna_break) break;
 	}
 
@@ -149,7 +149,7 @@ void Position::give_queen_raw_moves(int row, int column, int player, vector<Move
 
 	while (true) {
 		current_row--;
-		bool wanna_break = check_and_push_move(current_row, current_column, player, moves);
+		bool wanna_break = check_and_push_move(row, column, current_row, current_column, player, moves);
 		if (wanna_break) break;
 	}
 
@@ -157,7 +157,7 @@ void Position::give_queen_raw_moves(int row, int column, int player, vector<Move
 
 	while (true) {
 		current_row++;
-		bool wanna_break = check_and_push_move(current_row, current_column, player, moves);
+		bool wanna_break = check_and_push_move(row, column, current_row, current_column, player, moves);
 		if (wanna_break) break;
 	}
 
@@ -165,7 +165,7 @@ void Position::give_queen_raw_moves(int row, int column, int player, vector<Move
 
 	while (true) {
 		current_column--;
-		bool wanna_break = check_and_push_move(current_row, current_column, player, moves);
+		bool wanna_break = check_and_push_move(row, column, current_row, current_column, player, moves);
 		if (wanna_break) break;
 	}
 
@@ -173,7 +173,7 @@ void Position::give_queen_raw_moves(int row, int column, int player, vector<Move
 
 	while (true) {
 		current_column++;
-		bool wanna_break = check_and_push_move(current_row, current_column, player, moves);
+		bool wanna_break = check_and_push_move(row, column, current_row, current_column, player, moves);
 		if (wanna_break) break;
 	}
 
@@ -183,7 +183,7 @@ void Position::give_queen_raw_moves(int row, int column, int player, vector<Move
 	while (true) {
 		current_row--;
 		current_column--;
-		bool wanna_break = check_and_push_move(current_row, current_column, player, moves);
+		bool wanna_break = check_and_push_move(row, column, current_row, current_column, player, moves);
 		if (wanna_break) break;
 	}
 
@@ -193,7 +193,7 @@ void Position::give_queen_raw_moves(int row, int column, int player, vector<Move
 	while (true) {
 		current_row++;
 		current_column--;
-		bool wanna_break = check_and_push_move(current_row, current_column, player, moves);
+		bool wanna_break = check_and_push_move(row, column, current_row, current_column, player, moves);
 		if (wanna_break) break;
 	}
 
@@ -204,7 +204,7 @@ void Position::give_queen_raw_moves(int row, int column, int player, vector<Move
 	while (true) {
 		current_row--;
 		current_column++;
-		bool wanna_break = check_and_push_move(current_row, current_column, player, moves);
+		bool wanna_break = check_and_push_move(row, column, current_row, current_column, player, moves);
 		if (wanna_break) break;
 	}
 
@@ -214,7 +214,7 @@ void Position::give_queen_raw_moves(int row, int column, int player, vector<Move
 	while (true) {
 		current_row++;
 		current_column++;
-		bool wanna_break = check_and_push_move(current_row, current_column, player, moves);
+		bool wanna_break = check_and_push_move(row, column, current_row, current_column, player, moves);
 		if (wanna_break) break;
 	}
 
@@ -275,7 +275,7 @@ cout << "Moves for Pawn, its a bit complex since it depends on history and oppon
 			for (auto move : possible_moves){
 				current_row += move[0] ;
 				current_column += move[1];
-				check_and_push_move(current_row, current_column, player, moves);
+				check_and_push_move(row, column, current_row, current_column, player, moves);
 				current_row = row;
 				current_column = column;
 			}
