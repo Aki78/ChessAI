@@ -95,8 +95,20 @@ void Position::give_raw_moves(char type, int row, int column, int player, vector
 						 {-4,-4},{-3,-3},{-2,-2},{-1,-1},{1,1},{2,2},{3,3},{4,4},
 						 {-4,4},{-3,3},{-2,2},{-1,1},{1,-1},{2,-2},{3,-3},{4,-4}};
 			break;
+		case 'P': 
+				switch(_turn){
+					case WHITE:
+						possible_moves = {{0,1},{1,1},{-1,1}};
+						break;
+					case BLACK:
+						possible_moves = {{0,-1},{-1,1},{1,-1}};
+						break;
+					default:
+						cout << "Something went very wrong. this should not have happend." << endl;
+				}
+			break;
 		default:
-			std::cout << "ERROR PIECE NOT FOUND" << std::endl;
+			cout << "ERROR PIECE NOT FOUND" << endl;
     }
 
 	for (auto move : possible_moves){
