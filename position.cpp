@@ -43,55 +43,63 @@ void Position::give_rook_raw_moves(int row, int column, int player, vector<Move>
 	// Up
 	int current_row = row;
 	int current_column = column;
-	while (true) {
+//	while (true) {
+//
+//		current_row--;
+//		bool wanna_break = check_and_push_move(current_row, current_column, player, moves);
+//		if (wanna_break) break;
+//	}
 
-		current_row--;
-		bool wanna_break = check_and_push_move(current_row, current_column, player, moves);
-		if (wanna_break) break;
-	}
+//	current_row = row;
 
-	current_row = row;
+	vector<vector<int>> possible_moves = {{0,-4},{0,-3},{0,-2},{0,-1},{0,1},{0,2},{0,3},{0,4},
+					  {0,4},{0,3},{0,2},{0,1},{0,-1},{0,-2},{0,-3},{0,-4}};
 
-	// Down
-	while (true) {
-
-		current_row++;
-		bool wanna_break = check_and_push_move(current_row, current_column, player, moves);
-		if (wanna_break) break;
-
-	}
-
-
-	// Left
-	current_row = row;
-	while (true) {
-
-		current_column--;
-		bool wanna_break = check_and_push_move(current_row, current_column, player, moves);
-		if (wanna_break) break;
-
-	}
-
-	current_column = column;
-	//Right
-	while (true) {
-
-		current_column++;
-		bool wanna_break = check_and_push_move(current_row, current_column, player, moves);
-		if (wanna_break) break;
-
+	for (auto move : possible_moves){
+		current_row += move[0] ;
+		current_column += move[1];
+		check_and_push_move(current_row, current_column, player, moves);
+		current_row = row;
+		current_column = column;
 	}
 
 }
-
-
-void Position::give_nite_raw_moves(int row, int column, int player, vector<Move>& moves) const {
+`
+void Position::give_raw_moves(char type, int row, int column, int player, vector<Move>& moves) const {
 
 	int current_row = row;
 	int current_column = column;
-	vector<vector<int>> nite_moves = {{1,2},{1,-2},{2,1},{2,-1},{-1,2},{-1,-2},{-2,1},{-2,-1}};
+	vector<vector<int>> possible_moves;
+	switch(type)
 
-	for (auto move : nite_moves){
+	switch(ch) {
+		case 'R':
+				possible_moves = {{0,-4},{0,-3},{0,-2},{0,-1},{0,1},{0,2},{0,3},{0,4},
+						{0,4},{0,3},{0,2},{0,1},{0,-1},{0,-2},{0,-3},{0,-4}};
+			break;
+		case 'N':
+				possible_moves = {{1,2},{1,-2},{2,1},{2,-1},{-1,2},{-1,-2},{-2,1},{-2,-1}};
+			break;
+		case 'B':
+				possible_moves = {{-4,-4},{-3,-3},{-2,-2},{-1,-1},{1,1},{2,2},{3,3},{4,4},
+						{-4,4},{-3,3},{-2,2},{-1,1},{1,-1},{2,-2},{3,-3},{4,-4}};
+
+				possible_moves =  {{1,2},{1,-2},{2,1},{2,-1},{-1,2},{-1,-2},{-2,1},{-2,-1}};
+			break;
+		case 'K':
+				possible_moves = {{0,1},{1,1},{1,0},{1,-1},{0,-1},{-1,-1},{-1,0},{-1,1}};
+			break;
+		case 'Q':
+				possible_moves = {{0,-4},{0,-3},{0,-2},{0,-1},{0,1},{0,2},{0,3},{0,4},
+						 {0,4},{0,3},{0,2},{0,1},{0,-1},{0,-2},{0,-3},{0,-4}},
+						 {-4,-4},{-3,-3},{-2,-2},{-1,-1},{1,1},{2,2},{3,3},{4,4},
+						 {-4,4},{-3,3},{-2,2},{-1,1},{1,-1},{2,-2},{3,-3},{4,-4}};
+			break;
+		default:
+			std::cout << "ERROR PIECE NOT FOUND" << std::endl;
+    }
+
+	for (auto move : possible_moves){
 		current_row += move[0] ;
 		current_column += move[1];
 		check_and_push_move(current_row, current_column, player, moves);
@@ -102,21 +110,8 @@ void Position::give_nite_raw_moves(int row, int column, int player, vector<Move>
 
 
 
-void Position::give_bish_raw_moves(int row, int column, int player, vector<Move>& moves) const {
-	int current_row = row;
-	int current_column = column;
-	vector<vector<int>> nite_moves = {{-4,-4},{-3,-3},{-2,-2},{-1,-1},{1,1},{2,2},{3,3},{4,4},
-					  {-4,4},{-3,3},{-2,2},{-1,1},{1,-1},{2,-2},{3,-3},{4,-4}}
 
-	for (auto move : nite_moves){
-		current_row += move[0] ;
-		current_column += move[1];
-		check_and_push_move(current_row, current_column, player, moves);
-		current_row = row;
-		current_column = column;
-	}
 
-}
 
 void Position::print() const {
 	Piece a;
