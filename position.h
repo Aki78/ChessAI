@@ -9,7 +9,9 @@ public:
 	void clear();
 	void print() const;
 	void make_move(const Move& m);
-	void give_rook_raw_moves(int row, int column, int player, vector<Move>& moves) const;
+	void give_rook_raw_moves(int row, int column, int player, vector<Move>& moves);
+	void give_raw_moves(char a, int row, int column, int player, vector<Move>& moves);
+	bool check_and_push_move(int row, int column, int player, vector<Move>& moves);
 
 
 private:

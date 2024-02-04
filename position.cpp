@@ -23,23 +23,23 @@ void Position::make_move(const Move& m) {
 	switch_turns();
 }
 
-bool check_and_push_move(int row, int column, int player, vector<Move>& moves){ // woudl this logic really work?
+bool Position::check_and_push_move(int row, int column, int player, vector<Move>& moves){ // woudl this logic really work?
 // bool depricated, it used to be used for breaking while loops
 
-	if (current_row < 0) return true; // Off the board?
-	if (_board[current_row][current_column] == NA){ // Empty square?
-		moves.push_back(Move(row, column, current_row, current_column));
+	if (row < 0) return true; // Off the board?
+	if (_board[row][column] == NA){ // Empty square?
+		moves.push_back(Move(row, column, row, column));
 		return false; // false in thise case meens success and continue
 	}
-	if (piece_color(_board[current_row][current_column]) == player) return true; // Encounter own piece?
+	if (piece_color(_board[row][column]) == player) return true; // Encounter own piece?
 	
-	moves.push_back(Move(row, column, current_row, current_column)); // Capture opponent's piece.
+	moves.push_back(Move(row, column, row, column)); // Capture opponent's piece.
 	return true;
 
 }
 
 // Generate rook's raw moves
-void Position::give_rook_raw_moves(int row, int column, int player, vector<Move>& moves) const {
+void Position::give_rook_raw_moves(int row, int column, int player, vector<Move>& moves) {
 	// Up
 	int current_row = row;
 	int current_column = column;
@@ -66,8 +66,8 @@ void Position::give_rook_raw_moves(int row, int column, int player, vector<Move>
 	}
 
 }
-`
-void Position::give_raw_moves(char type, int row, int column, int player, vector<Move>& moves) const { // sanity check moves later
+
+void Position::give_raw_moves(char type, int row, int column, int player, vector<Move>& moves) { // sanity check moves later
 
 	int current_row = row;
 	int current_column = column;
@@ -91,7 +91,7 @@ void Position::give_raw_moves(char type, int row, int column, int player, vector
 			break;
 		case 'Q':
 				possible_moves = {{0,-4},{0,-3},{0,-2},{0,-1},{0,1},{0,2},{0,3},{0,4},
-						 {-4,0},{-3,0},{-2,0},{-1,0},{1,0},{2,0},{3,0},{4,0}},
+						 {-4,0},{-3,0},{-2,0},{-1,0},{1,0},{2,0},{3,0},{4,0},
 						 {-4,-4},{-3,-3},{-2,-2},{-1,-1},{1,1},{2,2},{3,3},{4,4},
 						 {-4,4},{-3,3},{-2,2},{-1,1},{1,-1},{2,-2},{3,-3},{4,-4}};
 			break;
@@ -106,16 +106,6 @@ void Position::give_raw_moves(char type, int row, int column, int player, vector
 		current_row = row;
 		current_column = column;
 	}
-}
-
-
-
-
-void Position::give_raw_moves(char type, int row, int column, int player, vector<Move>& moves) const { // sanity check moves later
-
-	int current_row = row;
-	int current_column = column;
-	vector<vector<int>> possible_moves;
 }
 
 
