@@ -46,6 +46,68 @@ void Position::give_rook_raw_moves(int row, int column, int player, vector<Move>
 		break;
 	}
 
+	current_row = row;
+
+	// Down
+	while (true) {
+
+		current_row++;
+
+		if (current_row < 0) break; // Off the board?
+
+		
+		if (_board[current_row][current_column] == NA){ // Empty square?
+			moves.push_back(Move(row, column, current_row, current_column));
+			continue;
+		}
+		
+		if (piece_color(_board[current_row][current_column]) == player) break; // Encounter own piece?
+		
+		moves.push_back(Move(row, column, current_row, current_column)); // Capture opponent's piece.
+		break;
+	}
+
+
+	// Left
+	current_row = row;
+	while (true) {
+
+		current_column--;
+
+		if (current_row < 0) break; // Off the board?
+
+		
+		if (_board[current_row][current_column] == NA){ // Empty square?
+			moves.push_back(Move(row, column, current_row, current_column));
+			continue;
+		}
+		
+		if (piece_color(_board[current_row][current_column]) == player) break; // Encounter own piece?
+		
+		moves.push_back(Move(row, column, current_row, current_column)); // Capture opponent's piece.
+		break;
+	}
+
+	current_column = column;
+	//Right
+	while (true) {
+
+		current_column++;
+
+		if (current_row < 0) break; // Off the board?
+
+		
+		if (_board[current_row][current_column] == NA){ // Empty square?
+			moves.push_back(Move(row, column, current_row, current_column));
+			continue;
+		}
+		
+		if (piece_color(_board[current_row][current_column]) == player) break; // Encounter own piece?
+		
+		moves.push_back(Move(row, column, current_row, current_column)); // Capture opponent's piece.
+		break;
+	}
+
 }
 
 void Position::print() const {
