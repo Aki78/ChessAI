@@ -23,13 +23,13 @@ void Position::make_move(const Move& m) {
 	switch_turns();
 }
 
-bool check_and_push_move(int row, int column, int player, vector<Move>& moves){
-
+bool check_and_push_move(int row, int column, int player, vector<Move>& moves){ // woudl this logic really work?
+// bool depricated, it used to be used for breaking while loops
 
 	if (current_row < 0) return true; // Off the board?
 	if (_board[current_row][current_column] == NA){ // Empty square?
 		moves.push_back(Move(row, column, current_row, current_column));
-		return false;
+		return false; // false in thise case meens success and continue
 	}
 	if (piece_color(_board[current_row][current_column]) == player) return true; // Encounter own piece?
 	
@@ -58,14 +58,16 @@ void Position::give_rook_raw_moves(int row, int column, int player, vector<Move>
 	for (auto move : possible_moves){
 		current_row += move[0] ;
 		current_column += move[1];
-		check_and_push_move(current_row, current_column, player, moves);
+		while(true){
+			check_and_push_move(current_row, current_column, player, moves);
+		}
 		current_row = row;
 		current_column = column;
 	}
 
 }
 `
-void Position::give_raw_moves(char type, int row, int column, int player, vector<Move>& moves) const {
+void Position::give_raw_moves(char type, int row, int column, int player, vector<Move>& moves) const { // sanity check moves later
 
 	int current_row = row;
 	int current_column = column;
