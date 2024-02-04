@@ -96,7 +96,7 @@ void Position::give_raw_moves(char type, int row, int column, int player, vector
 						 {-4,4},{-3,3},{-2,2},{-1,1},{1,-1},{2,-2},{3,-3},{4,-4}};
 			break;
 		case 'P': 
-				switch(_turn){
+				switch(_turn){ // check if the color order is correct
 					case WHITE:
 						possible_moves = {{0,1},{1,1},{-1,1}};
 						break;
@@ -110,13 +110,20 @@ void Position::give_raw_moves(char type, int row, int column, int player, vector
 		default:
 			cout << "ERROR PIECE NOT FOUND" << endl;
     }
-
-	for (auto move : possible_moves){
-		current_row += move[0] ;
-		current_column += move[1];
-		check_and_push_move(current_row, current_column, player, moves);
-		current_row = row;
-		current_column = column;
+// adding all possible raw moves to moves vector ( to NA or take piece)
+	switch(type) {
+		case 'P':
+cout << "Moves for Pawn, its a bit complex since it depends on history and opponents piece position" << endl;
+			break;
+		default:
+			for (auto move : possible_moves){
+				current_row += move[0] ;
+				current_column += move[1];
+				check_and_push_move(current_row, current_column, player, moves);
+				current_row = row;
+				current_column = column;
+			}
+			
 	}
 }
 
