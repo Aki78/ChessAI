@@ -10,10 +10,9 @@ public:
 	void print() const;
 	void make_move(const Move& m);
 	void give_rook_raw_moves(int row, int column, int player, vector<Move>& moves);
-	void give_nite_or_king_raw_moves(char a, int row, int column, int player, vector<Move>& moves);
+	void give_raw_moves(char a, int row, int column, int player, vector<Move>& moves);
 	bool check_and_push_move(int row, int column, int player, vector<Move>& moves);
 	void give_bish_raw_moves(int row, int column, int player, vector<Move>& moves);
-	void give_queen_raw_moves(int row, int column, int player, vector<Move>& moves);
 
 	bool check_pawn_and_push_move(vector<int> move, int row, int column, int player, vector<Move>& moves);
 
