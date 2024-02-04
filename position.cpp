@@ -72,12 +72,11 @@ void Position::give_raw_moves(char type, int row, int column, int player, vector
 	int current_row = row;
 	int current_column = column;
 	vector<vector<int>> possible_moves;
-	switch(type)
 
-	switch(ch) {
+	switch(type) {
 		case 'R':
 				possible_moves = {{0,-4},{0,-3},{0,-2},{0,-1},{0,1},{0,2},{0,3},{0,4},
-						{0,4},{0,3},{0,2},{0,1},{0,-1},{0,-2},{0,-3},{0,-4}};
+						 {-4,0},{-3,0},{-2,0},{-1,0},{1,0},{2,0},{3,0},{4,0}};
 			break;
 		case 'N':
 				possible_moves = {{1,2},{1,-2},{2,1},{2,-1},{-1,2},{-1,-2},{-2,1},{-2,-1}};
@@ -86,14 +85,13 @@ void Position::give_raw_moves(char type, int row, int column, int player, vector
 				possible_moves = {{-4,-4},{-3,-3},{-2,-2},{-1,-1},{1,1},{2,2},{3,3},{4,4},
 						{-4,4},{-3,3},{-2,2},{-1,1},{1,-1},{2,-2},{3,-3},{4,-4}};
 
-				possible_moves =  {{1,2},{1,-2},{2,1},{2,-1},{-1,2},{-1,-2},{-2,1},{-2,-1}};
 			break;
 		case 'K':
 				possible_moves = {{0,1},{1,1},{1,0},{1,-1},{0,-1},{-1,-1},{-1,0},{-1,1}};
 			break;
 		case 'Q':
 				possible_moves = {{0,-4},{0,-3},{0,-2},{0,-1},{0,1},{0,2},{0,3},{0,4},
-						 {0,4},{0,3},{0,2},{0,1},{0,-1},{0,-2},{0,-3},{0,-4}},
+						 {-4,0},{-3,0},{-2,0},{-1,0},{1,0},{2,0},{3,0},{4,0}},
 						 {-4,-4},{-3,-3},{-2,-2},{-1,-1},{1,1},{2,2},{3,3},{4,4},
 						 {-4,4},{-3,3},{-2,2},{-1,1},{1,-1},{2,-2},{3,-3},{4,-4}};
 			break;
@@ -111,6 +109,14 @@ void Position::give_raw_moves(char type, int row, int column, int player, vector
 }
 
 
+
+
+void Position::give_raw_moves(char type, int row, int column, int player, vector<Move>& moves) const { // sanity check moves later
+
+	int current_row = row;
+	int current_column = column;
+	vector<vector<int>> possible_moves;
+}
 
 
 
