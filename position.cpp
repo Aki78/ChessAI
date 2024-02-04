@@ -39,6 +39,14 @@ bool Position::check_and_push_move(int row, int column, int row_current, int col
 
 bool Position::check_pawn_and_push_move(vector<int> move,int row, int column, int row_current, int column_current, int player, vector<Move>& moves){ // woudl this logic really work?
 // add promotion, en passande,  taking pieces
+
+		// Promotion
+	if (player == WHITE && row_current == 7) {
+		cout << "Handle promotion" << endl;
+	} else if (player == BLACK && row_current == 0) {
+		cout << "Handle promotion" << endl;
+	}
+
 	if (row_current < 0 || row_current > 7 || column_current < 0 || column_current > 7) return true; // Off the board?
 	if (_board[row_current][column_current] == NA){ // Empty square?
 		moves.push_back(Move(row, column, row_current, column_current));
@@ -52,8 +60,12 @@ bool Position::check_pawn_and_push_move(vector<int> move,int row, int column, in
 		return false; // false in thise case meens success and continue
 	}
 	
-	if (piece_color(_board[row_current][column_current]) != player and (move[0]==1 || move[0]== -1) and (move[1]==1 || move[1] ==-1) )  
+	if (piece_color(_board[row_current][column_current]) != player and (move[0]==1 || move[0]== -1) and (move[1]==1 || move[1] ==-1) )  {
 		moves.push_back(Move(row, column, row_current, column_current)); // Capture opponent's piece.
+		return false;
+	}
+
+	// if (HANDLE EN PASSANT)
 	return true;
 
 }
