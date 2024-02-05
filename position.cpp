@@ -12,6 +12,73 @@ void Position::clear() {
 			_board[row][column] = NA;
 }
 
+
+
+	void generate_moves(std::vector<Move>& moves){
+		int king = _side_to_move == WHITE ? wK : bK;
+		int player = _side_to_move;
+		int opponent = opponent(player);
+
+		// Generate raw moves for the player. Some moves may
+		// leave the king in check.
+		std::vector<Move> raw_moves;
+		generate_all_raw_moves(player, raw_moves);
+
+		// Test each raw move.
+		for (Move& rm : raw_moves){
+			// Make a copy of the current position.
+			Position test_position = *this;
+
+			// Play the raw move on the test position.
+			test_position.make_move(rm);
+
+			// Find the king.
+			int row, column;
+			test_position.find_piece(king, row, column);
+
+			// Is the king in check?
+			if (!test_position.is_square_attacked(row, column, opponent)){
+				// Move is legal!
+				moves.push_back(rm);
+			}
+		}
+	}
+
+void Position::generate_all_raw_moves(int player, std::vector<Move>& moves) const{
+		for (int row = 0; row < 8; ++row)
+			for (int col = 0; col < 8; ++col){
+						int piece = _board[row][col];
+
+						// Empty square?
+						if (piece == NA) continue;
+
+						// Opponent's piece?
+						if (piece_color(player) != player) continue;
+
+						// Get raw moves for the piece.
+						switch (piece){
+						case WHITE_ROOK: case BLACK_ROOK:
+								generate_rook_raw_moves(row, col, player, moves);
+								break;
+						case WHITE_QUEEN: case BLACK_QUEEN:
+								generate_queen_raw_moves(row, col, player, moves);
+								break;
+						case WHITE_KNIGHT: case BLACK_KNIGHT:
+								generate_knight_raw_moves(row, col, player, moves);
+								break;
+						case WHITE_BISHOP: case BLACK_BISHOP:
+								generate_bishop_raw_moves(row, col, player, moves);
+								break;
+						case WHITE_KING: case BLACK_KING:
+								generate_king_raw_moves(row, col, player, moves);
+								break;
+						case WHITE_PAWN: case BLACK_PAWN:
+								generate_pawn_raw_moves(row, col, player, moves);
+								break;
+						}
+				}
+}
+
 // Execute a move
 void Position::make_move(const Move& m) {
 	
@@ -277,7 +344,7 @@ void Position::give_nite_or_king_raw_moves(char type, int row, int column, int p
 			break;
 		default:
 			cout << "ERROR PIECE NOT FOUND" << endl;
-    }
+	}
 // adding all possible raw moves to moves vector ( to NA or take piece)
 	switch(type) {
 		case 'P':
@@ -294,9 +361,6 @@ cout << "Moves for Pawn, its a bit complex since it depends on history and oppon
 			
 	}
 }
-
-
-
 
 void Position::print() const {
 	Piece a;
