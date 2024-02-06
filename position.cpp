@@ -57,23 +57,23 @@ void Position::generate_all_raw_moves(int player, std::vector<Move>& moves) cons
 
 						// Get raw moves for the piece.
 						switch (piece){
-						case WHITE_ROOK: case BLACK_ROOK:
-								generate_rook_raw_moves(row, col, player, moves);
+						case wR: case bR:
+								give_rook_raw_moves(row, col, player, moves);
 								break;
-						case WHITE_QUEEN: case BLACK_QUEEN:
-								generate_queen_raw_moves(row, col, player, moves);
+						case wQ: case bQ:
+								give_queen_raw_moves(row, col, player, moves);
 								break;
-						case WHITE_KNIGHT: case BLACK_KNIGHT:
-								generate_knight_raw_moves(row, col, player, moves);
+						case wN: case bN:
+								give_nite_or_king_raw_moves('N', row, col, player, moves);
 								break;
-						case WHITE_BISHOP: case BLACK_BISHOP:
-								generate_bishop_raw_moves(row, col, player, moves);
+						case wB: case bB:
+								give_bishop_raw_moves(row, col, player, moves);
 								break;
-						case WHITE_KING: case BLACK_KING:
-								generate_king_raw_moves(row, col, player, moves);
+						case wK: case bK:
+								give_nite_or_king_raw_moves('K', row, col, player, moves);
 								break;
-						case WHITE_PAWN: case BLACK_PAWN:
-								generate_pawn_raw_moves(row, col, player, moves);
+						case wP: case bP:
+								check_pawn_and_push_move(row, col, player, moves);
 								break;
 						}
 				}
@@ -308,6 +308,7 @@ void Position::give_nite_or_king_raw_moves(char type, int row, int column, int p
 	vector<vector<int>> possible_moves;
 
 	switch(type) {
+// R, B and Q doesn't work's well with tables, so the idea is discarded
 //		case 'R':
 //				possible_moves = {{0,-4},{0,-3},{0,-2},{0,-1},{0,1},{0,2},{0,3},{0,4},
 //						 {-4,0},{-3,0},{-2,0},{-1,0},{1,0},{2,0},{3,0},{4,0}};
@@ -333,10 +334,10 @@ void Position::give_nite_or_king_raw_moves(char type, int row, int column, int p
 		case 'P': 
 				switch(_turn){ // check if the color order is correct
 					case WHITE:
-						possible_moves = {{0,1},{1,1},{-1,1}};
+						possible_moves = {{0,1},{1,1},{-1,1},{0,2}};
 						break;
 					case BLACK:
-						possible_moves = {{0,-1},{-1,1},{1,-1}};
+						possible_moves = {{0,-1},{-1,1},{1,-1},{0,-2}};
 						break;
 					default:
 						cout << "Something went very wrong. this should not have happend." << endl;
@@ -361,6 +362,28 @@ cout << "Moves for Pawn, its a bit complex since it depends on history and oppon
 			
 	}
 }
+
+vector<int> Position::get_chess_piece(int chess_piece) const {
+	vector<int> piece_pos= {-1,-1};
+	for (int i = 0; i < 8; ++i) {
+		for (int j = 0; j < 8; ++j) {
+			if (chess_piece == m_board[i][j]) {
+				piece_pos[0] = i; piece_pos[1] = j;
+				return piece_pos;
+			}
+		}
+	}
+}
+
+
+bool Position::is_square_threatened(int row, int col, int enemy) const {
+	vector<Move> all_raw_moves = get_all_raw_moves(enemy);
+	for (Move& move: all_raw_moves) 
+		if (move._end_row == row && move._end_column == col)
+			return true;
+	return false;
+}
+
 
 void Position::print() const {
 	Piece a;
