@@ -14,7 +14,7 @@ void Position::clear() {
 
 
 
-void Position::generate_all_raw_moves(int player, vector<Move>& moves) const{
+void Position::generate_all_raw_moves(int player, vector<Move>& moves) {
 		for (int row = 0; row < 8; ++row)
 			for (int col = 0; col < 8; ++col){
 						int piece = _board[row][col];
@@ -37,7 +37,7 @@ void Position::generate_all_raw_moves(int player, vector<Move>& moves) const{
 								give_nite_or_king_raw_moves('N', row, col, player, moves);
 								break;
 						case wB: case bB:
-								give_bishop_raw_moves(row, col, player, moves);
+								give_bish_raw_moves(row, col, player, moves);
 								break;
 						case wK: case bK:
 								give_nite_or_king_raw_moves('K', row, col, player, moves);
@@ -49,7 +49,7 @@ void Position::generate_all_raw_moves(int player, vector<Move>& moves) const{
 				}
 }
 
-bool can_turn_into_queen(int piece, int p_destination_row) {
+bool can_turn_into_queen(int piece, int destination_row) {
 	return piece == wP && destination_row == 0 || piece == bP && destination_row == 7;
 }
 
@@ -94,6 +94,7 @@ bool Position::check_pawn_and_push_move(vector<int> move,int row, int column, in
 
 
 	if (row_current < 0 || row_current > 7 || column_current < 0 || column_current > 7) return true; // Off the board?
+
 	if (_board[row_current][column_current] == NA){ // Empty square?
 		moves.push_back(Move(row, column, row_current, column_current));
 		return false; // false in thise case meens success and continue
@@ -318,10 +319,9 @@ void Position::give_nite_or_king_raw_moves(char type, int row, int column, int p
 //					case BLACK:
 //						possible_moves = {{0,-1},{-1,1},{1,-1},{0,-2}};
 //						break;
-					default:
-						cout << "Something went very wrong. this should not have happend." << endl;
-				}
-			break;
+				//	default:
+				//		cout << "Something went very wrong. this should not have happend." << endl;
+				//}
 		default:
 			cout << "ERROR PIECE NOT FOUND" << endl;
 	}
@@ -346,7 +346,7 @@ vector<int> Position::get_chess_piece(int chess_piece) const {
 	vector<int> piece_pos= {-1,-1};
 	for (int i = 0; i < 8; ++i) {
 		for (int j = 0; j < 8; ++j) {
-			if (chess_piece == m_board[i][j]) {
+			if (chess_piece == _board[i][j]) {
 				piece_pos[0] = i; piece_pos[1] = j;
 				return piece_pos;
 			}
@@ -355,7 +355,7 @@ vector<int> Position::get_chess_piece(int chess_piece) const {
 }
 
 
-bool Position::is_square_threatened(vector<int> pos, int enemy) const {
+bool Position::is_square_threatened(vector<int> pos, int enemy) {
 	vector<Move> all_raw_moves; 
 	generate_all_raw_moves(enemy, all_raw_moves);
 	for (Move& move: all_raw_moves) 
@@ -365,7 +365,7 @@ bool Position::is_square_threatened(vector<int> pos, int enemy) const {
 }
 
 
-vector<Move> Position::generate_legal_moves() const {
+vector<Move> Position::generate_legal_moves() {
 	int my_king = bK;
 	int enemy = WHITE;
 
@@ -377,7 +377,7 @@ vector<Move> Position::generate_legal_moves() const {
 
 	vector<Move> raw_moves;
 
-	get_all_raw_moves(player, raw_moves);
+	generate_all_raw_moves(player, raw_moves);
 
 	vector<Move> legal_moves;
 

@@ -7,6 +7,8 @@ using namespace std;
 
 // Describes a change in position.
 class Move{
+
+
 public:
 	int _start_row; // starting row of the move
 	int _start_column; // starting column (i.e., file) of the move
@@ -19,6 +21,9 @@ public:
 	// Create a constructor that initializes a move object
 	// from a given string, e.g., "e2e4" or "g8f6".
 	Move(const string& str);
+	bool operator==(const Move& other) const {
+		return _start_row==other._start_row & _start_column==other._start_column &  _end_row==other._end_row &  _end_column==other._end_column ;
+	} 
 private:
 
 	vector<char> moveChars = {'\0','\0','\0','\0'}; // for splitting the movement chars
