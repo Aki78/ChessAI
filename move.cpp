@@ -8,7 +8,7 @@ Move::Move(int start_row, int start_column, int end_row, int end_column) : _star
 Move::Move(const string& str){
 
 	set_move(str);
-	move_string = str;
+//	move_string = str;
     	Move move(moveNums[0], moveNums[1], moveNums[2], moveNums[3]);
 //	print_move();
 		
@@ -46,13 +46,55 @@ void Move::set_move(const string& str) {
 
 }
 
-//void Move::print_move() {
-//	for (char c : moveChars) {
-//		cout << c << " " ;
-//	}
-//	cout << endl;
-//	for (int i : moveNums) {
-//		cout << i << " " ;
-//	}
-//}
+void Move::print_move() {
+	string print_string = "";
+	switch(_start_column){
+		case 0: print_string +="a"; break;
+		case 1: print_string +="b"; break;
+		case 2: print_string +="c"; break;
+		case 3: print_string +="d"; break;
+		case 4: print_string +="e"; break;
+		case 5: print_string +="f"; break;
+		case 6: print_string +="g"; break;
+		case 7: print_string +="h"; break;
+		case 8: print_string +="i"; break;
+		default: cout << "not a chess int" << endl;
+	}
+	switch(_start_row){
+		case 0: print_string +="0"; break;
+		case 1: print_string +="1"; break;
+		case 2: print_string +="2"; break;
+		case 3: print_string +="3"; break;
+		case 4: print_string +="4"; break;
+		case 5: print_string +="5"; break;
+		case 6: print_string +="6"; break;
+		case 7: print_string +="7"; break;
+		case 8: print_string +="8"; break;
+		default: cout << "not a chess int" << endl;
+	}
+	switch(_end_column){
+		case 0: print_string +="a"; break;
+		case 1: print_string +="b"; break;
+		case 2: print_string +="c"; break;
+		case 3: print_string +="d"; break;
+		case 4: print_string +="e"; break;
+		case 5: print_string +="f"; break;
+		case 6: print_string +="g"; break;
+		case 7: print_string +="h"; break;
+		case 8: print_string +="i"; break;
+		default: cout << "not a chess int" << endl;
+	}
+	switch(_end_row){
+		case 0: print_string +="0"; break;
+		case 1: print_string +="1"; break;
+		case 2: print_string +="2"; break;
+		case 3: print_string +="3"; break;
+		case 4: print_string +="4"; break;
+		case 5: print_string +="5"; break;
+		case 6: print_string +="6"; break;
+		case 7: print_string +="7"; break;
+		case 8: print_string +="8"; break;
+		default: cout << "not a chess int" << endl;
+	}
+}
 

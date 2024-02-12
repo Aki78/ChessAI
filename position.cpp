@@ -50,7 +50,7 @@ void Position::generate_all_raw_moves(int player, vector<Move>& moves) {
 }
 
 bool can_turn_into_queen(int piece, int destination_row) {
-	return piece == wP && destination_row == 0 || piece == bP && destination_row == 7;
+	return (piece == wP && destination_row == 0) || (piece == bP && destination_row == 7);
 }
 
 void switch_to_queen(int& piece){
@@ -67,7 +67,7 @@ void Position::make_move(const Move& m) {
 
 	_board[m._start_row][m._start_column] = NA; // Clear the starting square
 
-	int player = piece_color(piece);
+//	int player = piece_color(piece);
 	if (can_turn_into_queen(piece, m._end_row)) switch_to_queen(piece);	
 
 	_board[m._end_row][m._end_column] = piece; // Place the original piece in the destination square
@@ -76,6 +76,7 @@ void Position::make_move(const Move& m) {
 }
 
 bool Position::check_and_push_move(int row, int column, int row_current, int column_current, int player, vector<Move>& moves){ // woudl this logic really work?
+//	moves.push_back(Move(1,2,3,4));
 
 	if (row_current < 0 || row_current > 7 || column_current < 0 || column_current > 7) return true; // Off the board?
 	if (_board[row_current][column_current] == NA){ // Empty square?
@@ -310,7 +311,7 @@ void Position::give_nite_or_king_raw_moves(char type, int row, int column, int p
 
 		case 'K':
 				possible_moves = {{0,1},{1,1},{1,0},{1,-1},{0,-1},{-1,-1},{-1,0},{-1,1}};
-//			break;
+			break;
 //		case 'Q':
 //				possible_moves = {{0,-4},{0,-3},{0,-2},{0,-1},{0,1},{0,2},{0,3},{0,4},
 //						 {-4,0},{-3,0},{-2,0},{-1,0},{1,0},{2,0},{3,0},{4,0},
@@ -358,6 +359,7 @@ vector<int> Position::get_chess_piece(int chess_piece) const {
 			}
 		}
 	}
+
 }
 
 

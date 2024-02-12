@@ -14,6 +14,7 @@ int main()
         vector<Move> moves;
         position.generate_all_raw_moves(position._turn, moves);
 	string input_move_string;
+	moves[0].print_move();
 
 	Move new_move(input_move_string);
 
