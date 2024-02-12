@@ -23,28 +23,31 @@ void Position::generate_all_raw_moves(int player, vector<Move>& moves) {
 						if (piece == NA) continue;
 
 						// Opponent's piece?
-						if (piece_color(player) != player) continue;
+						if (piece_color(piece) != player) continue;
 
 						// Get raw moves for the piece.
 						switch (piece){
-						case wR: case bR:
+						case wR:
 								give_rook_raw_moves(row, col, player, moves);
 								break;
-						case wQ: case bQ:
-								give_queen_raw_moves(row, col, player, moves);
+						case bR:
+								give_rook_raw_moves(row, col, player, moves);
 								break;
-						case wN: case bN:
-								give_nite_or_king_raw_moves('N', row, col, player, moves);
-								break;
-						case wB: case bB:
-								give_bish_raw_moves(row, col, player, moves);
-								break;
-						case wK: case bK:
-								give_nite_or_king_raw_moves('K', row, col, player, moves);
-								break;
-						case wP: case bP:
-//								check_pawn_and_push_move(row, col, player, moves);
-								break;
+//						case wQ: case bQ:
+//								give_queen_raw_moves(row, col, player, moves);
+//								break;
+//						case wN: case bN:
+//								give_nite_or_king_raw_moves('N', row, col, player, moves);
+//								break;
+//						case wB: case bB:
+//								give_bish_raw_moves(row, col, player, moves);
+//								break;
+//						case wK: case bK:
+//								give_nite_or_king_raw_moves('K', row, col, player, moves);
+//								break;
+//						case wP: case bP:
+////								check_pawn_and_push_move(row, col, player, moves);
+//								break;
 						}
 				}
 }
@@ -77,14 +80,15 @@ void Position::make_move(const Move& m) {
 
 bool Position::check_and_push_move(int row, int column, int row_current, int column_current, int player, vector<Move>& moves){ // woudl this logic really work?
 //	moves.push_back(Move(1,2,3,4));
-
+// moving!
 	if (row_current < 0 || row_current > 7 || column_current < 0 || column_current > 7) return true; // Off the board?
 	if (_board[row_current][column_current] == NA){ // Empty square?
+		cout << "THERE WAS A NAM!!!" << endl;
 		moves.push_back(Move(row, column, row_current, column_current));
 		return false; // false in thise case meens success and continue
 	}
-	if (piece_color(_board[row_current][column_current]) == player) return true; // Encounter own piece?
-	
+	if (piece_color(_board[row_current][column_current]) == player){ cout << "There was own piece" << endl; return true;} // Encounter own piece?
+	cout << "player is: " <<  player << endl;	
 	moves.push_back(Move(row, column, row_current, column_current)); // Capture opponent's piece.
 	return true;
 
