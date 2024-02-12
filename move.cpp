@@ -8,6 +8,7 @@ Move::Move(int start_row, int start_column, int end_row, int end_column) : _star
 Move::Move(const string& str){
 
 	set_move(str);
+	move_string = str;
     	Move move(moveNums[0], moveNums[1], moveNums[2], moveNums[3]);
 //	print_move();
 		
@@ -30,6 +31,7 @@ int Move::num_to_int(char c) {
 		return -1; // Returns -1 or any other sentinel value to indicate an invalid input.
 	}
 }
+
 
 void Move::set_move(const string& str) {
 	moveChars[0] = str[0];

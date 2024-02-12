@@ -15,14 +15,14 @@ public:
 
 	int _end_row; // ending row of the move
 	int _end_column; // ending column of the move
+	string move_string;
+
+
 	Move(int start_row, int start_column, int end_row, int end_column) ;
 
-	// HOMEWORK
-	// Create a constructor that initializes a move object
-	// from a given string, e.g., "e2e4" or "g8f6".
 	Move(const string& str);
 	bool operator==(const Move& other) const {
-		return _start_row==other._start_row & _start_column==other._start_column &  _end_row==other._end_row &  _end_column==other._end_column ;
+		return _start_row==other._start_row && _start_column==other._start_column &&  _end_row==other._end_row &&  _end_column==other._end_column ;
 	} 
 private:
 
@@ -33,6 +33,7 @@ private:
 
 	int char_to_int(char c); 
 	int num_to_int(char c); 
+	string get_string();
 
 	void set_move(const string& str); 
 	void print_move(); 

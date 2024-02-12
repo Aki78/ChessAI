@@ -21,7 +21,7 @@ int main()
                 position.print();
 		cout << "Input your move: ";
 		cin >> input_move_string;
-		bool possible_move= true;
+//		bool possible_move= true;
 
 		if (!count(moves.begin(),moves.end(), new_move)) continue;
 //		while (possible_move) {
