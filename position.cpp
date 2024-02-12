@@ -27,12 +27,12 @@ void Position::generate_all_raw_moves(int player, vector<Move>& moves) {
 
 						// Get raw moves for the piece.
 						switch (piece){
-						case wR:
-								give_rook_raw_moves(row, col, player, moves);
-								break;
-						case bR:
-								give_rook_raw_moves(row, col, player, moves);
-								break;
+//						case wR:
+//								give_rook_raw_moves(row, col, player, moves);
+//								break;
+//						case bR:
+//								give_rook_raw_moves(row, col, player, moves);
+//								break;
 //						case wQ: case bQ:
 //								give_queen_raw_moves(row, col, player, moves);
 //								break;
@@ -42,9 +42,9 @@ void Position::generate_all_raw_moves(int player, vector<Move>& moves) {
 //						case wB: case bB:
 //								give_bish_raw_moves(row, col, player, moves);
 //								break;
-//						case wK: case bK:
-//								give_nite_or_king_raw_moves('K', row, col, player, moves);
-//								break;
+						case wK: case bK:
+								give_nite_or_king_raw_moves('K', row, col, player, moves);
+								break;
 //						case wP: case bP:
 ////								check_pawn_and_push_move(row, col, player, moves);
 //								break;

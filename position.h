@@ -37,7 +37,7 @@ private:
 		{ bR, bN, bB, bQ, bK, bB, bN, bR },
 		{ bP, bP, bP, bP, bP, bP, bP, bP },
 		{ NA, NA, NA, NA, NA, NA, NA, NA },
-		{ NA, NA, NA, NA, NA, NA, NA, NA },
+		{ NA, NA, NA, wK, NA, NA, NA, NA },
 		{ NA, NA, NA, NA, NA, NA, NA, NA },
 		{ NA, NA, NA, NA, NA, NA, NA, NA },
 		{ wP, wP, wP, wP, wP, wP, wP, wP },

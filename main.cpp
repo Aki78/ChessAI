@@ -6,8 +6,7 @@
 #include "move.h"
 using namespace std;
 
-int main()
-{
+int main(){
         // Initial position.
         Position position;
 
