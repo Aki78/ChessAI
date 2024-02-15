@@ -18,11 +18,9 @@ public:
 	vector<Move> generate_legal_moves() ;
 	bool is_king_threatened(vector<int> pos, int enemy);
 	vector<int> get_chess_piece(int chess_piece) const ;
-	bool check_pawn_and_push_move(vector<int> move,int row, int column, int row_current, int column_current, int player, vector<Move>& moves);
+	void check_pawn_and_push_move(int row, int column,  int player, vector<Move>& moves);
 
 	int _turn = WHITE;
-
-
 
 
 private:
@@ -35,16 +33,18 @@ private:
 	//
 	int _board[8][8] = {
 		{ bR, bN, bB, bQ, NA, bB, bN, bR },
-		{ bP, bP, bP, bP, bP, bP, bP, bP },
+		{ bP, NA, bP, bP, bP, bP, bP, bP },
 		{ NA, NA, NA, NA, NA, NA, NA, NA },
 		{ NA, NA, NA, wK, NA, bK, NA, NA },
 		{ NA, NA, NA, NA, NA, NA, NA, NA },
-		{ NA, NA, NA, NA, NA, NA, NA, NA },
+		{ NA, bP, NA, NA, NA, NA, NA, NA },
 		{ wP, wP, wP, wP, wP, wP, wP, wP },
 		{ wR, wN, wB, wQ, NA, wB, wN, wR }
 	};
 
 	void switch_turns();
+	bool is_enemy_of_white(int);
+	bool is_enemy_of_black(int);
 
 };
 

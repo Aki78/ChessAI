@@ -45,10 +45,9 @@ void Position::generate_all_raw_moves(int player, vector<Move>& moves) {
 						case wK: case bK:
 								give_nite_or_king_raw_moves('K', row, col, player, moves);
 								break;
-//						case wP: case bP:
-//								give_nite_or_king_raw_moves('K', row, col, player, moves);
-//								check_pawn_and_push_move(row, col, player, moves);
-//								break;
+						case wP: case bP:
+								check_pawn_and_push_move(row, col, player, moves);
+								break;
 						}
 				}
 }
@@ -94,39 +93,66 @@ bool Position::check_and_push_move(int row, int column, int row_current, int col
 
 }
 
-//bool Position::check_pawn_and_push_move(int row, int column, int row_current, int column_current, int player, vector<Move>& moves){ // woudl this logic really work?
-//// add promotion, en passande,  taking pieces
-//
-//	if (_turn == WHITE){
-/////???
-//	}
-//	if (row_current < 0 || row_current > 7 || column_current < 0 || column_current > 7) return true; // Off the board? // OK
-//
-//	if (_board[row_current][column_current] == NA){ // Empty square? OK
-//		moves.push_back(Move(row, column, row_current, column_current));
-//		return false; // false in thise case meens success and continue
-//	}
-//
-//
-//	if (piece_color(_board[row_current][column_current]) == player) return true; // Encounter own piece? OK
-//
-//
-//	if (piece_color(_board[row_current][column_current]) != player and (move[0]==0 and (move[1]==1 || move[1] ==-1) )) return true; // Enemy piece infront?
-//
-//	if (_board[row][column] == NA){ // Empty square?
-//		moves.push_back(Move(row, column, row_current, column_current));
-//		return false; // false in thise case meens success and continue
-//	}
-//	
-//	if (piece_color(_board[row_current][column_current]) != player and (move[0]==1 || move[0]== -1) and (move[1]==1 || move[1] ==-1) )  {
-//		moves.push_back(Move(row, column, row_current, column_current)); // Capture opponent's piece.
-//		return false;
-//	}
-//
-//
-//	return true;
-//
-//}
+bool Position::is_enemy_of_white(int p) {
+	if(p == bR  || p == bN || p == bB || p == bQ || p == bK || p == bP) return true;
+	else return false;
+}	
+
+bool Position::is_enemy_of_black(int p) {
+	if(p == wR  || p == wN || p == wB || p == wQ || p == wK || p == wP) return true;
+	else return false;
+}	
+
+void Position::check_pawn_and_push_move(int row, int column, int player, vector<Move>& moves){ // woudl this logic really work?
+// add promotion, en passande,  taking pieces
+	int current_row = row;
+	int current_column = column;
+
+//	if (row_current < 0 || row_current > 7) return true; // Off the board? // OK
+	if (_turn==WHITE){
+		current_row--; // could be opposite
+		if (_board[current_row][current_column] == NA){ // Empty square? OK
+			moves.push_back(Move(row, column, current_row, current_column));
+			if(current_row==5){
+				current_row--;	// another step if it is at starting point
+				if (_board[current_row][current_column] == NA){ // Empty square? OK
+					moves.push_back(Move(row, column, current_row, current_column));
+				}
+			}
+		}
+		current_row = row; // resetting position
+
+		if (is_enemy_of_white(_board[current_row-1][current_column-1])){ 
+			moves.push_back(Move(row, column, current_row-1, current_column-1));
+		}
+		if (is_enemy_of_white(_board[current_row-1][current_column+1])){ 
+			moves.push_back(Move(row, column, current_row-1, current_column+1));
+		}
+
+	}
+	if (_turn==BLACK){
+		current_row++; // could be opposite
+		if (_board[current_row][current_column] == NA){ // Empty square? OK
+			moves.push_back(Move(row, column, current_row, current_column));
+			if(current_row==2){
+				current_row++;	// another step if it is at starting point
+				if (_board[current_row][current_column] == NA){ // Empty square? OK
+					moves.push_back(Move(row, column, current_row, current_column));
+				}
+			}
+		}
+		current_row = row; // resetting position
+
+		if (is_enemy_of_black(_board[current_row+1][current_column-1])){ 
+			moves.push_back(Move(row, column, current_row+1, current_column-1));
+		}
+		if (is_enemy_of_black(_board[current_row+1][current_column+1])){ 
+			moves.push_back(Move(row, column, current_row+1, current_column+1));
+		}
+	}
+
+
+}
 
 // Generate rook's raw moves
 void Position::give_rook_raw_moves(int row, int column, int player, vector<Move>& moves) {
