@@ -10,15 +10,15 @@ using namespace std;
 int main(){
         // Initial position.
         Position position;
+	vector<Move> moves;
+	moves = position.generate_legal_moves();
 
-        vector<Move> moves;
-        position.generate_all_raw_moves(position._turn, moves);
-	string input_move_string;
-	for(auto m: moves) m.print_move();
-
-	cout << "Printing out all moves: " << endl;
 
         while (!moves.empty()){
+		string input_move_string;
+		cout << "Printing out all moves: " << endl;
+		for(auto m: moves) m.print_move();
+
                 position.print();
 		cout << "Input your move: ";
 		cin >> input_move_string;
@@ -26,16 +26,7 @@ int main(){
 		Move new_move(input_move_string);
 
 		if (!count(moves.begin(),moves.end(), new_move)) continue; // checking if moves exist
-//		while (possible_move) {
-//			for (auto& m: moves)
-//				if(m.get_moves() == input_move_string) {
-//					possible_move = false;
-//					break;		
-//				}
-//			if (possible_move) { // NO MORE MOVES!!!
-//				cout << "Not a possible move. " << endl;
-//			}
-//		}
+
 		position.make_move(new_move);
 		moves.clear();
 		moves = position.generate_legal_moves();

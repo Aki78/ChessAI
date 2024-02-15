@@ -16,7 +16,7 @@ public:
 	void give_queen_raw_moves(int row, int column, int player, vector<Move>& moves);
 	void generate_all_raw_moves(int player, vector<Move>& moves);
 	vector<Move> generate_legal_moves() ;
-	bool is_square_threatened(vector<int> pos, int enemy);
+	bool is_king_threatened(vector<int> pos, int enemy);
 	vector<int> get_chess_piece(int chess_piece) const ;
 	bool check_pawn_and_push_move(vector<int> move,int row, int column, int row_current, int column_current, int player, vector<Move>& moves);
 
@@ -34,14 +34,14 @@ private:
 	// [7][7] : bottom right corner ("h1")
 	//
 	int _board[8][8] = {
-		{ bR, bN, bB, bQ, bK, bB, bN, bR },
+		{ bR, bN, bB, bQ, NA, bB, bN, bR },
 		{ bP, bP, bP, bP, bP, bP, bP, bP },
 		{ NA, NA, NA, NA, NA, NA, NA, NA },
 		{ NA, NA, NA, wK, NA, bK, NA, NA },
 		{ NA, NA, NA, NA, NA, NA, NA, NA },
 		{ NA, NA, NA, NA, NA, NA, NA, NA },
 		{ wP, wP, wP, wP, wP, wP, wP, wP },
-		{ wR, wN, wB, wQ, wK, wB, wN, wR }
+		{ wR, wN, wB, wQ, NA, wB, wN, wR }
 	};
 
 	void switch_turns();

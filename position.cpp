@@ -27,26 +27,27 @@ void Position::generate_all_raw_moves(int player, vector<Move>& moves) {
 
 						// Get raw moves for the piece.
 						switch (piece){
-//						case wR:
-//								give_rook_raw_moves(row, col, player, moves);
-//								break;
-//						case bR:
-//								give_rook_raw_moves(row, col, player, moves);
-//								break;
-//						case wQ: case bQ:
-//								give_queen_raw_moves(row, col, player, moves);
-//								break;
-//						case wN: case bN:
-//								give_nite_or_king_raw_moves('N', row, col, player, moves);
-//								break;
-//						case wB: case bB:
-//								give_bish_raw_moves(row, col, player, moves);
-//								break;
+						case wR:
+								give_rook_raw_moves(row, col, player, moves);
+								break;
+						case bR:
+								give_rook_raw_moves(row, col, player, moves);
+								break;
+						case wQ: case bQ:
+								give_queen_raw_moves(row, col, player, moves);
+								break;
+						case wN: case bN:
+								give_nite_or_king_raw_moves('N', row, col, player, moves);
+								break;
+						case wB: case bB:
+								give_bish_raw_moves(row, col, player, moves);
+								break;
 						case wK: case bK:
 								give_nite_or_king_raw_moves('K', row, col, player, moves);
 								break;
 //						case wP: case bP:
-////								check_pawn_and_push_move(row, col, player, moves);
+//								give_nite_or_king_raw_moves('K', row, col, player, moves);
+//								check_pawn_and_push_move(row, col, player, moves);
 //								break;
 						}
 				}
@@ -65,7 +66,7 @@ void switch_to_queen(int& piece){
 
 // Execute a move (updating the board)
 void Position::make_move(const Move& m) {
-	cout << "New move is: " << m._start_row << " " << m._start_column << " " <<m._end_row << " "  <<m._end_column << endl;
+//	cout << "New move is: " << m._start_row << " " << m._start_column << " " <<m._end_row << " "  <<m._end_column << endl;
 	
 	int piece = _board[m._start_row][m._start_column]; // Store the piece in the starting square.
 
@@ -366,25 +367,29 @@ vector<int> Position::get_chess_piece(int chess_piece) const {
 }
 
 
-bool Position::is_square_threatened(vector<int> pos, int enemy) {
+bool Position::is_king_threatened(vector<int> pos, int enemy) {
 	vector<Move> all_raw_moves; 
 	generate_all_raw_moves(enemy, all_raw_moves);
-	for (Move& move: all_raw_moves) 
-		if (move._end_row == pos[0] && move._end_column == pos[1])
+	for (Move& move: all_raw_moves) {
+		move.print_move();
+			cout <<  pos[0] << " " << pos[1] << endl;
+		if (move._end_row == pos[0] && move._end_column == pos[1]){
+			cout << "HIT: " << pos[0] << " " << pos[1] << endl;
 			return true;
+		}
+	}		
 	return false;
 }
 
 
 vector<Move> Position::generate_legal_moves() {
+
 	int my_king = bK;
 	int enemy = WHITE;
-
-	if(_turn == WHITE) my_king = wK;
-
 	int player = _turn;
 
-	if(_turn == WHITE) enemy = BLACK;
+	if(player == WHITE) my_king = wK;
+	if(player == WHITE) enemy = BLACK;
 
 	vector<Move> raw_moves;
 
@@ -397,8 +402,8 @@ vector<Move> Position::generate_legal_moves() {
 
 		test_pos.make_move(m);
 
-		vector<int> piece_pos =  test_pos.get_chess_piece(my_king);
-		if (!test_pos.is_square_threatened(piece_pos, enemy)) 
+		vector<int> king_piece_pos =  test_pos.get_chess_piece(my_king);
+		if (!test_pos.is_king_threatened(king_piece_pos, enemy)) 
 			legal_moves.push_back(m);
 	}
 
