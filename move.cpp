@@ -9,7 +9,7 @@ Move::Move(const string& str){
 
 	set_move(str);
 //	move_string = str;
-    	Move move(moveNums[0], moveNums[1], moveNums[2], moveNums[3]);
+//    	Move move(moveNums[0], moveNums[1], moveNums[2], moveNums[3]);
 //	print_move();
 		
 }
@@ -43,6 +43,11 @@ void Move::set_move(const string& str) {
     	moveNums[1] = char_to_int(moveChars[0]);
     	moveNums[2] = 8 -  num_to_int(moveChars[3]);
     	moveNums[3] = char_to_int(moveChars[2]);
+
+	_start_row = moveNums[0];
+	_start_column = moveNums[1]; 
+	_end_row = moveNums[2]; 
+	_end_column = moveNums[3]; 
 
 
 //    	moveNums[0] = num_to_int(moveChars[0]);

@@ -65,6 +65,7 @@ void switch_to_queen(int& piece){
 
 // Execute a move (updating the board)
 void Position::make_move(const Move& m) {
+	cout << "New move is: " << m._start_row << " " << m._start_column << " " <<m._end_row << " "  <<m._end_column << endl;
 	
 	int piece = _board[m._start_row][m._start_column]; // Store the piece in the starting square.
 
@@ -83,12 +84,10 @@ bool Position::check_and_push_move(int row, int column, int row_current, int col
 // moving!
 	if (row_current < 0 || row_current > 7 || column_current < 0 || column_current > 7) return true; // Off the board?
 	if (_board[row_current][column_current] == NA){ // Empty square?
-		cout << "THERE WAS A NAM!!!" << endl;
 		moves.push_back(Move(row, column, row_current, column_current));
 		return false; // false in thise case meens success and continue
 	}
-	if (piece_color(_board[row_current][column_current]) == player){ cout << "There was own piece" << endl; return true;} // Encounter own piece?
-	cout << "player is: " <<  player << endl;	
+	if (piece_color(_board[row_current][column_current]) == player){ return true;} // Encounter own piece?
 	moves.push_back(Move(row, column, row_current, column_current)); // Capture opponent's piece.
 	return true;
 
@@ -422,7 +421,7 @@ void Position::print() const {
 		cout << to_string(8 - row) + "   " + row_str + " |\n";
 	}
 	cout << "     +---+---+---+---+---+---+---+---+\n";
-	cout << "\n	   A   B   C   D   E   F   G   H\n";
+	cout << "       A   B   C   D   E   F   G   H\n";
 }
 
 void Position::switch_turns(){

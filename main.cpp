@@ -4,6 +4,7 @@
 #include <algorithm>
 #include "position.h"
 #include "move.h"
+
 using namespace std;
 
 int main(){
@@ -16,15 +17,15 @@ int main(){
 	for(auto m: moves) m.print_move();
 
 	cout << "Printing out all moves: " << endl;
-	Move new_move(input_move_string);
 
         while (!moves.empty()){
                 position.print();
 		cout << "Input your move: ";
 		cin >> input_move_string;
 //		bool possible_move= true;
+		Move new_move(input_move_string);
 
-		if (!count(moves.begin(),moves.end(), new_move)) continue;
+		if (!count(moves.begin(),moves.end(), new_move)) continue; // checking if moves exist
 //		while (possible_move) {
 //			for (auto& m: moves)
 //				if(m.get_moves() == input_move_string) {
