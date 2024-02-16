@@ -12,6 +12,16 @@ void Position::clear() {
 			_board[row][column] = NA;
 }
 
+void Position::set_cowerdice(int row, int column) {
+	cowerdice_coord[0] = row;
+	cowerdice_coord[1] = column;
+}
+
+void Position::unset_cowerdice() {
+	cowerdice_coord[0] = -100;
+	cowerdice_coord[1] = -100;
+}
+
 
 
 void Position::generate_all_raw_moves(int player, vector<Move>& moves) {
@@ -27,10 +37,7 @@ void Position::generate_all_raw_moves(int player, vector<Move>& moves) {
 
 						// Get raw moves for the piece.
 						switch (piece){
-						case wR:
-								give_rook_raw_moves(row, col, player, moves);
-								break;
-						case bR:
+						case wR: case bR:
 								give_rook_raw_moves(row, col, player, moves);
 								break;
 						case wQ: case bQ:
@@ -68,13 +75,19 @@ void Position::make_move(const Move& m) {
 //	cout << "New move is: " << m._start_row << " " << m._start_column << " " <<m._end_row << " "  <<m._end_column << endl;
 	
 	int piece = _board[m._start_row][m._start_column]; // Store the piece in the starting square.
-
 	_board[m._start_row][m._start_column] = NA; // Clear the starting square
 
 //	int player = piece_color(piece);
 	if (can_turn_into_queen(piece, m._end_row)) switch_to_queen(piece);	
 
 	_board[m._end_row][m._end_column] = piece; // Place the original piece in the destination square
+
+	if((piece == wP || piece == bP) && abs(m._end_row - m._start_row) == 2){ //set en passantable piece
+		set_cowerdice(m._end_row, m._end_column);
+	}
+	if((piece == wP || piece == bP) && m._start_row == cowerdice_coord[0] && m._start_column + 1 == cowerdice_coord[1] ){ //set en passantable piece
+		// Unfinished 
+	}
 
 	switch_turns();
 }
@@ -103,6 +116,14 @@ bool Position::is_enemy_of_black(int p) {
 	else return false;
 }	
 
+
+//int Position::piece_color(int p) {
+//	if(p == wR  || p == wN || p == wB || p == wQ || p == wK || p == wP) return WHITE;
+//	else if(p == bR  || p == bN || p == bB || p == bQ || p == bK || p == bP) return BLACK;
+//	
+//	return -999; // Not white nor black
+//}	
+
 void Position::check_pawn_and_push_move(int row, int column, int player, vector<Move>& moves){ // woudl this logic really work?
 // add promotion, en passande,  taking pieces
 	int current_row = row;
@@ -110,18 +131,31 @@ void Position::check_pawn_and_push_move(int row, int column, int player, vector<
 
 //	if (row_current < 0 || row_current > 7) return true; // Off the board? // OK
 	if (_turn==WHITE){
-		current_row--; // could be opposite
+
+		int enpassantable_column = current_column + 1; 	
+		if(_board[current_row][enpassantable_column] == bP && cowerdice_coord[0] == current_row && cowerdice_coord[1] == enpassantable_column){
+			moves.push_back(Move(row, column, row - 1, enpassantable_column));}
+
+		enpassantable_column = current_column - 1; 	
+		if(_board[current_row][enpassantable_column] == bP && cowerdice_coord[0] == current_row && cowerdice_coord[1] == enpassantable_column){
+			moves.push_back(Move(row, column, row - 1, enpassantable_column));}
+
+
+
+		current_row--; 
 		if (_board[current_row][current_column] == NA){ // Empty square? OK
 			moves.push_back(Move(row, column, current_row, current_column));
 			if(current_row==5){
 				current_row--;	// another step if it is at starting point
 				if (_board[current_row][current_column] == NA){ // Empty square? OK
+//					set_cowerdice(current_row, current_column);
 					moves.push_back(Move(row, column, current_row, current_column));
 				}
 			}
 		}
 		current_row = row; // resetting position
 
+		// if enemy on sides
 		if (is_enemy_of_white(_board[current_row-1][current_column-1])){ 
 			moves.push_back(Move(row, column, current_row-1, current_column-1));
 		}
@@ -130,19 +164,33 @@ void Position::check_pawn_and_push_move(int row, int column, int player, vector<
 		}
 
 	}
-	if (_turn==BLACK){
+	else if (_turn==BLACK){
+		int enpassantable_column = current_column + 1; 	
+		if(_board[current_row][enpassantable_column] == wP && cowerdice_coord[0] == current_row && cowerdice_coord[1] == enpassantable_column){
+			moves.push_back(Move(row, column, row + 1, enpassantable_column));}
+
+		enpassantable_column = current_column - 1; 	
+		if(_board[current_row][enpassantable_column] == wP && cowerdice_coord[0] == current_row && cowerdice_coord[1] == enpassantable_column){
+			moves.push_back(Move(row, column, row + 1, enpassantable_column));}
+
+
+
+
+
 		current_row++; // could be opposite
 		if (_board[current_row][current_column] == NA){ // Empty square? OK
 			moves.push_back(Move(row, column, current_row, current_column));
 			if(current_row==2){
 				current_row++;	// another step if it is at starting point
 				if (_board[current_row][current_column] == NA){ // Empty square? OK
+//					set_cowerdice(current_row, current_column);
 					moves.push_back(Move(row, column, current_row, current_column));
 				}
 			}
 		}
 		current_row = row; // resetting position
 
+		// if enemy on sides
 		if (is_enemy_of_black(_board[current_row+1][current_column-1])){ 
 			moves.push_back(Move(row, column, current_row+1, current_column-1));
 		}
@@ -150,7 +198,6 @@ void Position::check_pawn_and_push_move(int row, int column, int player, vector<
 			moves.push_back(Move(row, column, current_row+1, current_column+1));
 		}
 	}
-
 
 }
 
@@ -398,7 +445,7 @@ bool Position::is_king_threatened(vector<int> pos, int enemy) {
 	generate_all_raw_moves(enemy, all_raw_moves);
 	for (Move& move: all_raw_moves) {
 		move.print_move();
-			cout <<  pos[0] << " " << pos[1] << endl;
+//			cout <<  pos[0] << " " << pos[1] << endl;
 		if (move._end_row == pos[0] && move._end_column == pos[1]){
 			cout << "HIT: " << pos[0] << " " << pos[1] << endl;
 			return true;

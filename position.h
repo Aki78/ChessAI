@@ -19,6 +19,8 @@ public:
 	bool is_king_threatened(vector<int> pos, int enemy);
 	vector<int> get_chess_piece(int chess_piece) const ;
 	void check_pawn_and_push_move(int row, int column,  int player, vector<Move>& moves);
+	void set_cowerdice(int i, int j);
+	void unset_cowerdice();
 
 	int _turn = WHITE;
 
@@ -32,19 +34,31 @@ private:
 	// [7][7] : bottom right corner ("h1")
 	//
 	int _board[8][8] = {
-		{ bR, bN, bB, bQ, NA, bB, bN, bR },
-		{ bP, NA, bP, bP, bP, bP, bP, bP },
 		{ NA, NA, NA, NA, NA, NA, NA, NA },
-		{ NA, NA, NA, wK, NA, bK, NA, NA },
+		{ bP, NA, NA, NA, NA, NA, NA, NA },
 		{ NA, NA, NA, NA, NA, NA, NA, NA },
-		{ NA, bP, NA, NA, NA, NA, NA, NA },
-		{ wP, wP, wP, wP, wP, wP, wP, wP },
-		{ wR, wN, wB, wQ, NA, wB, wN, wR }
+		{ NA, NA, NA, NA, NA, NA, NA, NA },
+		{ bP, NA, NA, NA, NA, NA, NA, NA },
+		{ NA, NA, NA, NA, NA, NA, NA, NA },
+		{ NA, wP, bP, NA, NA, NA, NA, NA },
+		{ NA, NA, NA, NA, NA, NA, NA, NA }
 	};
+
+//	int _board[8][8] = {
+//		{ bR, bN, bB, bQ, NA, bB, bN, bR },
+//		{ bP, bP, bP, bP, bP, bP, bP, bP },
+//		{ NA, NA, NA, NA, NA, NA, NA, NA },
+//		{ NA, NA, NA, NA, NA, NA, NA, NA },
+//		{ NA, NA, bP, NA, NA, NA, NA, NA },
+//		{ NA, NA, NA, NA, NA, NA, NA, NA },
+//		{ wP, wP, wP, wP, wP, wP, wP, wP },
+//		{ wR, wN, wB, wQ, NA, wB, wN, wR }
+//	};
 
 	void switch_turns();
 	bool is_enemy_of_white(int);
 	bool is_enemy_of_black(int);
+	vector<int> cowerdice_coord = {-100,-100}; // set this (i,j) when en passant is possible where the pawn is, otherwise, reset it to a big negative number;
 
 };
 
