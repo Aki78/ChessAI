@@ -49,8 +49,8 @@ private:
 		{ bR, NA, NA, NA, bK, NA, NA, bR },
 		{ NA, NA, NA, NA, NA, NA, NA, NA },
 		{ NA, NA, NA, NA, NA, NA, NA, NA },
-		{ NA, wP, NA, NA, NA, NA, NA, NA },
-		{ NA, NA, bP, NA, NA, NA, NA, NA },
+		{ NA, wP, NA, NA, wQ, NA, NA, NA },
+		{ NA, NA, bP, NA, bQ, NA, NA, NA },
 		{ NA, NA, NA, NA, NA, NA, NA, NA },
 		{ NA, NA, NA, NA, NA, NA, NA, NA },
 		{ wR, NA, NA, NA, wK, NA, NA, wR }
@@ -70,6 +70,8 @@ private:
 	void switch_turns();
 	bool is_enemy_of_white(int);
 	bool is_enemy_of_black(int);
+	bool white_is_threatened=false;
+	bool black_is_threatened=false;
 	vector<int> cowerdice_coord = {-100,-100}; // set this (i,j) when en passant is possible where the pawn is, otherwise, reset it to a big negative number;
 
 };

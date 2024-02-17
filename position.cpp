@@ -484,6 +484,13 @@ vector<Move> Position::generate_legal_moves() {
 	int enemy = WHITE;
 	int player = _turn;
 
+	//resetting previous state;
+	if (player == WHITE) 
+		white_is_threatened = false;
+	if (player == BLACK) 
+		black_is_threatened = false;
+
+// make king escape if threatened
 	if(player == WHITE) my_king = wK;
 	if(player == WHITE) enemy = BLACK;
 
@@ -493,28 +500,32 @@ vector<Move> Position::generate_legal_moves() {
 
 	vector<Move> legal_moves;
 
-	for(const Move& m: raw_moves) { // make sure king is free
+	for(const Move& m: raw_moves) { 
 		Position test_pos = *this;
 
 		test_pos.make_move(m);
 
 		vector<int> king_piece_pos =  test_pos.get_chess_piece(my_king);
+		if (player == WHITE && test_pos.is_king_threatened(king_piece_pos, enemy)) 
+			white_is_threatened = true;
+		if (player == BLACK && test_pos.is_king_threatened(king_piece_pos, enemy)) 
+			black_is_threatened = true;
+		
 		if (!test_pos.is_king_threatened(king_piece_pos, enemy)) 
 			legal_moves.push_back(m);
 	}
 
 // adding castling
 	if(player == WHITE){
-//		if(_board[7][0] == wR && _board[7][1] == NA && _board[7][2] == NA && _board[7][3] == NA && _board[7][3] == wK) // make sure king hasn't moved too or is in check
-		if(_board[7][0] == wR && _board[7][1] == NA && _board[7][2] == NA && _board[7][3] == NA && _board[7][4] == wK) // make sure king hasn't moved too or is in check
+		if(_board[7][0] == wR && _board[7][1] == NA && _board[7][2] == NA && _board[7][3] == NA && _board[7][4] == wK && !white_is_threatened) // make sure king hasn't moved too or is in check
 			legal_moves.push_back(Move(-52,-52,-52,-52));
-		if( _board[7][4] == wK && _board[7][5] == NA && _board[7][6] == NA && _board[7][7] == wR) // make sure king hasn't moved too or is in check
+		if( _board[7][4] == wK && _board[7][5] == NA && _board[7][6] == NA && _board[7][7] == wR && !white_is_threatened) // make sure king hasn't moved too or is in check
 			legal_moves.push_back(Move(-53,-53,-53,-53));
 	}
 	else if(player == BLACK){
-		if(_board[0][0] == bR && _board[0][1] == NA && _board[0][2] == NA && _board[0][3] == NA && _board[0][4] == bK) // make sure king hasn't moved too or is in check
+		if(_board[0][0] == bR && _board[0][1] == NA && _board[0][2] == NA && _board[0][3] == NA && _board[0][4] == bK && !black_is_threatened) // make sure king hasn't moved too or is in check
 			legal_moves.push_back(Move(-50,-50,-50,-50));
-		if( _board[0][4] == bK && _board[0][5] == NA && _board[0][6] == NA && _board[0][7] == bR) // make sure king hasn't moved too or is in check
+		if( _board[0][4] == bK && _board[0][5] == NA && _board[0][6] == NA && _board[0][7] == bR && !black_is_threatened) // make sure king hasn't moved too or is in check
 			legal_moves.push_back(Move(-51,-51,-51,-51));
 		
 	}
