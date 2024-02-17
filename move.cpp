@@ -5,20 +5,12 @@ using namespace std;
 // Describes a change in position.
 Move::Move(int start_row, int start_column, int end_row, int end_column) : _start_row(start_row), _start_column(start_column), _end_row(end_row), _end_column(end_column) {}
 
-Move::Move(const string& str){
-
-	set_move(str);
-//	move_string = str;
-//    	Move move(moveNums[0], moveNums[1], moveNums[2], moveNums[3]);
-//	print_move();
-		
-}
+Move::Move(const string& str){set_move(str);}
 
 int Move::char_to_int(char c) {
 
 	if (c >= 'a' && c <= 'h') {
-	return c - 'a';
-
+		return c - 'a';
 	} else {
 		return -1; // Returns -1 or any other sentinel value to indicate an invalid input.
 	}
@@ -33,21 +25,51 @@ int Move::num_to_int(char c) {
 }
 
 
-void Move::set_move(const string& str) {
-	moveChars[0] = str[0];
-   	moveChars[1] = str[1];
-    	moveChars[2] = str[2];
-    	moveChars[3] = str[3];
+int Move::set_move(const string& str) {
 
-   	moveNums[0] = 8 - num_to_int(moveChars[1]);
-    	moveNums[1] = char_to_int(moveChars[0]);
-    	moveNums[2] = 8 -  num_to_int(moveChars[3]);
-    	moveNums[3] = char_to_int(moveChars[2]);
+	if(str == "castle1"){
+		_start_row = -50;
+		_start_column = -50; 
+		_end_row = -50; 
+		_end_column = -50; 
+		return 1;
 
-	_start_row = moveNums[0];
-	_start_column = moveNums[1]; 
-	_end_row = moveNums[2]; 
-	_end_column = moveNums[3]; 
+	}
+	if(str == "castle2"){
+		_start_row = -51;
+		_start_column = -51; 
+		_end_row = -51; 
+		_end_column = -51; 
+
+		return 1;
+	}
+	if(str == "castle3"){
+		_start_row = -52;
+		_start_column = -52; 
+		_end_row = -52; 
+		_end_column = -52; 
+
+		return 1;
+	}
+	if(str == "castle4"){
+		_start_row = -53;
+		_start_column = -53; 
+		_end_row = -53; 
+		_end_column = -53; 
+
+		return 1;
+	}
+
+	moveChars[0] = str[0]; moveChars[1] = str[1]; moveChars[2] = str[2]; moveChars[3] = str[3];
+
+   	moveNums[0] = 8 - num_to_int(moveChars[1]);   moveNums[1] = char_to_int(moveChars[0]);
+	moveNums[2] = 8 -  num_to_int(moveChars[3]);  moveNums[3] = char_to_int(moveChars[2]);
+
+	_start_row = moveNums[0]; _start_column = moveNums[1]; _end_row = moveNums[2]; _end_column = moveNums[3]; 
+
+	return 0;
+
+	
 
 
 //    	moveNums[0] = num_to_int(moveChars[0]);
@@ -70,6 +92,10 @@ void Move::print_move() {
 		case 6: print_string +="g"; break;
 		case 7: print_string +="h"; break;
 		case 8: print_string +="i"; break;
+		case -50: print_string +="castle1"; break; // castle black left
+		case -51: print_string +="castle2"; break; // castle black rirght
+		case -52: print_string +="castle3"; break; // castle white left
+		case -53: print_string +="castle4"; break; // castle white right
 		default: cout << "not a chess int" << endl;
 	}
 	switch(_start_row){
@@ -82,6 +108,10 @@ void Move::print_move() {
 		case 6: print_string +="2"; break;
 		case 7: print_string +="1"; break;
 		case 8: print_string +="0"; break;
+		case -50: print_string +=""; break; // castle black left
+		case -51: print_string +=""; break; // castle black rirght
+		case -52: print_string +=""; break; // castle white left
+		case -53: print_string +=""; break; // castle white right
 		default: cout << "not a chess int" << endl;
 	}
 	switch(_end_column){
@@ -94,6 +124,10 @@ void Move::print_move() {
 		case 6: print_string +="g"; break;
 		case 7: print_string +="h"; break;
 		case 8: print_string +="i"; break;
+		case -50: print_string +=""; break; // castle black left
+		case -51: print_string +=""; break; // castle black rirght
+		case -52: print_string +=""; break; // castle white left
+		case -53: print_string +=""; break; // castle white right
 		default: cout << "not a chess int" << endl;
 	}
 	switch(_end_row){
@@ -106,6 +140,10 @@ void Move::print_move() {
 		case 6: print_string +="2"; break;
 		case 7: print_string +="1"; break;
 		case 8: print_string +="0"; break;
+		case -50: print_string +=""; break; // castle black left
+		case -51: print_string +=""; break; // castle black rirght
+		case -52: print_string +=""; break; // castle white left
+		case -53: print_string +=""; break; // castle white right
 		default: cout << "not a chess int" << endl;
 	}
 

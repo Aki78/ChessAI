@@ -33,15 +33,27 @@ private:
 	// [7][0] : bottom left corner ("a1")
 	// [7][7] : bottom right corner ("h1")
 	//
+//	int _board[8][8] = { // en passant test
+//		{ NA, NA, NA, NA, NA, NA, NA, NA },
+//		{ bP, NA, NA, NA, NA, wP, NA, NA },
+//		{ NA, NA, NA, NA, NA, NA, NA, NA },
+//		{ NA, wP, NA, NA, NA, NA, NA, NA },
+//		{ bP, NA, NA, NA, NA, NA, NA, NA },
+//		{ NA, NA, NA, NA, NA, NA, NA, NA },
+//		{ NA, wP, bP, NA, NA, NA, NA, NA },
+//		{ NA, NA, NA, NA, NA, NA, NA, NA }
+//	};
+
+
 	int _board[8][8] = {
+		{ bR, NA, NA, NA, bK, NA, NA, bR },
 		{ NA, NA, NA, NA, NA, NA, NA, NA },
-		{ bP, NA, NA, NA, NA, wP, NA, NA },
 		{ NA, NA, NA, NA, NA, NA, NA, NA },
 		{ NA, wP, NA, NA, NA, NA, NA, NA },
-		{ bP, NA, NA, NA, NA, NA, NA, NA },
+		{ NA, NA, bP, NA, NA, NA, NA, NA },
 		{ NA, NA, NA, NA, NA, NA, NA, NA },
-		{ NA, wP, bP, NA, NA, NA, NA, NA },
-		{ NA, NA, NA, NA, NA, NA, NA, NA }
+		{ NA, NA, NA, NA, NA, NA, NA, NA },
+		{ wR, NA, NA, NA, wK, NA, NA, wR }
 	};
 
 //	int _board[8][8] = {

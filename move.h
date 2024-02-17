@@ -36,6 +36,6 @@ private:
 	int num_to_int(char c); 
 	string get_string();
 
-	void set_move(const string& str); 
+	int set_move(const string& str); 
 };
 

@@ -86,12 +86,31 @@ void Position::make_move(const Move& m) {
 		set_cowerdice(m._end_row, m._end_column);
 	}
 
+// if en passant move
 	if(piece == bP && m._start_row == cowerdice_coord[0] && ( m._start_column + 1 == cowerdice_coord[1] || m._start_column - 1 == cowerdice_coord[1])) //erase pawn from enpassant
 		if(m._end_row - 1 == cowerdice_coord[0] && m._end_column == cowerdice_coord[1])
 			_board[cowerdice_coord[0]][cowerdice_coord[1]] = NA; //clear cowerdice piece 
 	if(piece == wP && m._start_row == cowerdice_coord[0] && ( m._start_column + 1 == cowerdice_coord[1] || m._start_column - 1 == cowerdice_coord[1])) //erase pawn from enpassant
 		if(m._end_row + 1 == cowerdice_coord[0] && m._end_column == cowerdice_coord[1])
 			_board[cowerdice_coord[0]][cowerdice_coord[1]] = NA; //clear cowerdice piece 
+
+// if castle move
+	if( m._start_row == -50){
+		_board[0][2] = bK; _board[0][3] = bR;
+		_board[0][0] = NA; _board[0][4] = NA;
+	}
+	if( m._start_row == -51){
+		_board[0][5] = bR; _board[0][6] = bK;
+		_board[0][4] = NA; _board[0][7] = NA;
+	}
+	if( m._start_row == -52){
+		_board[7][2] = wK; _board[7][3] = wR;
+		_board[7][0] = NA; _board[7][4] = NA;
+	}
+	if( m._start_row == -53){
+		_board[7][5] = wR; _board[7][6] = wK;
+		_board[7][4] = NA; _board[7][7] = NA;
+	}
 
 	switch_turns();
 }
@@ -448,7 +467,7 @@ bool Position::is_king_threatened(vector<int> pos, int enemy) {
 	vector<Move> all_raw_moves; 
 	generate_all_raw_moves(enemy, all_raw_moves);
 	for (Move& move: all_raw_moves) {
-		move.print_move();
+//		move.print_move();
 //			cout <<  pos[0] << " " << pos[1] << endl;
 		if (move._end_row == pos[0] && move._end_column == pos[1]){
 			cout << "HIT: " << pos[0] << " " << pos[1] << endl;
@@ -474,7 +493,7 @@ vector<Move> Position::generate_legal_moves() {
 
 	vector<Move> legal_moves;
 
-	for(const Move& m: raw_moves) {
+	for(const Move& m: raw_moves) { // make sure king is free
 		Position test_pos = *this;
 
 		test_pos.make_move(m);
@@ -482,6 +501,22 @@ vector<Move> Position::generate_legal_moves() {
 		vector<int> king_piece_pos =  test_pos.get_chess_piece(my_king);
 		if (!test_pos.is_king_threatened(king_piece_pos, enemy)) 
 			legal_moves.push_back(m);
+	}
+
+// adding castling
+	if(player == WHITE){
+//		if(_board[7][0] == wR && _board[7][1] == NA && _board[7][2] == NA && _board[7][3] == NA && _board[7][3] == wK) // make sure king hasn't moved too or is in check
+		if(_board[7][0] == wR && _board[7][1] == NA && _board[7][2] == NA && _board[7][3] == NA && _board[7][4] == wK) // make sure king hasn't moved too or is in check
+			legal_moves.push_back(Move(-52,-52,-52,-52));
+		if( _board[7][4] == wK && _board[7][5] == NA && _board[7][6] == NA && _board[7][7] == wR) // make sure king hasn't moved too or is in check
+			legal_moves.push_back(Move(-53,-53,-53,-53));
+	}
+	else if(player == BLACK){
+		if(_board[0][0] == bR && _board[0][1] == NA && _board[0][2] == NA && _board[0][3] == NA && _board[0][4] == bK) // make sure king hasn't moved too or is in check
+			legal_moves.push_back(Move(-50,-50,-50,-50));
+		if( _board[0][4] == bK && _board[0][5] == NA && _board[0][6] == NA && _board[0][7] == bR) // make sure king hasn't moved too or is in check
+			legal_moves.push_back(Move(-51,-51,-51,-51));
+		
 	}
 
 	return legal_moves;
