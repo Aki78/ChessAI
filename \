@@ -526,7 +526,6 @@ vector<Move> Position::generate_legal_moves() {
 	}
 
 // adding castling
-complete the rook and king move
 	if(player == WHITE){
 		if(_board[7][0] == wR && _board[7][1] == NA && _board[7][2] == NA && _board[7][3] == NA && _board[7][4] == wK && !white_is_threatened) // make sure king hasn't moved too or is in check
 			legal_moves.push_back(Move(-52,-52,-52,-52));
