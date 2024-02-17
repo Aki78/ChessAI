@@ -35,9 +35,9 @@ private:
 	//
 	int _board[8][8] = {
 		{ NA, NA, NA, NA, NA, NA, NA, NA },
-		{ bP, NA, NA, NA, NA, NA, NA, NA },
+		{ bP, NA, NA, NA, NA, wP, NA, NA },
 		{ NA, NA, NA, NA, NA, NA, NA, NA },
-		{ NA, NA, NA, NA, NA, NA, NA, NA },
+		{ NA, wP, NA, NA, NA, NA, NA, NA },
 		{ bP, NA, NA, NA, NA, NA, NA, NA },
 		{ NA, NA, NA, NA, NA, NA, NA, NA },
 		{ NA, wP, bP, NA, NA, NA, NA, NA },

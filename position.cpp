@@ -85,9 +85,13 @@ void Position::make_move(const Move& m) {
 	if((piece == wP || piece == bP) && abs(m._end_row - m._start_row) == 2){ //set en passantable piece
 		set_cowerdice(m._end_row, m._end_column);
 	}
-	if((piece == wP || piece == bP) && m._start_row == cowerdice_coord[0] && m._start_column + 1 == cowerdice_coord[1] ){ //set en passantable piece
-		// Unfinished 
-	}
+
+	if(piece == bP && m._start_row == cowerdice_coord[0] && ( m._start_column + 1 == cowerdice_coord[1] || m._start_column - 1 == cowerdice_coord[1])) //erase pawn from enpassant
+		if(m._end_row - 1 == cowerdice_coord[0] && m._end_column == cowerdice_coord[1])
+			_board[cowerdice_coord[0]][cowerdice_coord[1]] = NA; //clear cowerdice piece 
+	if(piece == wP && m._start_row == cowerdice_coord[0] && ( m._start_column + 1 == cowerdice_coord[1] || m._start_column - 1 == cowerdice_coord[1])) //erase pawn from enpassant
+		if(m._end_row + 1 == cowerdice_coord[0] && m._end_column == cowerdice_coord[1])
+			_board[cowerdice_coord[0]][cowerdice_coord[1]] = NA; //clear cowerdice piece 
 
 	switch_turns();
 }
