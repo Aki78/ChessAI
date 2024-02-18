@@ -113,14 +113,14 @@ void Position::make_move(const Move& m) {
 	}
 
 // mark as king has moved
-	if(m._board[0][4] != kB) black_king_has_moved = true;
-	if(m._board[7][4] != kB) white_king_has_moved = true;
+	if(_board[0][4] != bK) black_king_has_moved = true;
+	if(_board[7][4] != wK) white_king_has_moved = true;
 
 // mark
-	if(m._board[0][0] != bR) black_rook1_has_moved = true;
-	if(m._board[0][7] != bR) black_rook2_has_moved = true;
-	if(m._board[7][0] != bR) white_rook1_has_moved = true;
-	if(m._board[7][7] != bR) white_rook2_has_moved = true;
+	if(_board[0][0] != bR) black_rook1_has_moved = true;
+	if(_board[0][7] != bR) black_rook2_has_moved = true;
+	if(_board[7][0] != wR) white_rook1_has_moved = true;
+	if(_board[7][7] != wR) white_rook2_has_moved = true;
 
 	switch_turns();
 }
@@ -178,7 +178,7 @@ void Position::check_pawn_and_push_move(int row, int column, int player, vector<
 		current_row--; 
 		if (_board[current_row][current_column] == NA){ // Empty square? OK
 			moves.push_back(Move(row, column, current_row, current_column));
-			if(current_row==5){
+			if(current_row==5){ // off by one because checking one move
 				current_row--;	// another step if it is at starting point
 				if (_board[current_row][current_column] == NA){ // Empty square? OK
 //					set_cowerdice(current_row, current_column);
@@ -274,7 +274,6 @@ void Position::give_rook_raw_moves(int row, int column, int player, vector<Move>
 
 
 void Position::give_bish_raw_moves(int row, int column, int player, vector<Move>& moves) {
-	// Up
 	int current_row = row;
 	int current_column = column;
 
@@ -526,17 +525,17 @@ vector<Move> Position::generate_legal_moves() {
 	}
 
 // adding castling
-complete the rook and king move
+//complete the rook and king move
 	if(player == WHITE){
-		if(_board[7][0] == wR && _board[7][1] == NA && _board[7][2] == NA && _board[7][3] == NA && _board[7][4] == wK && !white_is_threatened) // make sure king hasn't moved too or is in check
+		if(_board[7][0] == wR && _board[7][1] == NA && _board[7][2] == NA && _board[7][3] == NA && _board[7][4] == wK && !white_is_threatened && !white_king_has_moved && !white_rook1_has_moved) // make sure king hasn't moved too or is in check
 			legal_moves.push_back(Move(-52,-52,-52,-52));
-		if( _board[7][4] == wK && _board[7][5] == NA && _board[7][6] == NA && _board[7][7] == wR && !white_is_threatened) // make sure king hasn't moved too or is in check
+		if( _board[7][4] == wK && _board[7][5] == NA && _board[7][6] == NA && _board[7][7] == wR && !white_is_threatened && !white_king_has_moved && !white_rook2_has_moved) // make sure king hasn't moved too or is in check
 			legal_moves.push_back(Move(-53,-53,-53,-53));
 	}
 	else if(player == BLACK){
-		if(_board[0][0] == bR && _board[0][1] == NA && _board[0][2] == NA && _board[0][3] == NA && _board[0][4] == bK && !black_is_threatened) // make sure king hasn't moved too or is in check
+		if(_board[0][0] == bR && _board[0][1] == NA && _board[0][2] == NA && _board[0][3] == NA && _board[0][4] == bK && !black_is_threatened && !black_king_has_moved && !black_rook2_has_moved) // make sure king hasn't moved too or is in check
 			legal_moves.push_back(Move(-50,-50,-50,-50));
-		if( _board[0][4] == bK && _board[0][5] == NA && _board[0][6] == NA && _board[0][7] == bR && !black_is_threatened) // make sure king hasn't moved too or is in check
+		if( _board[0][4] == bK && _board[0][5] == NA && _board[0][6] == NA && _board[0][7] == bR && !black_is_threatened && !black_king_has_moved && !black_rook2_has_moved) // make sure king hasn't moved too or is in check
 			legal_moves.push_back(Move(-51,-51,-51,-51));
 		
 	}
