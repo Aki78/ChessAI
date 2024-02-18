@@ -84,6 +84,10 @@ void Position::make_move(const Move& m) {
 
 	if((piece == wP || piece == bP) && abs(m._end_row - m._start_row) == 2){ //set en passantable piece
 		set_cowerdice(m._end_row, m._end_column);
+		if(_turn == WHITE)
+			white_cowerdice_commited = true;
+		if(_turn == BLACK)
+			black_cowerdice_commited = true;
 	}
 
 // if en passant move
@@ -162,15 +166,15 @@ void Position::check_pawn_and_push_move(int row, int column, int player, vector<
 	int current_row = row;
 	int current_column = column;
 
-//	if (row_current < 0 || row_current > 7) return true; // Off the board? // OK
 	if (_turn==WHITE){
 
+		// add possible enpassant to move
 		int enpassantable_column = current_column + 1; 	
-		if(_board[current_row][enpassantable_column] == bP && cowerdice_coord[0] == current_row && cowerdice_coord[1] == enpassantable_column){
+		if(_board[current_row][enpassantable_column] == bP && cowerdice_coord[0] == current_row && cowerdice_coord[1] == enpassantable_column && black_cowerdice_commited){
 			moves.push_back(Move(row, column, row - 1, enpassantable_column));}
 
 		enpassantable_column = current_column - 1; 	
-		if(_board[current_row][enpassantable_column] == bP && cowerdice_coord[0] == current_row && cowerdice_coord[1] == enpassantable_column){
+		if(_board[current_row][enpassantable_column] == bP && cowerdice_coord[0] == current_row && cowerdice_coord[1] == enpassantable_column && black_cowerdice_commited){
 			moves.push_back(Move(row, column, row - 1, enpassantable_column));}
 
 
@@ -197,13 +201,16 @@ void Position::check_pawn_and_push_move(int row, int column, int player, vector<
 		}
 
 	}
+
 	else if (_turn==BLACK){
+
+		// add possible enpassant to move
 		int enpassantable_column = current_column + 1; 	
-		if(_board[current_row][enpassantable_column] == wP && cowerdice_coord[0] == current_row && cowerdice_coord[1] == enpassantable_column){
+		if(_board[current_row][enpassantable_column] == wP && cowerdice_coord[0] == current_row && cowerdice_coord[1] == enpassantable_column && white_cowerdice_commited){
 			moves.push_back(Move(row, column, row + 1, enpassantable_column));}
 
 		enpassantable_column = current_column - 1; 	
-		if(_board[current_row][enpassantable_column] == wP && cowerdice_coord[0] == current_row && cowerdice_coord[1] == enpassantable_column){
+		if(_board[current_row][enpassantable_column] == wP && cowerdice_coord[0] == current_row && cowerdice_coord[1] == enpassantable_column && white_cowerdice_commited){
 			moves.push_back(Move(row, column, row + 1, enpassantable_column));}
 
 
@@ -494,11 +501,15 @@ vector<Move> Position::generate_legal_moves() {
 	int player = _turn;
 
 	//resetting previous state;
-	if (player == WHITE) 
+	if (player == WHITE){ 
 		white_is_threatened = false;
-	if (player == BLACK) 
+		white_cowerdice_commited = false;
+	}
+	if (player == BLACK) {
 		black_is_threatened = false;
+		black_cowerdice_commited = false;
 
+	}
 // make king escape if threatened
 	if(player == WHITE) my_king = wK;
 	if(player == WHITE) enemy = BLACK;

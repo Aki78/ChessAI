@@ -33,28 +33,28 @@ private:
 	// [7][0] : bottom left corner ("a1")
 	// [7][7] : bottom right corner ("h1")
 	//
-//	int _board[8][8] = { // en passant test
-//		{ NA, NA, NA, NA, NA, NA, NA, NA },
-//		{ bP, NA, NA, NA, NA, wP, NA, NA },
-//		{ NA, NA, NA, NA, NA, NA, NA, NA },
-//		{ NA, wP, NA, NA, NA, NA, NA, NA },
-//		{ bP, NA, NA, NA, NA, NA, NA, NA },
-//		{ NA, NA, NA, NA, NA, NA, NA, NA },
-//		{ NA, wP, bP, NA, NA, NA, NA, NA },
-//		{ NA, NA, NA, NA, NA, NA, NA, NA }
-//	};
-
-
-	int _board[8][8] = {
-		{ bR, NA, NA, NA, bK, NA, NA, bR },
+	int _board[8][8] = { // en passant test
 		{ NA, NA, NA, NA, NA, NA, NA, NA },
+		{ bP, NA, NA, NA, NA, wP, NA, NA },
 		{ NA, NA, NA, NA, NA, NA, NA, NA },
 		{ NA, wP, NA, NA, NA, NA, NA, NA },
-		{ NA, NA, bP, NA, NA, NA, NA, NA },
+		{ bP, NA, NA, NA, NA, NA, NA, NA },
 		{ NA, NA, NA, NA, NA, NA, NA, NA },
-		{ NA, NA, NA, NA, NA, NA, NA, NA },
-		{ wR, NA, NA, NA, wK, NA, NA, wR }
+		{ NA, wP, bP, NA, NA, NA, NA, NA },
+		{ NA, NA, NA, NA, NA, NA, NA, NA }
 	};
+
+
+//	int _board[8][8] = {
+//		{ bR, NA, NA, NA, bK, NA, NA, bR },
+//		{ NA, NA, NA, NA, NA, NA, NA, NA },
+//		{ NA, NA, NA, NA, NA, NA, NA, NA },
+//		{ NA, wP, NA, NA, NA, NA, NA, NA },
+//		{ NA, NA, bP, NA, NA, NA, NA, NA },
+//		{ NA, NA, NA, NA, NA, NA, NA, NA },
+//		{ NA, NA, NA, NA, NA, NA, NA, NA },
+//		{ wR, NA, NA, NA, wK, NA, NA, wR }
+//	};
 
 //	int _board[8][8] = {
 //		{ bR, bN, bB, bQ, NA, bB, bN, bR },
@@ -83,5 +83,7 @@ private:
 
 // for en passant
 	vector<int> cowerdice_coord = {-100,-100}; // set this (i,j) when en passant is possible where the pawn is, otherwise, reset it to a big negative number;
+	bool white_cowerdice_commited = false;
+	bool black_cowerdice_commited = false;
 };
 
