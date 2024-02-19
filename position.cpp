@@ -580,3 +580,26 @@ void Position::switch_turns(){
 
 }
 
+vector<int> Position::get_state_value(){ // [0] -> white state value, [1] -> black state value
+	vector<int> values = {0,0};
+	for (int row = 0; row < 8; ++row)
+		for (int col = 0; col < 8; ++col){
+			if(_board[row][col]==wP) values[0] += 1;
+			else if(_board[row][col]==wN) values[0] += 3;
+			else if(_board[row][col]==wB) values[0] += 3;
+			else if(_board[row][col]==wR) values[0] += 5;
+			else if(_board[row][col]==wQ) values[0] += 10;
+			else if(_board[row][col]==wK) values[0] += 20;
+
+			if(_board[row][col]==bP) values[1] += 1;
+			else if(_board[row][col]==bN) values[1] += 3;
+			else if(_board[row][col]==bB) values[1] += 3;
+			else if(_board[row][col]==bR) values[1] += 5;
+			else if(_board[row][col]==bQ) values[1] += 10;
+			else if(_board[row][col]==bK) values[1] += 20;
+		}
+	return values;	
+
+
+}
+

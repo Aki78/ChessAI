@@ -23,6 +23,7 @@ public:
 	void unset_cowerdice();
 
 	int _turn = WHITE;
+	vector<int> get_state_value(); 
 
 
 private:
@@ -33,16 +34,16 @@ private:
 	// [7][0] : bottom left corner ("a1")
 	// [7][7] : bottom right corner ("h1")
 	//
-	int _board[8][8] = { // en passant test
-		{ NA, NA, NA, NA, NA, NA, NA, NA },
-		{ bP, NA, NA, NA, NA, wP, NA, NA },
-		{ NA, NA, NA, NA, NA, NA, NA, NA },
-		{ NA, wP, NA, NA, NA, NA, NA, NA },
-		{ bP, NA, NA, NA, NA, NA, NA, NA },
-		{ NA, NA, NA, NA, NA, NA, NA, NA },
-		{ NA, wP, bP, NA, NA, NA, NA, NA },
-		{ NA, NA, NA, NA, NA, NA, NA, NA }
-	};
+//	int _board[8][8] = { // en passant test
+//		{ NA, NA, NA, NA, NA, NA, NA, NA },
+//		{ bP, NA, NA, NA, NA, wP, NA, NA },
+//		{ NA, NA, NA, NA, NA, NA, NA, NA },
+//		{ NA, wP, NA, NA, NA, NA, NA, NA },
+//		{ bP, NA, NA, NA, NA, NA, NA, NA },
+//		{ NA, NA, NA, NA, NA, NA, NA, NA },
+//		{ NA, wP, bP, NA, NA, NA, NA, NA },
+//		{ NA, NA, NA, NA, NA, NA, NA, NA }
+//	};
 
 
 //	int _board[8][8] = {
@@ -56,16 +57,16 @@ private:
 //		{ wR, NA, NA, NA, wK, NA, NA, wR }
 //	};
 
-//	int _board[8][8] = {
-//		{ bR, bN, bB, bQ, NA, bB, bN, bR },
-//		{ bP, bP, bP, bP, bP, bP, bP, bP },
-//		{ NA, NA, NA, NA, NA, NA, NA, NA },
-//		{ NA, NA, NA, NA, NA, NA, NA, NA },
-//		{ NA, NA, bP, NA, NA, NA, NA, NA },
-//		{ NA, NA, NA, NA, NA, NA, NA, NA },
-//		{ wP, wP, wP, wP, wP, wP, wP, wP },
-//		{ wR, wN, wB, wQ, NA, wB, wN, wR }
-//	};
+	int _board[8][8] = {
+		{ bR, bN, bB, bQ, NA, bB, bN, bR },
+		{ bP, bP, bP, bP, bP, bP, bP, bP },
+		{ NA, NA, NA, NA, NA, NA, NA, NA },
+		{ NA, NA, NA, NA, NA, NA, NA, NA },
+		{ NA, NA, NA, NA, NA, NA, NA, NA },
+		{ NA, NA, bP, NA, NA, NA, NA, NA },
+		{ wP, wP, wP, wP, wP, wP, wP, wP },
+		{ wR, wN, wB, wQ, NA, wB, wN, wR }
+	};
 
 	void switch_turns();
 	bool is_enemy_of_white(int);

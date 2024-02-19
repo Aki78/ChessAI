@@ -4,7 +4,6 @@
 #include <algorithm>
 #include "position.h"
 #include "move.h"
-#include <map>
 
 using namespace std;
 
@@ -13,7 +12,6 @@ int main(){
         Position position;
 	vector<Move> moves;
 	moves = position.generate_legal_moves();
-	
 
 
         while (!moves.empty()){
@@ -29,15 +27,10 @@ int main(){
 
 		if (!count(moves.begin(),moves.end(), new_move)) continue; // checking if moves exist
 
-		for(auto m: moves){ 
-			Position test_position = position; // copying new position for test
-			test_position.make_move(m);
-			vector<int> state_values = test_position.get_state_value();
-			cout << "values are: " << state_values[0] << " " << state_values[1] << endl;
-		}
-
+		position.make_move(new_move);
 		moves.clear();
 		moves = position.generate_legal_moves();
+
 
 
 		vector<int> state_values = position.get_state_value();
