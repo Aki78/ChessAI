@@ -58,14 +58,14 @@ private:
 //	};
 
 	int _board[8][8] = {
-		{ bR, bN, bB, bQ, NA, bB, bN, bR },
+		{ bR, bN, bB, bQ, bK, bB, bN, bR },
 		{ bP, bP, bP, bP, bP, bP, bP, bP },
 		{ NA, NA, NA, NA, NA, NA, NA, NA },
 		{ NA, NA, NA, NA, NA, NA, NA, NA },
 		{ NA, NA, NA, NA, NA, NA, NA, NA },
-		{ NA, NA, bP, NA, NA, NA, NA, NA },
+		{ NA, NA, NA, NA, NA, NA, NA, NA },
 		{ wP, wP, wP, wP, wP, wP, wP, wP },
-		{ wR, wN, wB, wQ, NA, wB, wN, wR }
+		{ wR, wN, wB, wQ, wK, wB, wN, wR }
 	};
 
 	void switch_turns();

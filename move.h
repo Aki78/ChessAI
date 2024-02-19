@@ -25,6 +25,12 @@ public:
 		return _start_row==other._start_row && _start_column==other._start_column &&  _end_row==other._end_row &&  _end_column==other._end_column ;
 	} 
 	void print_move(); 
+
+
+
+	bool operator<(const Move& other) const ;
+	bool operator>(const Move& other) const ;
+
 private:
 
 	vector<char> moveChars = {'\0','\0','\0','\0'}; // for splitting the movement chars
@@ -37,5 +43,9 @@ private:
 	string get_string();
 
 	int set_move(const string& str); 
+
+
+
+
 };
 

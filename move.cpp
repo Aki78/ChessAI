@@ -91,7 +91,6 @@ void Move::print_move() {
 		case 5: print_string +="f"; break;
 		case 6: print_string +="g"; break;
 		case 7: print_string +="h"; break;
-		case 8: print_string +="i"; break;
 		case -50: print_string +="castle1"; break; // castle black left
 		case -51: print_string +="castle2"; break; // castle black rirght
 		case -52: print_string +="castle3"; break; // castle white left
@@ -107,7 +106,6 @@ void Move::print_move() {
 		case 5: print_string +="3"; break;
 		case 6: print_string +="2"; break;
 		case 7: print_string +="1"; break;
-		case 8: print_string +="0"; break;
 		case -50: print_string +=""; break; // castle black left
 		case -51: print_string +=""; break; // castle black rirght
 		case -52: print_string +=""; break; // castle white left
@@ -123,7 +121,6 @@ void Move::print_move() {
 		case 5: print_string +="f"; break;
 		case 6: print_string +="g"; break;
 		case 7: print_string +="h"; break;
-		case 8: print_string +="i"; break;
 		case -50: print_string +=""; break; // castle black left
 		case -51: print_string +=""; break; // castle black rirght
 		case -52: print_string +=""; break; // castle white left
@@ -139,7 +136,6 @@ void Move::print_move() {
 		case 5: print_string +="3"; break;
 		case 6: print_string +="2"; break;
 		case 7: print_string +="1"; break;
-		case 8: print_string +="0"; break;
 		case -50: print_string +=""; break; // castle black left
 		case -51: print_string +=""; break; // castle black rirght
 		case -52: print_string +=""; break; // castle white left
@@ -150,3 +146,18 @@ void Move::print_move() {
 	cout << print_string << endl;
 }
 
+
+bool Move::operator<(const Move& other) const {
+        if (_start_row != other._start_row) return _start_row < other._start_row;
+        if (_start_column != other._start_column) return _start_column < other._start_column;
+        if (_end_row != other._end_row) return _end_row < other._end_row;
+        return _end_column < other._end_column;
+}
+
+
+bool Move::operator>(const Move& other) const {
+        if (_start_row != other._start_row) return _start_row > other._start_row;
+        if (_start_column != other._start_column) return _start_column > other._start_column;
+        if (_end_row != other._end_row) return _end_row > other._end_row;
+        return _end_column > other._end_column;
+}
