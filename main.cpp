@@ -30,7 +30,8 @@ int main(){
 //		bool possible_move= true;
 		Move new_move(input_move_string);
 
-		if (!count(moves.begin(),moves.end(), new_move)) continue; // checking if moves exist
+//		if (!count(moves.begin(),moves.end(), new_move)) continue; // checking if moves exist
+		if (!count(moves.begin(),moves.end(), new_move)) cout << "GAME OVER!!!!"; // checking if moves exist
 
 		for(auto m: moves){ // trying out moves to get state action values
 			Position test_position = position; // copying new position for test

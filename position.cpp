@@ -170,12 +170,14 @@ void Position::check_pawn_and_push_move(int row, int column, int player, vector<
 
 		// add possible enpassant to move
 		int enpassantable_column = current_column + 1; 	
-		if(_board[current_row][enpassantable_column] == bP && cowerdice_coord[0] == current_row && cowerdice_coord[1] == enpassantable_column && black_cowerdice_commited){
-			moves.push_back(Move(row, column, row - 1, enpassantable_column));}
+		if(enpassantable_column < 8 && enpassantable_column >= 0)
+			if(_board[current_row][enpassantable_column] == bP && cowerdice_coord[0] == current_row && cowerdice_coord[1] == enpassantable_column && black_cowerdice_commited){
+				moves.push_back(Move(row, column, row - 1, enpassantable_column));}
 
 		enpassantable_column = current_column - 1; 	
-		if(_board[current_row][enpassantable_column] == bP && cowerdice_coord[0] == current_row && cowerdice_coord[1] == enpassantable_column && black_cowerdice_commited){
-			moves.push_back(Move(row, column, row - 1, enpassantable_column));}
+		if(enpassantable_column < 8 && enpassantable_column >= 0)
+			if(_board[current_row][enpassantable_column] == bP && cowerdice_coord[0] == current_row && cowerdice_coord[1] == enpassantable_column && black_cowerdice_commited){
+				moves.push_back(Move(row, column, row - 1, enpassantable_column));}
 
 
 
@@ -193,11 +195,13 @@ void Position::check_pawn_and_push_move(int row, int column, int player, vector<
 		current_row = row; // resetting position
 
 		// if enemy on sides
-		if (is_enemy_of_white(_board[current_row-1][current_column-1])){ 
-			moves.push_back(Move(row, column, current_row-1, current_column-1));
-		}
-		if (is_enemy_of_white(_board[current_row-1][current_column+1])){ 
-			moves.push_back(Move(row, column, current_row-1, current_column+1));
+		if(current_column - 1 >= 0 && current_column + 1 <8){
+			if (is_enemy_of_white(_board[current_row-1][current_column-1])){ 
+				moves.push_back(Move(row, column, current_row-1, current_column-1));
+			}
+			if (is_enemy_of_white(_board[current_row-1][current_column+1])){ 
+				moves.push_back(Move(row, column, current_row-1, current_column+1));
+			}
 		}
 
 	}
@@ -206,12 +210,14 @@ void Position::check_pawn_and_push_move(int row, int column, int player, vector<
 
 		// add possible enpassant to move
 		int enpassantable_column = current_column + 1; 	
-		if(_board[current_row][enpassantable_column] == wP && cowerdice_coord[0] == current_row && cowerdice_coord[1] == enpassantable_column && white_cowerdice_commited){
-			moves.push_back(Move(row, column, row + 1, enpassantable_column));}
+		if(enpassantable_column < 8 && enpassantable_column >= 0)
+			if(_board[current_row][enpassantable_column] == wP && cowerdice_coord[0] == current_row && cowerdice_coord[1] == enpassantable_column && white_cowerdice_commited){
+				moves.push_back(Move(row, column, row + 1, enpassantable_column));}
 
 		enpassantable_column = current_column - 1; 	
-		if(_board[current_row][enpassantable_column] == wP && cowerdice_coord[0] == current_row && cowerdice_coord[1] == enpassantable_column && white_cowerdice_commited){
-			moves.push_back(Move(row, column, row + 1, enpassantable_column));}
+		if(enpassantable_column < 8 && enpassantable_column >= 0)
+			if(_board[current_row][enpassantable_column] == wP && cowerdice_coord[0] == current_row && cowerdice_coord[1] == enpassantable_column && white_cowerdice_commited){
+				moves.push_back(Move(row, column, row + 1, enpassantable_column));}
 
 
 
@@ -231,11 +237,13 @@ void Position::check_pawn_and_push_move(int row, int column, int player, vector<
 		current_row = row; // resetting position
 
 		// if enemy on sides
-		if (is_enemy_of_black(_board[current_row+1][current_column-1])){ 
-			moves.push_back(Move(row, column, current_row+1, current_column-1));
-		}
-		if (is_enemy_of_black(_board[current_row+1][current_column+1])){ 
-			moves.push_back(Move(row, column, current_row+1, current_column+1));
+		if(current_column - 1 >= 0 && current_column + 1 <8){
+			if (is_enemy_of_black(_board[current_row+1][current_column-1])){ 
+				moves.push_back(Move(row, column, current_row+1, current_column-1));
+			}
+			if (is_enemy_of_black(_board[current_row+1][current_column+1])){ 
+				moves.push_back(Move(row, column, current_row+1, current_column+1));
+			}
 		}
 	}
 
