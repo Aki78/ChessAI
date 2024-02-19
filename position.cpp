@@ -552,7 +552,7 @@ vector<Move> Position::generate_legal_moves() {
 			legal_moves.push_back(Move(-53,-53,-53,-53));
 	}
 	else if(player == BLACK){
-		if(_board[0][0] == bR && _board[0][1] == NA && _board[0][2] == NA && _board[0][3] == NA && _board[0][4] == bK && !black_is_threatened && !black_king_has_moved && !black_rook2_has_moved) // make sure king hasn't moved too or is in check
+		if(_board[0][0] == bR && _board[0][1] == NA && _board[0][2] == NA && _board[0][3] == NA && _board[0][4] == bK && !black_is_threatened && !black_king_has_moved && !black_rook1_has_moved) // make sure king hasn't moved too or is in check
 			legal_moves.push_back(Move(-50,-50,-50,-50));
 		if( _board[0][4] == bK && _board[0][5] == NA && _board[0][6] == NA && _board[0][7] == bR && !black_is_threatened && !black_king_has_moved && !black_rook2_has_moved) // make sure king hasn't moved too or is in check
 			legal_moves.push_back(Move(-51,-51,-51,-51));
