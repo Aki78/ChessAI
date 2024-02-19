@@ -69,7 +69,7 @@ map<Move, int> get_min(map<Move, int> a, map<Move, int> b){
 
 }
 
-
+// Try 1
 //map<Move, int> minimax(Move move, Position position, int depth, bool maximizingPlayer){ // move is just a place holder at start
 //	if(depth == 0){
 //		vector<int> state_values = position.get_state_value(); // split to white and black
@@ -122,65 +122,118 @@ map<Move, int> get_min(map<Move, int> a, map<Move, int> b){
 //
 //}
 
-map<Move, int> minimax(Move move, Position position, int depth, bool maximizingPlayer, auto g) {
-	if (depth == 0) {
-		vector<int> state_values = position.get_state_value(); 
+// Try 2
+//map<Move, int> minimax(Move move, Position position, int depth, bool maximizingPlayer, auto g) {
+//	if (depth == 0) {
+//		vector<int> state_values = position.get_state_value(); 
+//		map<Move, int> action_value;
+//		int state_value = 0;
+//
+//		if (position._turn == BLACK) state_value = state_values[0] - state_values[1];
+//		else if (position._turn == WHITE) state_value = state_values[1] - state_values[0];
+//
+//		action_value[move] = state_value;
+//
+//		return action_value;
+//	}
+//
+//	vector<Move> moves = position.generate_legal_moves();
+//	shuffle(moves.begin(), moves.end(), g);
+//
+//	if (maximizingPlayer) {
+//		int maxEval = -999;
+//		Move bestMove(0,0,0,0); 
+//
+//		for (auto& m : moves) {
+//			Position test_position = position;
+//			test_position.make_move(m);
+//			map<Move, int> moveEval = minimax(m, test_position, depth - 1, false, g);
+//			int currentEval = moveEval.begin()->second; 
+//
+//			if (currentEval > maxEval) {
+//				maxEval = currentEval;
+//				bestMove = m;
+//			}
+//		}
+//
+//		map<Move, int> bestMoveMap;
+//		bestMoveMap[bestMove] = maxEval;
+//		return bestMoveMap;
+//	} else { 
+//		int minEval = 999;
+//		Move bestMove(0,0,0,0);
+//
+//		for (auto& m : moves) {
+//			Position test_position = position;
+//			test_position.make_move(m);
+//			map<Move, int> moveEval = minimax(m, test_position, depth - 1, true, g);
+//			int currentEval = moveEval.begin()->second;
+//
+//			if (currentEval < minEval) {
+//				minEval = currentEval;
+//				bestMove = m;
+//			}
+//		}
+//
+//		map<Move, int> bestMoveMap;
+//		bestMoveMap[bestMove] = minEval;
+//		return bestMoveMap;
+//	}
+//}
+
+
+// Try 3
+int minimax(Position position, int depth, bool maximizingPlayer){ // move is just a place holder at start
+	if(depth == 0){
+		vector<int> state_values = position.get_state_value(); // split to white and black
 		map<Move, int> action_value;
 		int state_value = 0;
 
-		if (position._turn == BLACK) state_value = state_values[0] - state_values[1];
-		else if (position._turn == WHITE) state_value = state_values[1] - state_values[0];
+		if(position._turn == WHITE) state_value = state_values[0] - state_values[1];
+		else if(position._turn == BLACK) state_value = state_values[1] - state_values[0];
 
 		action_value[move] = state_value;
+		cout << "Max depth reached: " << state_value << endl;
 
-		return action_value;
+		return action_value; 
 	}
 
 	vector<Move> moves = position.generate_legal_moves();
-	shuffle(moves.begin(), moves.end(), g);
-
-	if (maximizingPlayer) {
+	cout << "starting evaluation" << endl;
+	if(maximizingPlayer){
 		int maxEval = -999;
-		Move bestMove(0,0,0,0); 
+		Move init_move(0,0,0,0);
 
-		for (auto& m : moves) {
-			Position test_position = position;
+		map<Move, int> maxMove;
+		maxMove[init_move] = maxEval;
+		for(auto m: moves){ //getting all legal moves (children)
+			Position test_position = position; 
 			test_position.make_move(m);
-			map<Move, int> moveEval = minimax(m, test_position, depth - 1, false, g);
-			int currentEval = moveEval.begin()->second; 
-
-			if (currentEval > maxEval) {
-				maxEval = currentEval;
-				bestMove = m;
-			}
+			map<Move, int> moveEval = minimax(m, test_position, depth - 1, false);
+			maxMove = get_max(maxMove, moveEval);
 		}
 
-		map<Move, int> bestMoveMap;
-		bestMoveMap[bestMove] = maxEval;
-		return bestMoveMap;
-	} else { 
-		int minEval = 999;
-		Move bestMove(0,0,0,0);
-
-		for (auto& m : moves) {
-			Position test_position = position;
-			test_position.make_move(m);
-			map<Move, int> moveEval = minimax(m, test_position, depth - 1, true, g);
-			int currentEval = moveEval.begin()->second;
-
-			if (currentEval < minEval) {
-				minEval = currentEval;
-				bestMove = m;
-			}
-		}
-
-		map<Move, int> bestMoveMap;
-		bestMoveMap[bestMove] = minEval;
-		return bestMoveMap;
+		return maxMove;
 	}
+	if(!maximizingPlayer){
+		int minEval = +999;
+		Move init_move(0,0,0,0);
+
+		map<Move, int> minMove;
+		minMove[init_move] = minEval;
+
+		for(auto m: moves){ //getting all legal moves (children)
+			Position test_position = position; 
+			test_position.make_move(m);
+			map<Move, int> moveEval = minimax(m, test_position, depth - 1, true);
+			minMove = get_min(minMove, moveEval);
+		}
+
+		return minMove;
+	}
+
+
 }
-
-
 
 
 int main(){
