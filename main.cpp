@@ -75,8 +75,8 @@ int minimax(Position position, int depth, bool maximizingPlayer){ // move is jus
 		vector<int> state_values = position.get_state_value(); // split to white and black
 		int state_value = 0;
 
-		if(position._turn == BLACK) state_value = state_values[0] - state_values[1];
-		else if(position._turn == WHITE ) state_value = state_values[1] - state_values[0];
+		if(position._turn == WHITE) state_value = state_values[0] - state_values[1];
+		else if(position._turn == BLACK ) state_value = state_values[1] - state_values[0];
 
 //		cout << "Max depth reached: " << state_value << endl;
 
@@ -222,7 +222,7 @@ int main(){
 //		Move maxMove = find_best_move(moves, position);
 //		map<Move, int> maxMoveMap = minimax(Move(1,1,1,1), position, 3, true, g);
 //		Move maxMove = maxMoveMap.begin() -> first;
-		Move maxMove = getBestMove(position, 5, g);
+		Move maxMove = getBestMove(position, 4, g);
 
 		cout << "MAX MOVE MADE:::" << endl;
 		maxMove.print_move();
@@ -234,6 +234,8 @@ int main(){
 		
 		cout << "values are: " << position.get_state_value()[0] << " " << position.get_state_value()[1] << endl;
 	}
+
+	cout << "Winner: " << position._turn << endl;
 	
 
 		return 0;
