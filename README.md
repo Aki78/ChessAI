@@ -7,12 +7,24 @@ This is a data structure and algorithm project for Metropolia University of Appl
 
 ### Prerequisites
 
-- C++ Compiler (GCC recommended)
-- CMake (for building the project)
+- C++ Compiler 
 
 ### Installation
 
 1. Clone the repository:
 ```
 git clone https://github.com/yourusername/chessai.git
+```
+
+
+2. Go to the repository and make executable by running:
+```
+make
+```
+
+a executable chess will then be created.
+
+3. Run the executable
+```
+./chess
 ```
