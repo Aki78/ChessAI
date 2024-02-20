@@ -2,7 +2,7 @@
 CC=g++
 
 # Define flags
-CFLAGS=-Wall -g
+CFLAGS=-Wall
 
 # Define target executable name
 TARGET=chess
