@@ -9,7 +9,7 @@ This is a data structure and algorithm project for Metropolia University of Appl
 
 - C++ Compiler 
 
-### Installation
+### Installation and Running
 
 1. Clone the repository:
 ```
@@ -22,9 +22,32 @@ git clone https://github.com/yourusername/chessai.git
 make
 ```
 
-a executable chess will then be created.
+ an executable chess will then be created.
 
 3. Run the executable
 ```
 ./chess
 ```
+
+
+## Game Play
+
+Three selections will be displayed. If you choose 1 and hit enter, AI will play against AI.
+If you choose 2 you will play against the AI as white and if you choose 3, vice versa.
+
+### Playing against the AI
+
+At every turn, a list of possible moves will be displayed
+```
+Printing out all moves: 
+S:c4c5
+S:c4c6
+S:c4c7
+S:c4c3
+S:c4b4
+S:c4a4
+S:c4d4
+S:c4e4
+...
+```
+
