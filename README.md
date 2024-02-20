@@ -60,3 +60,6 @@ c4c5
 the piece on row 4 at column c will move up to row 5.
 
 The game will automatically end, when either your king or the AI king has no where else to go.
+
+## AI implementation
+Minimax with alpha-beta pruning was used. The evaluation of the state-value is by simply counting the pieces (weighted with pawn:1, knite: 3, bishop: 3, rook: 5, queen:9 and king: 20), and taking the difference between black and white. 
