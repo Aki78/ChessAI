@@ -202,8 +202,8 @@ int main(){
 	moves = position.generate_legal_moves();
 //	map<Move, int> action_value;
 	int select;
-	while(select != 1 and select != 2){
-		cout << "1: AI vs AI. 2: AI vs HUMAN" << endl; 
+	while(select != 1 and select != 2 and select != 3){
+		cout << "1: AI vs AI. 2: AI(BLACK) vs HUMAN. 3: HUMAN vs AI(WHITE)" << endl; 
 		cin >> select;
 	}
 
@@ -249,8 +249,41 @@ int main(){
 			} 
 
 			
-			cout << "values are: " << position.get_state_value()[0] << " " << position.get_state_value()[1] << endl;
 		}
+	else if(select == 3)
+		while (!moves.empty()){
+			string input_move_string;
+			if(position._turn == BLACK){
+				cout << "Printing out all moves: " << endl;
+
+				for(auto m: moves) m.print_move();
+
+				position.print();
+				cout << "Input your move: ";
+				cin >> input_move_string;
+
+				Move new_move(input_move_string);
+
+				if (!count(moves.begin(),moves.end(), new_move)) continue; // checking if input moves exist
+
+				position.make_move(new_move);
+				moves.clear();
+				moves = position.generate_legal_moves();
+			}else{
+				position.print();
+				Move maxMove = getBestMove(position, 4, g);
+				maxMove.print_move();
+				position.make_move(maxMove);
+				moves.clear();
+				moves = position.generate_legal_moves();
+
+			} 
+
+			
+		}
+
+
+
 	if(position._turn == WHITE) cout << "Winnter: BLACK" << endl;
 	if(position._turn == BLACK) cout << "Winnter: WHITE" << endl;
 
