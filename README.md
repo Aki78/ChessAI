@@ -12,12 +12,14 @@ This is a data structure and algorithm project for Metropolia University of Appl
 ### Installation and Running
 
 1. Clone the repository:
+
 ```
 git clone https://github.com/yourusername/chessai.git
 ```
 
 
 2. Go to the repository and make executable by running:
+
 ```
 make
 ```
@@ -25,6 +27,7 @@ make
  an executable chess will then be created.
 
 3. Run the executable
+
 ```
 ./chess
 ```
@@ -50,4 +53,10 @@ S:c4d4
 S:c4e4
 ...
 ```
+the notation is 4 letters, the first 2 letters are the starting position of the piece you want to move, and the last 2 letters are the position you want to move to the square, for example if you type in:
+```
+c4c5
+```
+the piece on row 4 at column c will move up to row 5.
 
+The game will automatically end, when either your king or the AI king has no where else to go.
