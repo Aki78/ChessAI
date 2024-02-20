@@ -2,7 +2,6 @@
 #include <string>
 #include <vector>
 #include "position.h"
-#include "piece.h"
 using namespace std;
 
 // Clears the board
@@ -565,7 +564,6 @@ vector<Move> Position::generate_legal_moves() {
 
 
 void Position::print() const {
-	Piece a;
 	const string pieces[] =
 			{ "R", "N", "B", "Q", "K", "P", "r", "n", "b", "q", "k", "p", " " };
 
