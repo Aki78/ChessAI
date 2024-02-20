@@ -24,7 +24,7 @@ Move find_best_greedy_move(vector<Move> moves, Position position){
 		int state_value = 0;
 		if(position._turn == WHITE) state_value = state_values[0] - state_values[1];
 		else if(position._turn == BLACK) state_value = state_values[1] - state_values[0];
-		cout << "values are: " << state_values[0] << " " << state_values[1] << endl;
+		cout << "values are: " <<state_values[0] << " " << state_values[1] << endl;
 		cout << "action is: " << endl;
 		m.print_move();
 		cout << "state value is: " << state_value << endl;
@@ -186,53 +186,64 @@ map<Move, int> get_min(map<Move, int> a, map<Move, int> b){
 int minimax(Position position, int depth, bool maximizingPlayer){ // move is just a place holder at start
 	if(depth == 0){
 		vector<int> state_values = position.get_state_value(); // split to white and black
-		map<Move, int> action_value;
 		int state_value = 0;
 
 		if(position._turn == WHITE) state_value = state_values[0] - state_values[1];
-		else if(position._turn == BLACK) state_value = state_values[1] - state_values[0];
+		else if(position._turn == BLACK ) state_value = state_values[1] - state_values[0];
 
-		action_value[move] = state_value;
-		cout << "Max depth reached: " << state_value << endl;
+//		cout << "Max depth reached: " << state_value << endl;
 
-		return action_value; 
+		return state_value; 
 	}
 
 	vector<Move> moves = position.generate_legal_moves();
-	cout << "starting evaluation" << endl;
+	//cout << "starting evaluation" << endl;
 	if(maximizingPlayer){
-		int maxEval = -999;
-		Move init_move(0,0,0,0);
-
-		map<Move, int> maxMove;
-		maxMove[init_move] = maxEval;
-		for(auto m: moves){ //getting all legal moves (children)
-			Position test_position = position; 
-			test_position.make_move(m);
-			map<Move, int> moveEval = minimax(m, test_position, depth - 1, false);
-			maxMove = get_max(maxMove, moveEval);
-		}
-
-		return maxMove;
-	}
-	if(!maximizingPlayer){
-		int minEval = +999;
-		Move init_move(0,0,0,0);
-
-		map<Move, int> minMove;
-		minMove[init_move] = minEval;
+		int maxEval = -99999;
 
 		for(auto m: moves){ //getting all legal moves (children)
 			Position test_position = position; 
 			test_position.make_move(m);
-			map<Move, int> moveEval = minimax(m, test_position, depth - 1, true);
-			minMove = get_min(minMove, moveEval);
+			int moveEval = minimax(test_position, depth - 1, false);
+			maxEval = max(maxEval, moveEval);
 		}
 
-		return minMove;
+//	cout << "starting evaluation: " << maxEval <<endl;
+		return maxEval;
+	}
+	else if(!maximizingPlayer){
+		int minEval = +99999;
+
+		for(auto m: moves){ //getting all legal moves (children)
+			Position test_position = position; 
+			test_position.make_move(m);
+			int moveEval = minimax(test_position, depth - 1, true);
+			minEval = min(minEval, moveEval);
+		}
+
+		return minEval;
+	}
+}
+
+Move getBestMove(Position position, int depth) {
+	int bestValue = -999;
+	Move bestMove(0,0,0,0);
+	vector<Move> moves = position.generate_legal_moves();
+
+	for (const Move& m : moves) {
+		Position test_position = position; 
+		test_position.make_move(m);
+		int moveValue = minimax(test_position, depth - 1, false); 
+		cout << moveValue << endl;
+
+		if (moveValue > bestValue) {
+			cout << "Best HIT" << moveValue << " " << bestValue << endl;
+			bestValue = moveValue;
+			bestMove = m;
+		}
 	}
 
-
+	return bestMove;
 }
 
 
@@ -264,8 +275,9 @@ int main(){
 		if (!count(moves.begin(),moves.end(), new_move)) cout << "GAME OVER!!!!"; // checking if moves exist
 
 //		Move maxMove = find_best_move(moves, position);
-		map<Move, int> maxMoveMap = minimax(Move(1,1,1,1), position, 3, true, g);
-		Move maxMove = maxMoveMap.begin() -> first;
+//		map<Move, int> maxMoveMap = minimax(Move(1,1,1,1), position, 3, true, g);
+//		Move maxMove = maxMoveMap.begin() -> first;
+		Move maxMove = getBestMove(position, 4);
 
 		cout << "MAX MOVE MADE:::" << endl;
 		maxMove.print_move();
@@ -279,5 +291,5 @@ int main(){
 	}
 	
 
-	    return 0;
+		return 0;
 }

@@ -494,7 +494,7 @@ bool Position::is_king_threatened(vector<int> pos, int enemy) {
 //		move.print_move();
 //			cout <<  pos[0] << " " << pos[1] << endl;
 		if (move._end_row == pos[0] && move._end_column == pos[1]){
-			cout << "HIT: " << pos[0] << " " << pos[1] << endl;
+//			cout << "HIT: " << pos[0] << " " << pos[1] << endl;
 			return true;
 		}
 	}		
