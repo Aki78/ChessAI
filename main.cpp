@@ -14,7 +14,7 @@ using namespace std;
 Move find_best_greedy_move(vector<Move> moves, Position position){
 
 	Move maxMove(0,0,0,0);
-	int maxValue = -1000; // Include <climits> for INT_MIN
+	int maxValue = -100000; 
 	map<Move, int> action_value;
 
 	for(auto m: moves){ // trying out moves to get state action values
@@ -121,8 +121,8 @@ int minimax_alphabeta(Position& position, int depth, bool maximizingPlayer, int 
 		vector<int> state_values = position.get_state_value(); // split to white and black
 		int state_value = 0;
 
-		if(position._turn == BLACK) state_value = state_values[0] - state_values[1];
-		else if(position._turn == WHITE ) state_value = state_values[1] - state_values[0];
+		if(position._turn == WHITE) state_value = state_values[0] - state_values[1];
+		else if(position._turn == BLACK ) state_value = state_values[1] - state_values[0];
 
 //		cout << "Max depth reached: " << state_value << endl;
 
@@ -201,41 +201,59 @@ int main(){
 	vector<Move> moves;
 	moves = position.generate_legal_moves();
 //	map<Move, int> action_value;
-	
-
-
-		while (!moves.empty()){
-		string input_move_string;
-//		cout << "Printing out all moves: " << endl;
-//		for(auto m: moves) m.print_move();
-//		action_value.clear();
-
-		position.print();
-		cout << "Input your move: ";
-//		cin >> input_move_string;
-//		bool possible_move= true;
-		Move new_move(input_move_string);
-
-//		if (!count(moves.begin(),moves.end(), new_move)) continue; // checking if moves exist
-		if (!count(moves.begin(),moves.end(), new_move)) cout << "GAME OVER!!!!"; // checking if moves exist
-
-//		Move maxMove = find_best_move(moves, position);
-//		map<Move, int> maxMoveMap = minimax(Move(1,1,1,1), position, 3, true, g);
-//		Move maxMove = maxMoveMap.begin() -> first;
-		Move maxMove = getBestMove(position, 4, g);
-
-		cout << "MAX MOVE MADE:::" << endl;
-		maxMove.print_move();
-		position.make_move(maxMove);
-		moves.clear();
-		moves = position.generate_legal_moves();
-
-
-		
-		cout << "values are: " << position.get_state_value()[0] << " " << position.get_state_value()[1] << endl;
+	int select;
+	while(select != 1 and select != 2){
+		cout << "1: AI vs AI. 2: AI vs HUMAN" << endl; 
+		cin >> select;
 	}
 
-	cout << "Winner: " << position._turn << endl;
+// AI playing
+	if(select == 1)
+		while (!moves.empty()){
+			position.print();
+			Move maxMove = getBestMove(position, 4, g);
+			maxMove.print_move();
+			position.make_move(maxMove);
+			moves.clear();
+			moves = position.generate_legal_moves();
+		}
+
+
+	else if(select == 2)
+		while (!moves.empty()){
+			string input_move_string;
+			if(position._turn == WHITE){
+				cout << "Printing out all moves: " << endl;
+
+				for(auto m: moves) m.print_move();
+
+				position.print();
+				cout << "Input your move: ";
+				cin >> input_move_string;
+
+				Move new_move(input_move_string);
+
+				if (!count(moves.begin(),moves.end(), new_move)) continue; // checking if input moves exist
+
+				position.make_move(new_move);
+				moves.clear();
+				moves = position.generate_legal_moves();
+			}else{
+				position.print();
+				Move maxMove = getBestMove(position, 4, g);
+				maxMove.print_move();
+				position.make_move(maxMove);
+				moves.clear();
+				moves = position.generate_legal_moves();
+
+			} 
+
+			
+			cout << "values are: " << position.get_state_value()[0] << " " << position.get_state_value()[1] << endl;
+		}
+	if(position._turn == WHITE) cout << "Winnter: BLACK" << endl;
+	if(position._turn == BLACK) cout << "Winnter: WHITE" << endl;
+
 	
 
 		return 0;
