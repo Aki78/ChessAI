@@ -195,18 +195,18 @@ Move getBestMove(Position position, int depth, auto g) {
 
 Move getBestMoveThread(Position position, int depth, auto g) {
 	vector<Move> moves = position.generate_legal_moves();
-	std::shuffle(moves.begin(), moves.end(), g);
+	shuffle(moves.begin(), moves.end(), g);
 
-	std::atomic<int> bestValue(-99999);
+	atomic<int> bestValue(-99999);
 	Move bestMove(0,0,0,0);
-	std::mutex bestMoveMutex;
+	mutex bestMoveMutex;
 
 	int alpha = -99999;
 	int beta = 99999;
 
 	// determine the number of threads to use 
-	unsigned num_threads = std::thread::hardware_concurrency();
-	std::vector<std::thread> threads(num_threads);
+	unsigned num_threads = thread::hardware_concurrency();
+	vector<thread> threads(num_threads);
 
 	auto processMoves = [&](int start, int end) {
 		int localBestValue = -99999;
@@ -223,11 +223,11 @@ Move getBestMoveThread(Position position, int depth, auto g) {
 				localBestMove = moves[i];
 			}
 
-			localAlpha = std::max(localAlpha, localBestValue);
+			localAlpha = max(localAlpha, localBestValue);
 			if (localBeta <= localAlpha) break;
 		}
 
-		std::lock_guard<std::mutex> lock(bestMoveMutex);
+		lock_guard<mutex> lock(bestMoveMutex);
 		if (localBestValue > bestValue) {
 			bestValue = localBestValue;
 			bestMove = localBestMove;
@@ -243,7 +243,7 @@ Move getBestMoveThread(Position position, int depth, auto g) {
 			end = moves.size(); // ensure the last thread picks up the remainder
 		}
 
-		threads[i] = std::thread(processMoves, start, end);
+		threads[i] = thread(processMoves, start, end);
 	}
 
 	for (auto& t : threads) {
