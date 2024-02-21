@@ -48,30 +48,6 @@ Move find_best_greedy_move(vector<Move> moves, Position position){
 }
 
 
-map<Move, int> get_max(map<Move, int> a, map<Move, int> b){
-
-	int valA = a.begin() -> second;
-	int valB = b.begin() -> second;
-
-	if(valA > valB) return a;
-	else return b;
-
-
-
-}
-
-map<Move, int> get_min(map<Move, int> a, map<Move, int> b){
-
-	int valA = a.begin() -> second;
-	int valB = b.begin() -> second;
-
-	cout << "VAL A " << valA << endl;
-
-	if(valA < valB) return a;
-	else return b;
-
-}
-
 // Try 3 still very dumb, can't do more than depth = 4
 int minimax(Position position, int depth, bool maximizingPlayer){ // move is just a place holder at start
 	if(depth == 0){
@@ -192,7 +168,7 @@ Move getBestMove(Position position, int depth, auto g) {
 }
 
 
-
+// with thread, it can go deepth 7 or even 8
 Move getBestMoveThread(Position position, int depth, auto g) {
 	vector<Move> moves = position.generate_legal_moves();
 	shuffle(moves.begin(), moves.end(), g);
@@ -236,7 +212,7 @@ Move getBestMoveThread(Position position, int depth, auto g) {
 
 	// divide the work among the threads
 	int moves_per_thread = moves.size() / num_threads;
-	for (unsigned i = 0; i < num_threads; ++i) {
+	for (int i = 0; i < num_threads; ++i) {
 		int start = i * moves_per_thread;
 		int end = (i + 1) * moves_per_thread;
 		if (i == num_threads - 1) {
