@@ -100,8 +100,8 @@ int minimax_alphabeta(Position& position, int depth, bool maximizingPlayer, int 
 		vector<int> state_values = position.get_state_value(); // split to white and black
 		int state_value = 0;
 
-		if(position._turn == WHITE) state_value = state_values[0] - state_values[1];
-		else if(position._turn == BLACK ) state_value = state_values[1] - state_values[0];
+		if(position._turn == BLACK) state_value = state_values[0] - state_values[1];
+		else if(position._turn == WHITE ) state_value = state_values[1] - state_values[0];
 
 //		cout << "Max depth reached: " << state_value << endl;
 
