@@ -236,9 +236,13 @@ Move getBestMoveThread(Position position, int depth, auto g) {
 int main(){
 	random_device rd;
 	mt19937 g(rd()); // initializing a random seed;
+	int depth = 5;
 
 		// Initial position.
-		Position position;
+	Position position;
+//	double current_value;
+
+//	double total_value = (double) (position.get_state_value()[0] + position.get_state_value()[1]);
 	vector<Move> moves;
 	moves = position.generate_legal_moves();
 //	map<Move, int> action_value;
@@ -251,8 +255,14 @@ int main(){
 // AI playing
 	if(select == 1)
 		while (!moves.empty()){
+			if (position.get_state_value()[0] + position.get_state_value()[1]  < 100) depth = 6;
+			if (position.get_state_value()[0] + position.get_state_value()[1]  < 90) depth = 7;
+			if (position.get_state_value()[0] + position.get_state_value()[1]  < 80) depth = 8;
+			if (position.get_state_value()[0] + position.get_state_value()[1]  < 70) depth = 9;
+			if (position.get_state_value()[0] + position.get_state_value()[1]  < 60) depth = 10;
+			if (position.get_state_value()[0] + position.get_state_value()[1]  < 50) depth = 11;
 			position.print();
-			Move maxMove = getBestMoveThread(position, 6, g);
+			Move maxMove = getBestMoveThread(position, depth, g);
 			maxMove.print_move();
 			position.make_move(maxMove);
 			moves.clear();
