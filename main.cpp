@@ -8,6 +8,9 @@
 #include <climits>
 #include <algorithm>
 #include <random>
+#include <mutex>
+#include<atomic>
+#include<thread>
 
 using namespace std;
 
@@ -174,12 +177,9 @@ Move getBestMove(Position position, int depth, auto g) {
 	for (const Move& m : moves) {
 		Position test_position = position; 
 		test_position.make_move(m);
-//		int moveValue = minimax(test_position, depth - 1, false); 
 		int moveValue = minimax_alphabeta(test_position, depth - 1, false, alpha, beta); 
-//		cout << moveValue << endl;
 
 		if (moveValue > bestValue) {
-//			cout << "Best HIT" << moveValue << " " << bestValue << endl;
 			bestValue = moveValue;
 			bestMove = m;
 		}
@@ -190,6 +190,71 @@ Move getBestMove(Position position, int depth, auto g) {
 
 	return bestMove;
 }
+
+
+
+Move getBestMoveThread(Position position, int depth, auto g) {
+	vector<Move> moves = position.generate_legal_moves();
+	std::shuffle(moves.begin(), moves.end(), g);
+
+	std::atomic<int> bestValue(-99999);
+	Move bestMove(0,0,0,0);
+	std::mutex bestMoveMutex;
+
+	int alpha = -99999;
+	int beta = 99999;
+
+	// determine the number of threads to use 
+	unsigned num_threads = std::thread::hardware_concurrency();
+	std::vector<std::thread> threads(num_threads);
+
+	auto processMoves = [&](int start, int end) {
+		int localBestValue = -99999;
+		Move localBestMove(0,0,0,0);
+		int localAlpha = alpha, localBeta = beta;
+
+		for (int i = start; i < end; ++i) {
+			Position test_position = position;
+			test_position.make_move(moves[i]);
+			int moveValue = minimax_alphabeta(test_position, depth - 1, false, localAlpha, localBeta);
+
+			if (moveValue > localBestValue) {
+				localBestValue = moveValue;
+				localBestMove = moves[i];
+			}
+
+			localAlpha = std::max(localAlpha, localBestValue);
+			if (localBeta <= localAlpha) break;
+		}
+
+		std::lock_guard<std::mutex> lock(bestMoveMutex);
+		if (localBestValue > bestValue) {
+			bestValue = localBestValue;
+			bestMove = localBestMove;
+		}
+	};
+
+	// divide the work among the threads
+	int moves_per_thread = moves.size() / num_threads;
+	for (unsigned i = 0; i < num_threads; ++i) {
+		int start = i * moves_per_thread;
+		int end = (i + 1) * moves_per_thread;
+		if (i == num_threads - 1) {
+			end = moves.size(); // ensure the last thread picks up the remainder
+		}
+
+		threads[i] = std::thread(processMoves, start, end);
+	}
+
+	for (auto& t : threads) {
+		if (t.joinable()) {
+			t.join();
+		}
+	}
+
+	return bestMove;
+}
+
 
 
 int main(){
@@ -211,7 +276,7 @@ int main(){
 	if(select == 1)
 		while (!moves.empty()){
 			position.print();
-			Move maxMove = getBestMove(position, 4, g);
+			Move maxMove = getBestMoveThread(position, 7, g);
 			maxMove.print_move();
 			position.make_move(maxMove);
 			moves.clear();
@@ -240,7 +305,7 @@ int main(){
 				moves = position.generate_legal_moves();
 			}else{
 				position.print();
-				Move maxMove = getBestMove(position, 4, g);
+				Move maxMove = getBestMove(position, 5, g);
 				maxMove.print_move();
 				position.make_move(maxMove);
 				moves.clear();
@@ -271,7 +336,7 @@ int main(){
 				moves = position.generate_legal_moves();
 			}else{
 				position.print();
-				Move maxMove = getBestMove(position, 4, g);
+				Move maxMove = getBestMove(position, 5, g);
 				maxMove.print_move();
 				position.make_move(maxMove);
 				moves.clear();

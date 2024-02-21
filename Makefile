@@ -8,7 +8,7 @@ CFLAGS=-Wall -O3
 TARGET=chess
 
 # Define source files
-SRCS=main.cpp position.cpp chess.cpp move.cpp piece.cpp
+SRCS=main.cpp position.cpp chess.cpp move.cpp
 
 # Define object files
 OBJS=$(SRCS:.cpp=.o)
