@@ -281,7 +281,7 @@ int main(){
 				moves = position.generate_legal_moves();
 			}else{
 				position.print();
-				Move maxMove = getBestMoveThread(position, 5, g);
+				Move maxMove = getBestMove(position, 4, g);
 				maxMove.print_move();
 				position.make_move(maxMove);
 				moves.clear();
@@ -312,7 +312,7 @@ int main(){
 				moves = position.generate_legal_moves();
 			}else{
 				position.print();
-				Move maxMove = getBestMoveThread(position, 5, g);
+				Move maxMove = getBestMove(position, 4, g);
 				maxMove.print_move();
 				position.make_move(maxMove);
 				moves.clear();
