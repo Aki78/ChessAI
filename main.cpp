@@ -276,7 +276,7 @@ int main(){
 	if(select == 1)
 		while (!moves.empty()){
 			position.print();
-			Move maxMove = getBestMoveThread(position, 7, g);
+			Move maxMove = getBestMoveThread(position, 6, g);
 			maxMove.print_move();
 			position.make_move(maxMove);
 			moves.clear();
