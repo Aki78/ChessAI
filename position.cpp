@@ -153,13 +153,6 @@ bool Position::is_enemy_of_black(int p) {
 }	
 
 
-//int Position::piece_color(int p) {
-//	if(p == wR  || p == wN || p == wB || p == wQ || p == wK || p == wP) return WHITE;
-//	else if(p == bR  || p == bN || p == bB || p == bQ || p == bK || p == bP) return BLACK;
-//	
-//	return -999; // Not white nor black
-//}	
-
 void Position::check_pawn_and_push_move(int row, int column, int player, vector<Move>& moves){ // woudl this logic really work?
 // add promotion, en passande,  taking pieces
 	int current_row = row;
@@ -194,7 +187,7 @@ void Position::check_pawn_and_push_move(int row, int column, int player, vector<
 		current_row = row; // resetting position
 
 		// if enemy on sides
-		if(current_column - 1 >= 0 && current_column + 1 <8){
+		if(current_column - 1 >= -1 && current_column + 1 <9){
 			if (is_enemy_of_white(_board[current_row-1][current_column-1])){ 
 				moves.push_back(Move(row, column, current_row-1, current_column-1));
 			}
