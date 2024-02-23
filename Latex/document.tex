@@ -66,7 +66,7 @@
 
 \vspace{0.5cm}
 
-{\Huge \textcolor{red}{Chess Project}} \\
+{\Huge \textcolor{red}{Chess AI Project}} \\
 
 
 \vspace{0.5cm}
@@ -85,7 +85,7 @@
 
 
 \begin{tabular}{l}
- Second year second period semster\\
+ Second year second semster (7th period)\\
  School of ICT\\
  Metropolia University of Applied Sciences  \\
  \today
@@ -224,8 +224,98 @@ This could only achieve a depth of 4 or 5 so I added also the alpha-beta pruning
 
 
 
+\subsection{Alpha-Beta Pruning}
+
+ Alpha-Beta Pruning optimizes the Minimax algorithm by introducing two parameters, `alpha` and `beta`, which represent the minimum score that the maximizing player is assured of and the maximum score that the minimizing player is assured of, respectively. By updating these parameters during recursion and employing conditional checks, the algorithm prunes (skips) branches that cannot possibly affect the final decision. This significantly reduces the number of nodes evaluated, leading to faster decision-making without compromising the outcome's accuracy.
 
 
+
+
+
+\begin{lstlisting}[language=Python, caption=Alpha-Beta Pruning Enhancements]
+func minimax_alphabeta(position, depth, maximizingPlayer, alpha, beta)
+    # Base case remains the same
+
+    if maximizingPlayer
+        # Initialize maxEval as before
+        for each move in moves
+            # Apply move and recursive call with alpha and beta
+            eval = minimax_alphabeta(childPosition, depth - 1, false, alpha, beta)
+            maxEval = max(maxEval, eval)
+            alpha = max(alpha, eval) # Update alpha
+            if beta <= alpha
+                break # Pruning occurs here
+        return maxEval
+    else
+        # Initialize minEval as before
+        for each move in moves
+            # Apply move and recursive call with alpha and beta
+            eval = minimax_alphabeta(childPosition, depth - 1, true, alpha, beta)
+            minEval = min(minEval, eval)
+            beta = min(beta, eval) # Update beta
+            if beta <= alpha
+                break # Pruning occurs here
+        return minEval
+\end{lstlisting}
+
+
+Incorporating Alpha-Beta Pruning into the chess engine allowed for an exploration depth of 5 to 6 moves ahead on my personal computer. To further enhance the engine's capability and achieve greater depth in move exploration, I employed parallelization techniques using the C++ Standard Library's threading capabilities. This approach enabled the distribution of computational tasks across multiple threads, significantly reducing the time required to evaluate deeper game states and thereby improving the overall performance and strategic analysis of the chess engine.
+
+
+\subsection{Threading}
+By employing parallel computing through threading, the chess engine's ability to evaluate potential moves is significantly enhanced. Moves are first shuffled to ensure an even distribution of computational effort across threads. The work of evaluating moves is then divided among a determined number of threads, equal to the system's hardware concurrency, allowing for simultaneous evaluation. Each thread calculates the best move for its assigned portion of the move list, and through synchronization mechanisms (mutexes), updates the global best move and value if a better move is found. This method not only accelerates the move evaluation process by leveraging multicore processors but also maintains the integrity of the decision-making process by ensuring that the best move is selected based on a deeper and faster analysis.
+
+
+\begin{lstlisting}[language=Python, caption=Alpha-Beta Pruning Enhancements]
+func getBestMoveThread(position, depth, g)
+    moves = generateLegalMoves(position)
+    shuffle(moves, g) # Randomize moves to evenly distribute computational load
+
+    bestValue = -infinity
+    bestMove = null
+    alpha = -infinity
+    beta = infinity
+
+    num_threads = hardwareConcurrency() # Number of available hardware threads
+    threads = vector(num_threads)
+
+    func processMoves(start, end)
+        localBestValue = -infinity
+        localBestMove = null
+
+        for each move in moves[start:end]
+            test_position = applyMove(position, move)
+            moveValue = minimax_alphabeta(test_position, depth - 1, false, alpha, beta)
+
+            if moveValue > localBestValue
+                localBestValue = moveValue
+                localBestMove = move
+
+        # Critical section to update global best values
+        lock(mutex)
+        if localBestValue > bestValue
+            bestValue = localBestValue
+            bestMove = localBestMove
+        unlock(mutex)
+
+    # Divide work among threads and start them
+    moves_per_thread = moves.size / num_threads
+    for i = 0 to num_threads
+        start = i * moves_per_thread
+        end = (i + 1) * moves_per_thread
+        if i == num_threads - 1
+            end = moves.size # Last thread gets remainder
+
+        threads[i] = startThread(processMoves, start, end)
+
+    # Wait for all threads to complete
+    for each thread in threads
+        join(thread)
+
+    return bestMove
+\end{lstlisting}
+
+Incorporating threading into the chess engine's "getBestMove" function, I was able to extend the search depth to 7 or 8 levels on my personal computer, a significant improvement over the depth achievable without parallel processing. This enhancement is a direct result of leveraging multiple threads to concurrently evaluate potential moves, thus allowing the engine to explore more possibilities within the same time frame. While this approach already provides a substantial boost in performance, it's important to note that further optimizations and advanced techniques could potentially unlock even deeper search capabilities. Such enhancements could include more sophisticated move ordering, use of transposition tables, and adaptive depth adjustment based on the complexity of the position, among others. These additional optimizations promise to further enhance the engine's strategic depth and efficiency, pushing the boundaries of what can be achieved with parallel processing in chess analysis.
 
 
 
