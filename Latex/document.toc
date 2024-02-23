@@ -1,0 +1,13 @@
+\contentsline {section}{\numberline {1}Introduction}{3}{section.1}%
+\contentsline {section}{\numberline {2}AI Algorithm}{3}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Minimax}{3}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Alpha-Beta Pruning}{4}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}Threading}{5}{subsection.2.3}%
+\contentsline {section}{\numberline {3}Future Development Directions}{6}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Improving Board Representation}{6}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Move Ordering to Enhance Alpha-Beta Pruning}{6}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Using Transposition Tables}{6}{subsection.3.3}%
+\contentsline {subsection}{\numberline {3.4}Use a Better Evaluation}{7}{subsection.3.4}%
+\contentsline {subsection}{\numberline {3.5}Incorporating Opening Books and Endgame Tablebases}{7}{subsection.3.5}%
+\contentsline {subsection}{\numberline {3.6}Enhancing Strategy with Opening Books, Endgame Tablebases, and Memory Optimization}{7}{subsection.3.6}%
+\contentsline {section}{\numberline {4}Summary}{7}{section.4}%
