@@ -95,17 +95,35 @@ int minimax(Position position, int depth, bool maximizingPlayer){ // move is jus
 //Try4 with alpha beta pruning, can do depth of 5 now,
 // even 6 if you wait minutes per tern,
 // but with a bad evaluation function, still bad
+
+
+int evaluate_leaf(Position position){
+
+	vector<int> state_values = position.get_state_value(); // split to white and black
+	int state_value = 0;
+
+	if(position._turn == BLACK){
+		state_value = state_values[0] - state_values[1];
+		vector<Move> moves = position.generate_legal_moves();
+		state_value -= moves.size();
+	}
+	else if(position._turn == WHITE ){
+		state_value = state_values[1] - state_values[0];
+		vector<Move> moves = position.generate_legal_moves();
+//	 	cout << state_value << endl;
+		state_value -= moves.size();
+//	 	cout << state_value << endl;
+	}
+
+
+	return state_value; 
+}
+
+
+
 int minimax_alphabeta(Position& position, int depth, bool maximizingPlayer, int alpha, int beta){ // move is just a place holder at start
 	if(depth == 0){
-		vector<int> state_values = position.get_state_value(); // split to white and black
-		int state_value = 0;
-
-		if(position._turn == BLACK) state_value = state_values[0] - state_values[1];
-		else if(position._turn == WHITE ) state_value = state_values[1] - state_values[0];
-
-//		cout << "Max depth reached: " << state_value << endl;
-
-		return state_value; 
+		return evaluate_leaf(position);
 	}
 
 	vector<Move> moves = position.generate_legal_moves();
@@ -262,7 +280,7 @@ int main(){
 			if (position.get_state_value()[0] + position.get_state_value()[1]  < 60) depth = 10;
 			if (position.get_state_value()[0] + position.get_state_value()[1]  < 50) depth = 11;
 			position.print();
-			Move maxMove = getBestMoveThread(position, depth, g);
+			Move maxMove = getBestMoveThread(position, 5, g);
 			maxMove.print_move();
 			position.make_move(maxMove);
 			moves.clear();
@@ -291,7 +309,7 @@ int main(){
 				moves = position.generate_legal_moves();
 			}else{
 				position.print();
-				Move maxMove = getBestMoveThread(position, 5, g);
+				Move maxMove = getBestMoveThread(position, 3, g);
 				maxMove.print_move();
 				position.make_move(maxMove);
 				moves.clear();
