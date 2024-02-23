@@ -325,7 +325,7 @@ To reach and surpass the search depths of over 20 moves achieved by modern chess
 
 \subsection{Improving Board Representation}
 
-Right now, the chessboard is represented using a 2D C++ vector, where each piece, like a white rook or knight, is marked by specific numbers (e.g., 0 for rook, 1 for knight). Switching to a bitboard system and using simple bit operations (AND, NOR, XOR) for managing moves could greatly speed up the game's decision-making process.
+Right now, the chessboard is represented using a 2D C++ array of enumerated integers, where each piece, like a white rook or knight, is marked by specific numbers (e.g., 0 for rook, 1 for knight). Switching to a bitboard system and using simple bit operations (AND, NOR, XOR) for managing moves could greatly speed up the game's decision-making process.
 
 \subsection{Move Ordering to Enhance Alpha-Beta Pruning}
 
