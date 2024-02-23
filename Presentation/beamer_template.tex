@@ -1,0 +1,94 @@
+\documentclass{beamer}
+
+% Theme setting
+\usetheme{Madrid} % This theme is quite flexible and popular
+
+\usepackage{graphicx} % Required for including images
+\usepackage{caption} % Required for captioning
+
+% Color theme setting
+\usecolortheme{orchid} % Base color theme
+
+\definecolor{MetropoliaOrange}{RGB}{232, 93, 12} % Adjusted to a deeper orange
+\setbeamercolor{structure}{fg=MetropoliaOrange} % Use the new Metropolia Orange for structural elements
+\setbeamercolor{section in toc}{fg=MetropoliaOrange} % Table of contents sections
+\setbeamercolor{subsection in toc}{fg=MetropoliaOrange} % Table of contents subsections
+\setbeamercolor{title}{fg=MetropoliaOrange} % Titles
+\setbeamercolor{item}{fg=MetropoliaOrange} % Items (bullets, etc.)
+
+\setbeamercolor{title}{fg=white, bg=MetropoliaOrange} % Add a background color if needed
+
+
+
+% Logo setting
+\logo{\includegraphics[height=1cm]{logo.png}} % Adjust the path and size as needed
+
+% Additional packages
+\usepackage{graphicx} % For including images
+\usepackage{booktabs} % For nicer tables
+
+\title[Short Title]{Full Title of the Presentation}
+\author{Your Name}
+\institute[Metropolia UAS]{Metropolia University of Applied Sciences}
+\date{\today}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Table of Contents}
+  \tableofcontents
+\end{frame}
+
+% Section and Subsection in the presentation
+\section{Introduction}
+\begin{frame}{Introduction}
+  \begin{itemize}
+    \item Point 1
+    \item Point 2
+    \item Point 3
+  \end{itemize}
+\end{frame}
+
+\section{Main Content}
+\begin{frame}{Main Content}
+  Text here...
+\end{frame}
+
+\begin{frame}{Image Description}
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.4\textwidth]{logo.png} % Adjust the size as needed
+        \caption{Description of the image.}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{Comparative Images}
+  \begin{columns}[T] % The [T] option aligns column content at the top
+%
+    \begin{column}{.48\textwidth} % Left column
+      \centering
+      \includegraphics[width=0.8\linewidth]{logo.png} % Left image
+      \captionof{figure}{Caption here}
+    \end{column}
+%
+    \begin{column}{.48\textwidth} % Right column
+      \centering
+      \includegraphics[width=0.8\linewidth]{logo.png} % Right image
+%        \caption{Description of the image.}
+      \captionof{figure}{Caption here}
+    \end{column}
+%
+  \end{columns}
+\end{frame}
+
+
+\section{Conclusion}
+\begin{frame}{Conclusion}
+  Summary or conclusion text...
+\end{frame}
+
+\end{document}
+

@@ -6,6 +6,12 @@
 \usepackage{graphicx} % Required for including images
 \usepackage{caption} % Required for captioning
 
+\hypersetup{
+    colorlinks=true,
+    linkcolor=gray, % change this color to suit your needs
+    urlcolor=gray % change this color to suit your needs
+}
+
 % Color theme setting
 \usecolortheme{orchid} % Base color theme
 
@@ -18,6 +24,8 @@
 
 \setbeamercolor{title}{fg=white, bg=MetropoliaOrange} % Add a background color if needed
 
+\usepackage{hyperref}
+
 
 
 % Logo setting
@@ -27,8 +35,8 @@
 \usepackage{graphicx} % For including images
 \usepackage{booktabs} % For nicer tables
 
-\title[Short Title]{Full Title of the Presentation}
-\author{Your Name}
+\title[Chess AI]{Chess AI with Minimax $\alpha$-$\beta$ Pruning}
+\author{Aki Morooka}
 \institute[Metropolia UAS]{Metropolia University of Applied Sciences}
 \date{\today}
 
@@ -43,52 +51,120 @@
 \end{frame}
 
 % Section and Subsection in the presentation
+
 \section{Introduction}
-\begin{frame}{Introduction}
+
+
+\begin{frame}{History}
   \begin{itemize}
-    \item Point 1
-    \item Point 2
-    \item Point 3
+    \item 1951: Alan Turing suggests theoretical possibility
+    \item 1989: Chess world champion Gary Kasparov defeated IBM’s Deep Thought in a chess match
+    \item 1997: IBM’s Deep Blue becomes the first chess AI to defeat a grandmaster in a match
+
+    \item 2017: AlphaZero, a neural net-based digital automaton, beats Stockfish 28–0, with 72 draws in chess matches
   \end{itemize}
+
+\vspace{1cm}
+\href{https://builtin.com/artificial-intelligence/chess-ai}{https://builtin.com/artificial-intelligence/chess-ai}
 \end{frame}
 
-\section{Main Content}
-\begin{frame}{Main Content}
-  Text here...
+\begin{frame}{Complexity}
+\center
+    10 moves give around  $10^{29}$ possible configurations
+
+    \vspace{1cm}
+
+\href{https://www.reddit.com/r/chess/comments/o1bwhw/a_model_for_the_number_of_possible_moves_in_chess/}{Reference}
 \end{frame}
 
-\begin{frame}{Image Description}
+\section{Algorithms}
+
+\begin{frame}{Board Representation}
     \begin{figure}
         \centering
-        \includegraphics[width=0.4\textwidth]{logo.png} % Adjust the size as needed
-        \caption{Description of the image.}
+        \includegraphics[width=0.8\textwidth]{board_representation.png} % Adjust the size as needed
+        \caption{8 x 8 Array of Enums}
     \end{figure}
 \end{frame}
 
-\begin{frame}{Comparative Images}
-  \begin{columns}[T] % The [T] option aligns column content at the top
-%
-    \begin{column}{.48\textwidth} % Left column
-      \centering
-      \includegraphics[width=0.8\linewidth]{logo.png} % Left image
-      \captionof{figure}{Caption here}
-    \end{column}
-%
-    \begin{column}{.48\textwidth} % Right column
-      \centering
-      \includegraphics[width=0.8\linewidth]{logo.png} % Right image
-%        \caption{Description of the image.}
-      \captionof{figure}{Caption here}
-    \end{column}
-%
-  \end{columns}
+
+
+
+\begin{frame}{Board Representation}
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.8\textwidth]{minimax.png} % Adjust the size as needed
+
+        \caption{8 x 8 Array of Enums}
+    \end{figure}
+\href{https://en.wikipedia.org/wiki/Alpha\%E2\%80\%93beta_pruning}{Wikipedia}
 \end{frame}
 
 
-\section{Conclusion}
-\begin{frame}{Conclusion}
-  Summary or conclusion text...
+\begin{frame}{It's Playable! (github.com/Aki78/ChessAI)}
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.7\textwidth]{playable.png} % Adjust the size as needed
+
+    \end{figure}
 \end{frame}
+
+
+
+\begin{frame}{Evaluation}
+\begin{table}[ht]
+\centering
+\begin{tabular}{|l|c|}
+\hline
+\textbf{Chess Piece} & \textbf{Value} \\
+\hline
+Pawn & 1 \\
+\hline
+Knight & 3 \\
+\hline
+Bishop & 3 \\
+\hline
+Rook & 5 \\
+\hline
+Queen & 9 \\
+\hline
+King & 20 \\
+\hline
+\end{tabular}
+\caption{Values assigned to each chess piece for evaluation.}
+\label{table:chess_piece_values}
+\end{table}
+\end{frame}
+
+%\begin{frame}{Comparative Images}
+%  \begin{columns}[T] % The [T] option aligns column content at the top
+%    \begin{column}{.48\textwidth} % Left column
+%      \centering
+%      \includegraphics[width=0.8\linewidth]{logo.png} % Left image
+%      \captionof{figure}{Caption here}
+%    \end{column}
+%    \begin{column}{.48\textwidth} % Right column
+%      \centering
+%      \includegraphics[width=0.8\linewidth]{logo.png} % Right image
+%      \captionof{figure}{Caption here}
+%    \end{column}
+%
+%  \end{columns}
+%\end{frame}
+
+\section{Further Development}
+
+\begin{frame}{Further Development}
+  \begin{itemize}
+    \item Better Evaluation Function
+    \item Reordering Moves for $\alpha$ - $\beta$ pruning
+    \item Using bit operations with a bit representation
+    \item Use Opening books and End Game Tables
+    \item Machine Learning? $\rightarrow$ Need a super computer
+    \item etc. etc.
+  \end{itemize}
+\end{frame}
+
 
 \end{document}
 

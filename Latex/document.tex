@@ -85,7 +85,7 @@
 
 
 \begin{tabular}{l}
- Second year second semster (7th period)\\
+ Second year second semester (7th period)\\
  School of ICT\\
  Metropolia University of Applied Sciences  \\
  \today
@@ -127,14 +127,14 @@ My goal was to create a chess engine that not only plays well but does so by eff
 
 \pagebreak
 
-\section{AI Algorithm}
+\section{AI Algorithms}
 \subsection{Minimax}
 
 The Minimax algorithm is a recursive strategy used for minimizing the possible loss for a worst-case scenario. When applied to chess, it is used to determine the best move by exploring all possible moves up to a certain depth. The function minimax(position, depth, maximizingPlayer) serves as the core of this strategy. It evaluates the game's positions to decide on the optimal move, considering both the player's and the opponent's perspectives.
 
 At the base of the recursion, when the depth is zero, the algorithm evaluates the current board position using the evaluatePosition(position) function. This evaluation assigns a numerical value to the board state, indicating how favorable it is. Positive values are favorable for White, while negative values favor Black. For non-terminal nodes (depth \textless \   0), the algorithm generates all legal moves from the current position and explores each move's outcomes recursively. When the algorithm operates in the maximizing mode, it looks for the move that will result in the highest evaluation. Conversely, in minimizing mode, it seeks the move that will lead to the lowest evaluation, simulating an opponent trying to minimize the score. Through this process of exploring and evaluating all possible moves up to the given depth, the algorithm identifies the best possible move from the current position, aiming to maximize the player's advantage while minimizing the opponent's.
 
-The following is a speudo-code (for simplicity) of the minimax algorithm I used
+The following is a pseudo-code (for simplicity) of the minimax algorithm:
 
 \begin{lstlisting}[caption={Pseudo-Code of the minimax used}, label=lst:pseudocode]
 func minimax(position, depth, maximizingPlayer)
@@ -201,8 +201,8 @@ King & 20 \\
 \label{table:chess_piece_values}
 \end{table}
 
-This could only achieve a depth of 4 or 5 so I added also the alpha-beta pruning.
 
+This could only achieve a depth of 4 or 5 so I added also the alpha-beta pruning. This made it possible to reach a search depth of 5 or 6.
 
 
 
@@ -332,7 +332,7 @@ Right now, the chessboard is represented using a 2D C++ vector, where each piece
 Currently, the move order is randomized. By implementing a good move ordering is a strategic enhancement that can significantly improve the efficiency of alpha-beta pruning. By evaluating promising moves earlier, the pruning process becomes more effective, allowing deeper searches in the same amount of time. This technique prioritizes moves that are likely to lead to a favorable outcome, such as captures or threats, thereby increasing the chances of cutting off less promising branches sooner. Integrating move ordering could be a pivotal step in refining the engine's performance and achieving faster, more accurate evaluations.
 
 \subsection{Using Transposition Tables}
-Adding transposition tables can makethe AI smarter and faster. These tables remember positions the engine has already looked at, along with their scores and how deeply they were analyzed. If the engine comes across a position it's seen before, it can just use the score from the table instead of figuring it out all over again. This saves time and lets the engine think deeper without extra work.
+Adding transposition tables can make the AI smarter and faster. These tables remember positions the engine has already looked at, along with their scores and how deeply they were analyzed. If the engine comes across a position it's seen before, it can just use the score from the table instead of figuring it out all over again. This saves time and lets the engine think deeper without extra work.
 
 
 \subsection{Use a Better Evaluation}
