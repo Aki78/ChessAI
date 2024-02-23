@@ -43,7 +43,7 @@
 }
 
 \pagestyle{fancy}
-\setlength{\footskip}{60pt}
+\setlength{\footskip}{70pt}
 \vspace{-2cm}
 \fancyfoot{\rule{0.5\linewidth}{1pt}}
 
@@ -125,14 +125,14 @@ Given the complexity of chess and the depth of analysis required, I also incorpo
 My goal was to create a chess engine that not only plays well but does so by efficiently navigating the vast sea of possible moves in chess. This project, crafted entirely in C++, was a hands-on journey into the intersection of AI and one of the world's oldest games, pushing the boundaries of what I could achieve with code, algorithms, and a bit of strategic thinking.
 %
 
-
+\pagebreak
 
 \section{AI Algorithm}
 \subsection{Minimax}
 
 The Minimax algorithm is a recursive strategy used for minimizing the possible loss for a worst-case scenario. When applied to chess, it is used to determine the best move by exploring all possible moves up to a certain depth. The function minimax(position, depth, maximizingPlayer) serves as the core of this strategy. It evaluates the game's positions to decide on the optimal move, considering both the player's and the opponent's perspectives.
 
-At the base of the recursion, when the depth is zero, the algorithm evaluates the current board position using the evaluatePosition(position) function. This evaluation assigns a numerical value to the board state, indicating how favorable it is. Positive values are favorable for White, while negative values favor Black. For non-terminal nodes (depth > 0), the algorithm generates all legal moves from the current position and explores each move's outcomes recursively. When the algorithm operates in the maximizing mode, it looks for the move that will result in the highest evaluation. Conversely, in minimizing mode, it seeks the move that will lead to the lowest evaluation, simulating an opponent trying to minimize the score. Through this process of exploring and evaluating all possible moves up to the given depth, the algorithm identifies the best possible move from the current position, aiming to maximize the player's advantage while minimizing the opponent's.
+At the base of the recursion, when the depth is zero, the algorithm evaluates the current board position using the evaluatePosition(position) function. This evaluation assigns a numerical value to the board state, indicating how favorable it is. Positive values are favorable for White, while negative values favor Black. For non-terminal nodes (depth \textless \   0), the algorithm generates all legal moves from the current position and explores each move's outcomes recursively. When the algorithm operates in the maximizing mode, it looks for the move that will result in the highest evaluation. Conversely, in minimizing mode, it seeks the move that will lead to the lowest evaluation, simulating an opponent trying to minimize the score. Through this process of exploring and evaluating all possible moves up to the given depth, the algorithm identifies the best possible move from the current position, aiming to maximize the player's advantage while minimizing the opponent's.
 
 The following is a speudo-code (for simplicity) of the minimax algorithm I used
 
@@ -232,7 +232,7 @@ This could only achieve a depth of 4 or 5 so I added also the alpha-beta pruning
 
 
 
-\begin{lstlisting}[language=Python, caption=Alpha-Beta Pruning Enhancements]
+\begin{lstlisting}[caption=Pseudo-Code of Alpha-Beta Pruning Enhancements, label=lst:pseudocode]
 func minimax_alphabeta(position, depth, maximizingPlayer, alpha, beta)
     # Base case remains the same
 
@@ -266,7 +266,7 @@ Incorporating Alpha-Beta Pruning into the chess engine allowed for an exploratio
 By employing parallel computing through threading, the chess engine's ability to evaluate potential moves is significantly enhanced. Moves are first shuffled to ensure an even distribution of computational effort across threads. The work of evaluating moves is then divided among a determined number of threads, equal to the system's hardware concurrency, allowing for simultaneous evaluation. Each thread calculates the best move for its assigned portion of the move list, and through synchronization mechanisms (mutexes), updates the global best move and value if a better move is found. This method not only accelerates the move evaluation process by leveraging multicore processors but also maintains the integrity of the decision-making process by ensuring that the best move is selected based on a deeper and faster analysis.
 
 
-\begin{lstlisting}[language=Python, caption=Alpha-Beta Pruning Enhancements]
+\begin{lstlisting}[caption= Threading in Getting Best Move, label=lst:pseudocode]
 func getBestMoveThread(position, depth, g)
     moves = generateLegalMoves(position)
     shuffle(moves, g) # Randomize moves to evenly distribute computational load
@@ -319,9 +319,9 @@ Incorporating threading into the chess engine's "getBestMove" function, I was ab
 
 
 
-\section{Future Development Directions}
+\section{Future Development}
 
-To reach and surpass the search depths of over 20 moves achieved by modern chess engines, significant improvements are necessary. Key areas include refining search algorithms, adopting efficient board representations, and exploring new technologies.
+To reach and surpass the search depths of over 20 moves achieved by modern chess engines, significant improvements are necessary. Key areas include refining search algorithms and adopting efficient board representations.
 
 \subsection{Improving Board Representation}
 
@@ -329,7 +329,7 @@ Right now, the chessboard is represented using a 2D C++ vector, where each piece
 
 \subsection{Move Ordering to Enhance Alpha-Beta Pruning}
 
-Implementing move ordering is a strategic enhancement that can significantly improve the efficiency of alpha-beta pruning. By evaluating promising moves earlier, the pruning process becomes more effective, allowing deeper searches in the same amount of time. This technique prioritizes moves that are likely to lead to a favorable outcome, such as captures or threats, thereby increasing the chances of cutting off less promising branches sooner. Integrating move ordering could be a pivotal step in refining the engine's performance and achieving faster, more accurate evaluations.
+Currently, the move order is randomized. By implementing a good move ordering is a strategic enhancement that can significantly improve the efficiency of alpha-beta pruning. By evaluating promising moves earlier, the pruning process becomes more effective, allowing deeper searches in the same amount of time. This technique prioritizes moves that are likely to lead to a favorable outcome, such as captures or threats, thereby increasing the chances of cutting off less promising branches sooner. Integrating move ordering could be a pivotal step in refining the engine's performance and achieving faster, more accurate evaluations.
 
 \subsection{Using Transposition Tables}
 Adding transposition tables can makethe AI smarter and faster. These tables remember positions the engine has already looked at, along with their scores and how deeply they were analyzed. If the engine comes across a position it's seen before, it can just use the score from the table instead of figuring it out all over again. This saves time and lets the engine think deeper without extra work.
@@ -339,15 +339,8 @@ Adding transposition tables can makethe AI smarter and faster. These tables reme
 Improving the evaluation function can significantly enhance move quality without necessarily deepening search depth. Currently, the evaluation relies on a simple weighted count of pieces. Enhancements could include considering positional factors such as piece mobility, pawn structure, king safety, control of the center, and specific piece placements.
 
 
-\subsection{Incorporating Opening Books and Endgame Tablebases}
 
-To elevate the chess engine's performance further, integrating Opening Books and Endgame Tablebases is essential. These resources optimize play in the game's initial and final stages, respectively.
-
-Opening Books draw from a vast database of successful opening moves from professional games. This approach allows the engine to deploy strong openings without expending computational power on early-game analysis, preserving depth-searching capabilities for more complex middlegame scenarios.
-
-Endgame Tablebases, on the other hand, are comprehensive databases of pre-analyzed endgame positions. They enable the engine to execute perfect endgame strategies by providing optimal moves for any given position with a limited number of pieces. This ensures maximum effectiveness in winning or drawing positions theoretically within reach.
-
-\subsection{Enhancing Strategy with Opening Books, Endgame Tablebases, and Memory Optimization}
+\subsection{Opening Books, Endgame Tablebases}
 
 Integrating Opening Books and Endgame Tablebases into the chess engine represents a strategic enhancement that significantly improves its opening and endgame performance.
 
@@ -365,9 +358,7 @@ I made a chess engine and enhanced the AI's decision-making and computational ef
 
 By introducing parallel processing, I was able to dive deeper into possible moves, reaching new depths in analysis with the AI. I also discussed potential improvements like adopting bitboards for faster move calculations and considering advanced strategies such as opening books and endgame tablebases for better opening and endgame performance.
 
-There is room for further development. Optimizing the board representation to bitboards could dramatically increase speed, and refining my move evaluation process could sharpen the AI's competitive edge.
-
-In essence, the chess engine has come a long way, but much more development can be done. The next steps involve deeper optimization and exploring strategies to make my engine smarter and faster.
+There is significant room for further development. Optimizing the board representation to bitboards could dramatically increase speed, and refining my move evaluation process could sharpen the AI's competitive edge.
 
 
 \end{document}
