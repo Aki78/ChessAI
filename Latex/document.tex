@@ -1,0 +1,233 @@
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{fancyhdr}
+\usepackage{cite}
+\usepackage{hyperref}
+\usepackage{lipsum}
+\usepackage{xcolor}
+\usepackage{amsmath}
+\usepackage{colortbl}
+\usepackage{listings}
+\usepackage{geometry}
+
+% Define colors
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\geometry{
+    margin=1in % Sets all margins to 1 inch. Adjust as needed.
+}
+
+\lstset{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2,
+    language=Python, % Using Python for a more generic syntax highlighting
+    morekeywords={func, if, then, else, return, foreach, in, not}, % Add pseudo-code keywords
+}
+
+\pagestyle{fancy}
+\setlength{\footskip}{60pt}
+\vspace{-2cm}
+\fancyfoot{\rule{0.5\linewidth}{1pt}}
+
+\fancyfoot[L]{{\includegraphics[scale=0.07]{logo.png}}}
+
+\definecolor{lightgreen}{rgb}{0.56, 0.93, 0.56}
+
+\begin{document}
+
+
+\begin{center}
+\includegraphics[scale=0.2]{logo.png}
+\end{center}
+
+\vspace{0.5cm}
+
+\begin{center}
+
+ Eiaki Morooka \\
+
+\vspace{0.5cm}
+
+{\Huge \textcolor{red}{Chess Project}} \\
+
+
+\vspace{0.5cm}
+
+{\Large \textbf{Period 7}} \\
+
+
+\end{center}
+
+\vspace{1cm}
+
+\begin{center}
+
+{\Large }
+
+
+
+\begin{tabular}{l}
+ Second year second period semster\\
+ School of ICT\\
+ Metropolia University of Applied Sciences  \\
+ \today
+\end{tabular}
+\end{center}
+
+
+\begin{abstract}
+This report outlines the development of a chess engine with artificial intelligence, undertaken as a second-year project for the Data Structure and Algorithm class at Metropolia University of Applied Sciences. Utilizing the Minimax algorithm, enhanced with Alpha-Beta pruning, and parallelized through multithreading, my project aimed to create a capable and efficient AI for playing chess. The implementation of Alpha-Beta pruning allowed my engine to ignore less promising moves, streamlining the decision-making process. By incorporating multithreading, I was able to extend the engine's search depth to 7 or 8 levels, improving its strategic foresight within a manageable computation time. This project demonstrates the practical application of complex algorithms and multithreading in developing a competitive yet straightforward chess AI. It reflects my journey through the challenges of algorithm optimization and parallel computing, offering insights into the foundational aspects of AI development in gaming.
+\end{abstract}
+
+
+
+
+
+
+
+\newpage
+
+\tableofcontents
+
+\newpage
+
+
+%\begin{align*}
+%  \nabla \cdot \mathbf{E} &= \frac{\rho}{\varepsilon_0} &\quad \oint_{\mathcal{S}} \mathbf{E} \cdot d\mathbf{A} &= \frac{Q_{enc}}{\varepsilon_0} \\
+%\end{align*}
+
+
+\section{Introduction}
+Chess has always been a classic testbed for artificial intelligence, challenging programmers to replicate or surpass human strategic thinking. My project dives into this challenge by developing a chess engine in C++. The heart of this engine is the Position object, which holds the chessboard's current state and handles all move operations, serving as the crucial element for game logic.
+
+To make the AI, I implemented the Minimax algorithm, enhanced with Alpha-Beta pruning to sift through possible moves more efficiently. This approach helps in evaluating the game's future possibilities, allowing the engine to decide on the best moves by pruning unlikely paths, thus saving valuable computation time.
+
+Given the complexity of chess and the depth of analysis required, I also incorporated multithreading in the main file. This parallelizes the computation, enabling the engine to explore game scenarios up to 7 or 8 moves ahead, striking a balance between depth of search and computational speed.
+
+My goal was to create a chess engine that not only plays well but does so by efficiently navigating the vast sea of possible moves in chess. This project, crafted entirely in C++, was a hands-on journey into the intersection of AI and one of the world's oldest games, pushing the boundaries of what I could achieve with code, algorithms, and a bit of strategic thinking.
+%
+
+
+
+\section{AI Algorithm}
+\subsection{Minimax}
+
+The Minimax algorithm is a recursive strategy used for minimizing the possible loss for a worst-case scenario. When applied to chess, it is used to determine the best move by exploring all possible moves up to a certain depth. The function minimax(position, depth, maximizingPlayer) serves as the core of this strategy. It evaluates the game's positions to decide on the optimal move, considering both the player's and the opponent's perspectives.
+
+At the base of the recursion, when the depth is zero, the algorithm evaluates the current board position using the evaluatePosition(position) function. This evaluation assigns a numerical value to the board state, indicating how favorable it is. Positive values are favorable for White, while negative values favor Black. For non-terminal nodes (depth > 0), the algorithm generates all legal moves from the current position and explores each move's outcomes recursively. When the algorithm operates in the maximizing mode, it looks for the move that will result in the highest evaluation. Conversely, in minimizing mode, it seeks the move that will lead to the lowest evaluation, simulating an opponent trying to minimize our score. Through this process of exploring and evaluating all possible moves up to the given depth, the algorithm identifies the best possible move from the current position, aiming to maximize the player's advantage while minimizing the opponent's.
+
+The following is a speudo-code (for simplicity) of the minimax algorithm I used
+
+\begin{lstlisting}[caption={Pseudo-Code of the minimax used}, label=lst:pseudocode]
+func minimax(position, depth, maximizingPlayer)
+    if depth == 0
+        return evaluatePosition(position) # Evaluate position for terminal node
+
+    moves = generateLegalMoves(position) # Generate all legal moves from position
+
+    if maximizingPlayer
+        maxEval = -infinity
+        for each move in moves
+            # Apply move to create new position
+            childPosition = applyMove(position, move)
+            # Recursive call for child position, toggle maximizingPlayer
+            eval = minimax(childPosition, depth - 1, false)
+            maxEval = max(maxEval, eval)
+        return maxEval
+    else
+        minEval = +infinity
+        for each move in moves
+            # Apply move to create new position
+            childPosition = applyMove(position, move)
+            # Recursive call for child position, toggle maximizingPlayer
+            eval = minimax(childPosition, depth - 1, true)
+            minEval = min(minEval, eval)
+        return minEval
+
+# Auxiliary function to evaluate the position
+# Returns a numerical value representing the position's value
+# Positive for favorable positions for WHITE, negative for BLACK
+
+func evaluatePosition(position)
+    stateValues = position.getStateValue() # Get state values for both players
+    if position.turn == BLACK
+        return stateValues[WHITE] - stateValues[BLACK]
+    else
+        return stateValues[BLACK] - stateValues[WHITE]
+
+\end{lstlisting}
+
+Since it is impossible to do a full search, the evaluation function within the Minimax algorithm plays a crucial role in assessing the strength of a given board position in the game of chess. In this implementation, the evaluation is based on a weighted scoring system for the chess pieces, assigning specific values to each type of piece: Pawns are valued at 1 point, Knights at 3 points, and so on (see table below). This scoring system reflects the general consensus on the relative value of chess pieces in terms of their mobility and utility in the game. The evaluation function calculates the total score for both White and Black by summing the values of all pieces each side has on the board. The final evaluation score is the difference between these totals, providing a numerical value that represents the board state's favorability. A positive score indicates a position favorable to White, while a negative score favors Black. This method offers a straightforward yet effective way to quantify the advantage or disadvantage at any point in the game, guiding the Minimax algorithm in its decision-making process to select the optimal move.
+
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{|l|c|}
+\hline
+\textbf{Chess Piece} & \textbf{Value} \\
+\hline
+Pawn & 1 \\
+\hline
+Knight & 3 \\
+\hline
+Bishop & 3 \\
+\hline
+Rook & 5 \\
+\hline
+Queen & 9 \\
+\hline
+King & 20 \\
+\hline
+\end{tabular}
+\caption{Values assigned to each chess piece for evaluation.}
+\label{table:chess_piece_values}
+\end{table}
+
+This could only achieve a depth of 4 or 5 so I added also the alpha-beta pruning.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}
