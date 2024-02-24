@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2024.2.2)  23 FEB 2024 18:07
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2024.2.2)  24 FEB 2024 13:12
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1003,30 +1003,53 @@ Package pdftex.def Info: logo.png  used on input line 101.
  [6
 
  <./minimax.png>]
-<playable.png, id=218, 767.86874pt x 604.2575pt>
-File: playable.png Graphic file (type png)
-<use playable.png>
-Package pdftex.def Info: playable.png  used on input line 110.
-(pdftex.def)             Requested size: 239.60567pt x 188.55339pt.
 File: logo.png Graphic file (type png)
 <use logo.png>
-Package pdftex.def Info: logo.png  used on input line 110.
+Package pdftex.def Info: logo.png  used on input line 130.
 (pdftex.def)             Requested size: 26.66609pt x 28.45274pt.
 [7
 
- <./playable.png>]
+]
+<playable.png, id=248, 767.86874pt x 604.2575pt>
+File: playable.png Graphic file (type png)
+<use playable.png>
+Package pdftex.def Info: playable.png  used on input line 138.
+(pdftex.def)             Requested size: 239.60567pt x 188.55339pt.
 File: logo.png Graphic file (type png)
 <use logo.png>
-Package pdftex.def Info: logo.png  used on input line 137.
+Package pdftex.def Info: logo.png  used on input line 138.
 (pdftex.def)             Requested size: 26.66609pt x 28.45274pt.
  [8
 
-]
+ <./playable.png>]
+File: playable.png Graphic file (type png)
+<use playable.png>
+Package pdftex.def Info: playable.png  used on input line 147.
+(pdftex.def)             Requested size: 239.60567pt x 188.55339pt.
 File: logo.png Graphic file (type png)
 <use logo.png>
-Package pdftex.def Info: logo.png  used on input line 166.
+Package pdftex.def Info: logo.png  used on input line 147.
 (pdftex.def)             Requested size: 26.66609pt x 28.45274pt.
  [9
+
+]
+<play1500.png, id=300, 541.02126pt x 646.415pt>
+File: play1500.png Graphic file (type png)
+<use play1500.png>
+Package pdftex.def Info: play1500.png  used on input line 157.
+(pdftex.def)             Requested size: 136.91603pt x 163.5859pt.
+File: logo.png Graphic file (type png)
+<use logo.png>
+Package pdftex.def Info: logo.png  used on input line 157.
+(pdftex.def)             Requested size: 26.66609pt x 28.45274pt.
+ [10
+
+ <./play1500.png>]
+File: logo.png Graphic file (type png)
+<use logo.png>
+Package pdftex.def Info: logo.png  used on input line 186.
+(pdftex.def)             Requested size: 26.66609pt x 28.45274pt.
+ [11
 
 ]
 \tf@nav=\write6
@@ -1043,10 +1066,10 @@ Package rerunfilecheck Info: File `beamer.out' has not changed.
 (rerunfilecheck)             Checksum: C49E513C455F5FABA6502C79F5764D80;337.
  ) 
 Here is how much of TeX's memory you used:
- 23210 strings out of 478287
- 455400 string characters out of 5849290
- 700553 words of memory out of 5000000
- 40913 multiletter control sequences out of 15000+600000
+ 23225 strings out of 478287
+ 455585 string characters out of 5849290
+ 700555 words of memory out of 5000000
+ 40923 multiletter control sequences out of 15000+600000
  480407 words of font info for 68 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  128i,15n,122p,386b,610s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1057,10 +1080,10 @@ ive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss12.pfb></usr/share/texlive/te
 xmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb></usr/share/texlive/texmf-dis
 t/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/share/texlive/texmf-dist/fo
 nts/type1/public/amsfonts/cm/cmsy10.pfb>
-Output written on beamer.pdf (9 pages, 256088 bytes).
+Output written on beamer.pdf (11 pages, 302828 bytes).
 PDF statistics:
- 338 PDF objects out of 1000 (max. 8388607)
- 290 compressed objects within 3 object streams
- 23 named destinations out of 1000 (max. 500000)
- 135 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 393 PDF objects out of 1000 (max. 8388607)
+ 341 compressed objects within 4 object streams
+ 27 named destinations out of 1000 (max. 500000)
+ 140 words of extra memory for PDF output out of 10000 (max. 10000000)
 
