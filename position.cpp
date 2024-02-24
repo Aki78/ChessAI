@@ -187,14 +187,15 @@ void Position::check_pawn_and_push_move(int row, int column, int player, vector<
 		current_row = row; // resetting position
 
 		// if enemy on sides
-		if(current_column - 1 >= -1 && current_column + 1 <9){
+		if(current_column - 1 > 0)
 			if (is_enemy_of_white(_board[current_row-1][current_column-1])){ 
 				moves.push_back(Move(row, column, current_row-1, current_column-1));
 			}
+		if(current_column + 1 < 8)
 			if (is_enemy_of_white(_board[current_row-1][current_column+1])){ 
 				moves.push_back(Move(row, column, current_row-1, current_column+1));
 			}
-		}
+		
 
 	}
 
@@ -229,14 +230,15 @@ void Position::check_pawn_and_push_move(int row, int column, int player, vector<
 		current_row = row; // resetting position
 
 		// if enemy on sides
-		if(current_column - 1 >= 0 && current_column + 1 <8){
+		if(current_column - 1 > 0)
 			if (is_enemy_of_black(_board[current_row+1][current_column-1])){ 
 				moves.push_back(Move(row, column, current_row+1, current_column-1));
 			}
+		if(current_column + 1 < 8)
 			if (is_enemy_of_black(_board[current_row+1][current_column+1])){ 
 				moves.push_back(Move(row, column, current_row+1, current_column+1));
 			}
-		}
+		
 	}
 
 }

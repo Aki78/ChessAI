@@ -14,7 +14,7 @@ public:
 	bool check_and_push_move(int row, int column, int row_current, int column_current, int player, vector<Move>& moves);
 	void give_bish_raw_moves(int row, int column, int player, vector<Move>& moves);
 	void give_queen_raw_moves(int row, int column, int player, vector<Move>& moves);
-	void generate_all_raw_moves(int player, vector<Move>& moves);
+	void generate_all_raw_moves(int player, vector<Move>& moves) ;
 	vector<Move> generate_legal_moves() ;
 	bool is_king_threatened(vector<int> pos, int enemy);
 	vector<int> get_chess_piece(int chess_piece) const ;

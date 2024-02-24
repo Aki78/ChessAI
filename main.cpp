@@ -97,21 +97,21 @@ int minimax(Position position, int depth, bool maximizingPlayer){ // move is jus
 // but with a bad evaluation function, still bad
 
 
-int evaluate_leaf(Position position){
+int evaluate_leaf(Position& position){
 
 	vector<int> state_values = position.get_state_value(); // split to white and black
 	int state_value = 0;
 
 	if(position._turn == BLACK){
 		state_value = state_values[0] - state_values[1];
-		vector<Move> moves = position.generate_legal_moves();
-		state_value -= moves.size();
+//		vector<Move> moves = position.generate_legal_moves();
+//		state_value -= moves.size()/10;
 	}
 	else if(position._turn == WHITE ){
 		state_value = state_values[1] - state_values[0];
-		vector<Move> moves = position.generate_legal_moves();
+//		vector<Move> moves = position.generate_legal_moves();
 //	 	cout << state_value << endl;
-		state_value -= moves.size();
+//		state_value -= moves.size()/10;
 //	 	cout << state_value << endl;
 	}
 
@@ -309,7 +309,7 @@ int main(){
 				moves = position.generate_legal_moves();
 			}else{
 				position.print();
-				Move maxMove = getBestMoveThread(position, 3, g);
+				Move maxMove = getBestMoveThread(position, 5, g);
 				maxMove.print_move();
 				position.make_move(maxMove);
 				moves.clear();
