@@ -39,7 +39,7 @@
     showtabs=false,
     tabsize=2,
     language=Python, % Using Python for a more generic syntax highlighting
-    morekeywords={func, if, then, else, return, foreach, in, not}, % Add pseudo-code keywords
+    morekeywords={func, if, then, else, return, foreach, in, not, Position}, % Add pseudo-code keywords
 }
 
 \pagestyle{fancy}
@@ -137,7 +137,7 @@ At the base of the recursion, when the depth is zero, the algorithm evaluates th
 The following is a pseudo-code (for simplicity) of the minimax algorithm:
 
 \begin{lstlisting}[caption={Pseudo-Code of the minimax used}, label=lst:pseudocode]
-func minimax(position, depth, maximizingPlayer)
+func minimax(Position position, int depth, int maximizingPlayer)
     if depth == 0
         return evaluatePosition(position) # Evaluate position for terminal node
 
@@ -166,7 +166,7 @@ func minimax(position, depth, maximizingPlayer)
 # Returns a numerical value representing the position's value
 # Positive for favorable positions for WHITE, negative for BLACK
 
-func evaluatePosition(position)
+func evaluatePosition(Position position)
     stateValues = position.getStateValue() # Get state values for both players
     if position.turn == BLACK
         return stateValues[WHITE] - stateValues[BLACK]
@@ -194,7 +194,7 @@ Rook & 5 \\
 \hline
 Queen & 9 \\
 \hline
-King & 20 \\
+King & 50 \\
 \hline
 \end{tabular}
 \caption{Values assigned to each chess piece for evaluation.}
@@ -233,7 +233,7 @@ This could only achieve a depth of 4 or 5 so I added also the alpha-beta pruning
 
 
 \begin{lstlisting}[caption=Pseudo-Code of Alpha-Beta Pruning Enhancements, label=lst:pseudocode]
-func minimax_alphabeta(position, depth, maximizingPlayer, alpha, beta)
+func minimax_alphabeta(Position position, int depth, int maximizingPlayer, int alpha, int beta)
     # Base case remains the same
 
     if maximizingPlayer
@@ -267,7 +267,7 @@ By employing parallel computing through threading, the chess engine's ability to
 
 
 \begin{lstlisting}[caption= Threading in Getting Best Move, label=lst:pseudocode]
-func getBestMoveThread(position, depth, g)
+func getBestMoveThread(Position position, int depth, auto g) # g is random seed
     moves = generateLegalMoves(position)
     shuffle(moves, g) # Randomize moves to evenly distribute computational load
 
@@ -279,7 +279,7 @@ func getBestMoveThread(position, depth, g)
     num_threads = hardwareConcurrency() # Number of available hardware threads
     threads = vector(num_threads)
 
-    func processMoves(start, end)
+    func processMoves(int start, int end)
         localBestValue = -infinity
         localBestMove = null
 

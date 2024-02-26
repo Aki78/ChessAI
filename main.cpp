@@ -280,7 +280,7 @@ int main(){
 			if (position.get_state_value()[0] + position.get_state_value()[1]  < 60) depth = 10;
 			if (position.get_state_value()[0] + position.get_state_value()[1]  < 50) depth = 11;
 			position.print();
-			Move maxMove = getBestMoveThread(position, 5, g);
+			Move maxMove = getBestMoveThread(position, 6, g);
 			maxMove.print_move();
 			position.make_move(maxMove);
 			moves.clear();
