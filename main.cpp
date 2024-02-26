@@ -103,7 +103,7 @@ int evaluate_leaf(Position& position){
 	int state_value = 0;
 
 //	if(position._turn == BLACK){
-		state_value = state_values[0] - state_values[1];
+		state_value = state_values[1] - state_values[0]; // only works for white
 //		vector<Move> moves = position.generate_legal_moves();
 //		state_value -= moves.size()/10;
 //	}
