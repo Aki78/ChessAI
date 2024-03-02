@@ -97,33 +97,36 @@ int minimax(Position position, int depth, bool maximizingPlayer){ // move is jus
 // but with a bad evaluation function, still bad
 
 
-int evaluate_leaf(Position& position){
+//int evaluate_leaf(Position& position){
+//	vector<int> state_values = position.get_state_value(); // split to white and black
+//	int state_value = 0;
+//	if(position._turn == BLACK){
+//		state_value = state_values[0] - state_values[1]; // only works for white
+//	}
+//	else if(position._turn == WHITE ){
+//		state_value = state_values[1] - state_values[0];
+//	}
+//	return state_value; 
+//}
 
+
+int evaluate_leaf(Position& position,int turn){
 	vector<int> state_values = position.get_state_value(); // split to white and black
 	int state_value = 0;
-
-	if(position._turn == BLACK){
-		state_value = state_values[0] - state_values[1]; // only works for white
-//		vector<Move> moves = position.generate_legal_moves();
-//		state_value -= moves.size()/10;
+	if(turn == BLACK){
+		state_value = state_values[1] - state_values[0]; // only works for white
 	}
-	else if(position._turn == WHITE ){
-		state_value = state_values[1] - state_values[0];
-//		vector<Move> moves = position.generate_legal_moves();
-//	 	cout << state_value << endl;
-//		state_value -= moves.size()/10;
-//	 	cout << state_value << endl;
+	else if(turn == WHITE ){
+		state_value = state_values[0] - state_values[1];
 	}
-
-
 	return state_value; 
 }
 
 
 
-int minimax_alphabeta(Position& position, int depth, bool maximizingPlayer, int alpha, int beta){ // move is just a place holder at start
+int minimax_alphabeta(Position& position, int depth, bool maximizingPlayer, int alpha, int beta, int turn){ // move is just a place holder at start
 	if(depth == 0){
-		return evaluate_leaf(position);
+		return evaluate_leaf(position, turn);
 	}
 
 	vector<Move> moves = position.generate_legal_moves();
@@ -134,7 +137,7 @@ int minimax_alphabeta(Position& position, int depth, bool maximizingPlayer, int 
 		for(auto m: moves){ //getting all legal moves (children)
 			Position test_position = position; 
 			test_position.make_move(m);
-			int moveEval = minimax_alphabeta(test_position, depth - 1, false, alpha, beta);
+			int moveEval = minimax_alphabeta(test_position, depth - 1, false, alpha, beta, turn);
 			maxEval = max(maxEval, moveEval);
 			alpha = max(alpha, moveEval);
 			if (beta <= alpha) break; 
@@ -149,7 +152,7 @@ int minimax_alphabeta(Position& position, int depth, bool maximizingPlayer, int 
 		for(auto m: moves){ //getting all legal moves (children)
 			Position test_position = position; 
 			test_position.make_move(m);
-			int moveEval = minimax_alphabeta(test_position, depth - 1, true, alpha, beta);
+			int moveEval = minimax_alphabeta(test_position, depth - 1, true, alpha, beta, turn);
 			minEval = min(minEval, moveEval);
 			beta = min(beta, moveEval);
 			if (beta <= alpha) break; 
@@ -211,7 +214,7 @@ Move getBestMoveThread(Position position, int depth, auto g) {
 		for (int i = start; i < end; ++i) {
 			Position test_position = position;
 			test_position.make_move(moves[i]);
-			int moveValue = minimax_alphabeta(test_position, depth - 1, false, localAlpha, localBeta);
+			int moveValue = minimax_alphabeta(test_position, depth - 1, false, localAlpha, localBeta, position._turn);
 
 			if (moveValue > localBestValue) {
 				localBestValue = moveValue;
@@ -341,7 +344,7 @@ int main(){
 				moves = position.generate_legal_moves();
 			}else{
 				position.print();
-				Move maxMove = getBestMoveThread(position, 6, g);
+				Move maxMove = getBestMoveThread(position, 5, g);
 				maxMove.print_move();
 				position.make_move(maxMove);
 				moves.clear();
