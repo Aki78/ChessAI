@@ -585,17 +585,22 @@ vector<int> Position::get_state_value(){ // [0] -> white state value, [1] -> bla
 	vector<int> values = {0,0};
 	for (int row = 0; row < 8; ++row)
 		for (int col = 0; col < 8; ++col){
+			bool is_center = col >= 2 && col <= 5 && row >= 2 && row <= 5; 
+			bool is_super_center = col >= 3 && col <= 4 && row >= 3 && row <= 4; 
 			if(_board[row][col]==wP){ 
 				values[0] += 10;
-				if(col >= 2 && col <= 5 && row >= 2 && row <= 5) values[0]+=1;
+				if(is_center) values[0]+=1;
+				if(is_super_center) values[0]+=1;
 			}
 			else if(_board[row][col]==wN){
 				values[0] += 30;
-				if(col >= 2 && col <= 5 && row >= 2 && row <= 5) values[0]+=1;
+				if(is_center) values[0]+=1;
+				if(is_super_center) values[0]+=1;
 			}
 			else if(_board[row][col]==wB){
 				values[0] += 30;
-				if(col >= 2 && col <= 5 && row >= 2 && row <= 5) values[0]+=1;
+				if(is_center) values[0]+=1;
+				if(is_super_center) values[0]+=1;
 			}
 			else if(_board[row][col]==wR) values[0] += 50;
 			else if(_board[row][col]==wQ) values[0] += 90;
@@ -605,15 +610,18 @@ vector<int> Position::get_state_value(){ // [0] -> white state value, [1] -> bla
 
 			if(_board[row][col]==bP){ 
 				values[1] += 10;
-				if(col >= 2 && col <= 5 && row >= 2 && row <= 5) values[1]+=1;
+				if(is_center) values[1]+=1;
+				if(is_super_center) values[1]+=1;
 			}
 			else if(_board[row][col]==bN){
 				values[1] += 30;
-				if(col >= 2 && col <= 5 && row >= 2 && row <= 5) values[1]+=1;
+				if(is_center) values[1]+=1;
+				if(is_super_center) values[1]+=1;
 			}
 			else if(_board[row][col]==bB){
 				values[1] += 30;
-				if(col >= 2 && col <= 5 && row >= 2 && row <= 5) values[1]+=1;
+				if(is_center) values[1]+=1;
+				if(is_super_center) values[1]+=1;
 			}
 			else if(_board[row][col]==bR) values[1] += 50;
 			else if(_board[row][col]==bQ) values[1] += 90;
