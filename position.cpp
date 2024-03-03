@@ -694,8 +694,8 @@ vector<int> Position::get_state_value(){ // [0] -> white state value, [1] -> bla
 			else if(_board[row][col]==wK) values[0] += 500;
 
 
-
-			if(_board[row][col]==bP){ 
+// black
+			else if(_board[row][col]==bP){ 
 				values[1] += 10;
 				if(is_center) values[1]+=1;
 				if(is_super_center) values[1]+=1;

@@ -287,6 +287,7 @@ int main(){
 			Move maxMove = getBestMoveThread(position, 6, g);
 			maxMove.print_move();
 			position.make_move(maxMove);
+			// check game over
 			moves.clear();
 			moves = position.generate_legal_moves();
 		}
