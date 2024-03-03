@@ -528,29 +528,116 @@ vector<Move> Position::generate_legal_moves() {
 		test_pos.make_move(m);
 
 		vector<int> king_piece_pos =  test_pos.get_chess_piece(my_king);
-		if (player == WHITE && test_pos.is_king_threatened(king_piece_pos, enemy)) 
-			white_is_threatened = true;
-		if (player == BLACK && test_pos.is_king_threatened(king_piece_pos, enemy)) 
-			black_is_threatened = true;
+//		if (player == WHITE && test_pos.is_king_threatened(king_piece_pos, enemy)) 
+//			white_is_threatened = true;
+//		if (player == BLACK && test_pos.is_king_threatened(king_piece_pos, enemy)) 
+//			black_is_threatened = true;
 		
 		if (!test_pos.is_king_threatened(king_piece_pos, enemy)) 
 			legal_moves.push_back(m);
 	}
 
+	Position test_castle_pos = *this;
+	vector<int> king_piece_pos =  test_castle_pos.get_chess_piece(my_king);
+
+	
+
 // adding castling
 //complete the rook and king move
 	if(player == WHITE){
-		if(_board[7][0] == wR && _board[7][1] == NA && _board[7][2] == NA && _board[7][3] == NA && _board[7][4] == wK && !white_is_threatened && !white_king_has_moved && !white_rook1_has_moved) // make sure king hasn't moved too or is in check
-			legal_moves.push_back(Move(-52,-52,-52,-52));
-		if( _board[7][4] == wK && _board[7][5] == NA && _board[7][6] == NA && _board[7][7] == wR && !white_is_threatened && !white_king_has_moved && !white_rook2_has_moved) // make sure king hasn't moved too or is in check
-			legal_moves.push_back(Move(-53,-53,-53,-53));
+		if(_board[7][0] == wR && _board[7][1] == NA && _board[7][2] == NA && _board[7][3] == NA && _board[7][4] == wK && !is_king_threatened(king_piece_pos, enemy) && !white_king_has_moved && !white_rook1_has_moved){ 
+			bool attacked_inbetween = false;
+			Position test_castle_pos_inner = *this;
+
+			test_castle_pos_inner._board[7][4] = NA;
+			test_castle_pos_inner._board[7][3] = wK;
+			vector<int> king_piece_pos_inner =  test_castle_pos_inner.get_chess_piece(my_king);
+			if(is_king_threatened(king_piece_pos_inner, enemy)) attacked_inbetween = true; 
+
+
+			test_castle_pos_inner._board[7][3] = NA;
+			test_castle_pos_inner._board[7][2] = wK;
+			king_piece_pos_inner =  test_castle_pos_inner.get_chess_piece(my_king);
+			if(is_king_threatened(king_piece_pos_inner, enemy)) attacked_inbetween = true; 
+
+
+
+			if(!attacked_inbetween)
+				legal_moves.push_back(Move(-52,-52,-52,-52));
+
+		}
+		if( _board[7][4] == wK && _board[7][5] == NA && _board[7][6] == NA && _board[7][7] == wR && !is_king_threatened(king_piece_pos, enemy)  && !white_king_has_moved && !white_rook2_has_moved){ // make sure king hasn't moved too or is in check
+			bool attacked_inbetween = false; // checking if inbetween squares are not threatened
+			Position test_castle_pos_inner = *this;
+
+			test_castle_pos_inner._board[7][4] = NA;
+			test_castle_pos_inner._board[7][5] = wK;
+			vector<int> king_piece_pos_inner =  test_castle_pos_inner.get_chess_piece(my_king);
+			if(is_king_threatened(king_piece_pos_inner, enemy)) attacked_inbetween = true; 
+
+
+			test_castle_pos_inner._board[7][5] = NA;
+			test_castle_pos_inner._board[7][6] = wK;
+			king_piece_pos_inner =  test_castle_pos_inner.get_chess_piece(my_king);
+			if(is_king_threatened(king_piece_pos_inner, enemy)) attacked_inbetween = true; 
+
+
+
+			if(!attacked_inbetween)
+				legal_moves.push_back(Move(-53,-53,-53,-53));
+
+			}
+
+
+
 	}
 	else if(player == BLACK){
-		if(_board[0][0] == bR && _board[0][1] == NA && _board[0][2] == NA && _board[0][3] == NA && _board[0][4] == bK && !black_is_threatened && !black_king_has_moved && !black_rook1_has_moved) // make sure king hasn't moved too or is in check
-			legal_moves.push_back(Move(-50,-50,-50,-50));
-		if( _board[0][4] == bK && _board[0][5] == NA && _board[0][6] == NA && _board[0][7] == bR && !black_is_threatened && !black_king_has_moved && !black_rook2_has_moved) // make sure king hasn't moved too or is in check
-			legal_moves.push_back(Move(-51,-51,-51,-51));
+		if(_board[0][0] == bR && _board[0][1] == NA && _board[0][2] == NA && _board[0][3] == NA && _board[0][4] == bK && !is_king_threatened(king_piece_pos, enemy)  && !black_king_has_moved && !black_rook1_has_moved){ // make sure king hasn't moved too or is in check
+			bool attacked_inbetween = false;
+			Position test_castle_pos_inner = *this;
+
+			test_castle_pos_inner._board[0][4] = NA;
+			test_castle_pos_inner._board[0][3] = bK;
+			vector<int> king_piece_pos_inner =  test_castle_pos_inner.get_chess_piece(my_king);
+			if(is_king_threatened(king_piece_pos_inner, enemy)) attacked_inbetween = true; 
+
+
+			test_castle_pos_inner._board[0][3] = NA;
+			test_castle_pos_inner._board[0][2] = bK;
+			king_piece_pos_inner =  test_castle_pos_inner.get_chess_piece(my_king);
+			if(is_king_threatened(king_piece_pos_inner, enemy)) attacked_inbetween = true; 
+
+
+
+			if(!attacked_inbetween)
+				legal_moves.push_back(Move(-50,-50,-50,-50));
+}
+		if( _board[0][4] == bK && _board[0][5] == NA && _board[0][6] == NA && _board[0][7] == bR && !is_king_threatened(king_piece_pos, enemy)  && !black_king_has_moved && !black_rook2_has_moved){ // make sure king hasn't moved too or is in check
+			bool attacked_inbetween = false;
+			Position test_castle_pos_inner = *this;
+
+			test_castle_pos_inner._board[0][4] = NA;
+			test_castle_pos_inner._board[0][5] = bK;
+			vector<int> king_piece_pos_inner =  test_castle_pos_inner.get_chess_piece(my_king);
+			if(is_king_threatened(king_piece_pos_inner, enemy)) attacked_inbetween = true; 
+
+
+			test_castle_pos_inner._board[0][5] = NA;
+			test_castle_pos_inner._board[0][6] = bK;
+			king_piece_pos_inner =  test_castle_pos_inner.get_chess_piece(my_king);
+			if(is_king_threatened(king_piece_pos_inner, enemy)) attacked_inbetween = true; 
+
+
+
+			if(!attacked_inbetween)
+				legal_moves.push_back(Move(-51,-51,-51,-51));
+
+
+		}
 		
+
+
+
 	}
 
 	return legal_moves;

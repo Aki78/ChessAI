@@ -258,7 +258,7 @@ Move getBestMoveThread(Position position, int depth, auto g) {
 int main(){
 	random_device rd;
 	mt19937 g(rd()); // initializing a random seed;
-	int depth = 5;
+	int depth = 6;
 
 		// Initial position.
 	Position position;
@@ -302,7 +302,7 @@ int main(){
 
 				position.print();
 				cout << "Input your move: ";
-				cin >> input_move_string;
+				cin >> input_move_string >> depth;
 
 				Move new_move(input_move_string);
 
@@ -313,7 +313,7 @@ int main(){
 				moves = position.generate_legal_moves();
 			}else{
 				position.print();
-				Move maxMove = getBestMoveThread(position, 5, g);
+				Move maxMove = getBestMoveThread(position, depth, g);
 				maxMove.print_move();
 				position.make_move(maxMove);
 				moves.clear();
@@ -333,7 +333,7 @@ int main(){
 
 				position.print();
 				cout << "Input your move: ";
-				cin >> input_move_string;
+				cin >> input_move_string >> depth;
 
 				Move new_move(input_move_string);
 
@@ -344,7 +344,7 @@ int main(){
 				moves = position.generate_legal_moves();
 			}else{
 				position.print();
-				Move maxMove = getBestMoveThread(position, 5, g);
+				Move maxMove = getBestMoveThread(position, depth, g);
 				maxMove.print_move();
 				position.make_move(maxMove);
 				moves.clear();

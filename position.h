@@ -68,6 +68,17 @@ private:
 		{ wR, wN, wB, wQ, wK, wB, wN, wR }
 	};
 
+//	int _board[8][8] = {
+//		{ bR, NA, NA, NA, bK, NA, NA, bR },
+//		{ NA, NA, NA, NA, NA, NA, NA, NA },
+//		{ NA, NA, NA, NA, NA, NA, NA, NA },
+//		{ NA, NA, NA, NA, NA, NA, NA, NA },
+//		{ NA, NA, NA, NA, NA, NA, wR, NA },
+//		{ NA, NA, NA, NA, NA, NA, NA, NA },
+//		{ NA, NA, NA, NA, NA, bP, NA, NA },
+//		{ NA, NA, NA, NA, wK, NA, NA, NA }
+//	};
+
 	void switch_turns();
 	bool is_enemy_of_white(int);
 	bool is_enemy_of_black(int);
@@ -75,6 +86,7 @@ private:
 // for castling
 	bool white_is_threatened=false;
 	bool black_is_threatened=false;
+
 	bool white_king_has_moved=false;
 	bool black_king_has_moved=false;
 	bool white_rook1_has_moved=false;
