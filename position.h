@@ -46,27 +46,27 @@ private:
 //	};
 
 
-	int _board[8][8] = {
-		{ bR, NA, NA, NA, bK, NA, NA, bR },
-		{ NA, NA, NA, NA, NA, NA, NA, NA },
-		{ NA, NA, bP, NA, NA, NA, NA, NA },
-		{ NA, bP, wP, wP, NA, NA, NA, NA },
-		{ NA, wP, wP, NA, NA, NA, NA, NA },
-		{ NA, NA, NA, NA, NA, NA, NA, NA },
-		{ NA, NA, NA, NA, NA, NA, NA, NA },
-		{ wR, NA, NA, NA, wK, NA, NA, wR }
-	};
-
 //	int _board[8][8] = {
-//		{ bR, bN, bB, bQ, bK, bB, bN, bR },
-//		{ bP, bP, bP, bP, bP, bP, bP, bP },
+//		{ bR, NA, NA, NA, bK, NA, NA, bR },
+//		{ NA, NA, NA, NA, NA, NA, NA, NA },
+//		{ NA, NA, bP, NA, NA, NA, NA, NA },
+//		{ NA, bP, wP, wP, NA, NA, NA, NA },
+//		{ NA, wP, wP, NA, NA, NA, NA, NA },
 //		{ NA, NA, NA, NA, NA, NA, NA, NA },
 //		{ NA, NA, NA, NA, NA, NA, NA, NA },
-//		{ NA, NA, NA, NA, NA, NA, NA, NA },
-//		{ NA, NA, NA, NA, NA, NA, NA, NA },
-//		{ wP, wP, wP, wP, wP, wP, wP, wP },
-//		{ wR, wN, wB, wQ, wK, wB, wN, wR }
+//		{ wR, NA, NA, NA, wK, NA, NA, wR }
 //	};
+
+	int _board[8][8] = {
+		{ bR, bN, bB, bQ, bK, bB, bN, bR },
+		{ bP, bP, bP, bP, bP, bP, bP, bP },
+		{ NA, NA, NA, NA, NA, NA, NA, NA },
+		{ NA, NA, NA, NA, NA, NA, NA, NA },
+		{ NA, NA, NA, NA, NA, NA, NA, NA },
+		{ NA, NA, NA, NA, NA, NA, NA, NA },
+		{ wP, wP, wP, wP, wP, wP, wP, wP },
+		{ wR, wN, wB, wQ, wK, wB, wN, wR }
+	};
 
 //	int _board[8][8] = {
 //		{ bR, NA, NA, NA, bK, NA, NA, bR },

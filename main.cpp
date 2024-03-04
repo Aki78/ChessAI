@@ -258,7 +258,8 @@ Move getBestMoveThread(Position position, int depth, auto g) {
 int main(){
 	random_device rd;
 	mt19937 g(rd()); // initializing a random seed;
-	int depth = 6;
+	int depth = 5;
+	Position undo_position; 
 
 		// Initial position.
 	Position position;
@@ -277,12 +278,6 @@ int main(){
 // AI playing
 	if(select == 1)
 		while (!moves.empty()){
-			if (position.get_state_value()[0] + position.get_state_value()[1]  < 100) depth = 6;
-			if (position.get_state_value()[0] + position.get_state_value()[1]  < 90) depth = 7;
-			if (position.get_state_value()[0] + position.get_state_value()[1]  < 80) depth = 8;
-			if (position.get_state_value()[0] + position.get_state_value()[1]  < 70) depth = 9;
-			if (position.get_state_value()[0] + position.get_state_value()[1]  < 60) depth = 10;
-			if (position.get_state_value()[0] + position.get_state_value()[1]  < 50) depth = 11;
 			position.print();
 			Move maxMove = getBestMoveThread(position, 6, g);
 			maxMove.print_move();
@@ -297,18 +292,27 @@ int main(){
 		while (!moves.empty()){
 			string input_move_string;
 			if(position._turn == WHITE){
-				cout << "Printing out all moves: " << endl;
 
+				cout << "Printing out all moves: " << endl;
 				for(auto m: moves) m.print_move();
+
 
 				position.print();
 				cout << "Input your move: ";
 				cin >> input_move_string >> depth;
 
+				if(input_move_string == "undo"){
+					position = undo_position;
+					moves = position.generate_legal_moves();
+					continue;
+				}
+
+				
+
 				Move new_move(input_move_string);
 
 				if (!count(moves.begin(),moves.end(), new_move)) continue; // checking if input moves exist
-
+				undo_position = position;
 				position.make_move(new_move);
 				moves.clear();
 				moves = position.generate_legal_moves();
@@ -335,11 +339,17 @@ int main(){
 				position.print();
 				cout << "Input your move: ";
 				cin >> input_move_string >> depth;
+				if(input_move_string == "undo"){
+					position = undo_position;
+					moves = position.generate_legal_moves();
+					continue;
+				}
 
 				Move new_move(input_move_string);
 
 				if (!count(moves.begin(),moves.end(), new_move)) continue; // checking if input moves exist
 
+				undo_position = position;
 				position.make_move(new_move);
 				moves.clear();
 				moves = position.generate_legal_moves();
@@ -360,8 +370,6 @@ int main(){
 
 	if(position._turn == WHITE) cout << "Winnter: BLACK" << endl;
 	if(position._turn == BLACK) cout << "Winnter: WHITE" << endl;
-
-	
 
 		return 0;
 }
