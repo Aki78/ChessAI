@@ -55,9 +55,9 @@ S:c4e4
 ```
 the notation is 4 letters, the first 2 letters are the starting position of the piece you want to move, and the last 2 letters are the position you want to move to the square, for example if you type in:
 ```
-c4c5
+c4c5 5
 ```
-the piece on row 4 at column c will move up to row 5.
+the piece on row 4 at column c will move up to row 5. ( you also need to input the depth, in this case depth = 5)
 
 The game will automatically end, when either your king or the AI king has no where else to go.
 
